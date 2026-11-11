@@ -57,15 +57,21 @@ function clean(node, base, doc) {
 // Чистка после Readability: меню, «хлебные крошки», блоки из ссылок, биография автора, мусор до начала текста и после конца.
 const txtLen = el => (el.textContent || '').replace(/\s+/g, ' ').trim().length;
 const linkLen = el => [...(el.querySelectorAll ? el.querySelectorAll('a') : [])].reduce((t, a) => t + txtLen(a), 0);
-const BIO = /^[A-ZА-ЯЁ][\p{L}.' -]{2,60}\s+(is|was|—|–|-)\s+(a|an|the)?\s*[\p{L} ,-]{0,60}(writer|reporter|editor|journalist|correspondent|columnist|contributor|author)\b/iu;
+const BIO = /^([A-ZА-ЯЁ][\p{L}.' -]{2,60}\s+)?(is|was|—|–|-)\s+(a|an|the)?\s*[\p{L} ,-]{0,60}(writer|reporter|editor|journalist|correspondent|columnist|contributor|author)\b/iu;
+const JUNK = /^(by|автор|фото|photo|image|share|поделиться|читайте также|read more|related|advertisement|реклама|календарь)\s*:?\s*$|^(\d{1,2}\s+\p{L}+\s+\d{4}|\p{L}{3,9}\.? \d{1,2}, \d{4})[,\s\d:apmAPMUTC]*$/iu;
 function isReal(el) {
   if (el.nodeType !== 1) return false; const t = el.tagName.toLowerCase();
   if (t === 'p' || t === 'blockquote') { const n = txtLen(el); return n >= 80 && linkLen(el) / n < 0.4 && !BIO.test(el.textContent.trim()); }
   return false;
 }
 function tidy(root) {
+  // 0. Таблицы-раскладки (внутри абзацы, картинки) — разворачиваем; ссылки на авторов с фото — убираем
+  for (const t of [...root.querySelectorAll('table')]) if (t.querySelector('p, img, figure, h2, h3')) { for (const c of [...t.querySelectorAll('tbody, thead, tr, td, th')]) c.replaceWith(...c.childNodes); t.replaceWith(...t.childNodes); }
+  for (const a of [...root.querySelectorAll('a')]) if (/\/(authors?|people|profile|users?)\//i.test(a.getAttribute('href') || '') && (a.querySelector('img') || txtLen(a) < 40)) { const p = a.parentNode; a.remove(); if (p && p.tagName === 'P' && !txtLen(p) && !p.querySelector('img, video, iframe')) p.remove(); }
+  for (const p of [...root.querySelectorAll('p, h2, h3, h4, div, span')]) { const t = (p.textContent || '').replace(/\s+/g, ' ').trim(); if (t.length < 60 && JUNK.test(t) && !p.querySelector('img, video, iframe')) p.remove(); }
+  { let prev = ''; for (const p of [...root.querySelectorAll('p')]) { const t = (p.textContent || '').trim(); if (t && t === prev) p.remove(); else prev = t; } }
   // 1. Блоки, где почти весь текст — ссылки (меню, теги, «читайте также»)
-  for (const el of [...root.querySelectorAll('ul, ol, p, h2, h3, h4, table')]) {
+  for (const el of [...root.children].filter(e => /^(UL|OL|P|H2|H3|H4|TABLE)$/.test(e.tagName))) {
     const n = txtLen(el); if (!n || el.querySelector('img, video, iframe')) continue;
     if (linkLen(el) / n > 0.6 && n < 600) el.remove();
   }
@@ -84,12 +90,23 @@ function tidy(root) {
   for (const k of [...root.childNodes]) if (k.nodeType === 3) { const t = k.textContent.replace(/\s+/g, ' ').trim(); if (t.length < 80) k.remove(); }
 }
 
+// Облегчение страницы до разбора: без скриптов, стилей, svg, комментариев, шапки/подвала/навигации; если есть <article> — только он.
+function slim(raw) {
+  let b = (/<body[^>]*>([\s\S]*)<\/body>/i.exec(raw) || [, raw])[1];
+  b = b.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style|noscript|svg|template|form|select|button|nav|footer|aside)\b[\s\S]*?<\/\1>/gi, '').replace(/<header\b[\s\S]*?<\/header>/gi, '');
+  const i = b.search(/<article\b/i), j = b.lastIndexOf('</article>');
+  if (i >= 0 && j > i && j - i > 1500) b = b.slice(i, j + 10);
+  return b.slice(0, 1.5e6);
+}
+
 async function extract(target) {
   const r = await fetch(target, { redirect: 'follow', headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15', 'Accept': 'text/html,application/xhtml+xml', 'Accept-Language': 'ru,en;q=0.8' }, cf: { cacheTtl: 600, cacheEverything: true } });
   if (!r.ok) throw Object.assign(new Error('Сайт ответил ' + r.status), { status: 502 });
   const ct = r.headers.get('content-type') || ''; if (!/html/i.test(ct)) throw Object.assign(new Error('Это не страница статьи'), { status: 415 });
   const len = +(r.headers.get('content-length') || 0); if (len > 6e6) throw Object.assign(new Error('Страница слишком большая'), { status: 413 });
-  const html = (await r.text()).slice(0, 6e6), base = r.url || target;
+  const raw = (await r.text()).slice(0, 6e6), base = r.url || target;
+  const head = (/<head[\s\S]*?<\/head>/i.exec(raw) || [''])[0].replace(/<(script|style)[\s\S]*?<\/\1>/gi, '');
+  const html = '<!doctype html><html>' + head + '<body>' + slim(raw) + '</body></html>';
   const { document } = parseHTML(html);
   const meta = n => (document.querySelector(`meta[property="${n}"]`) || document.querySelector(`meta[name="${n}"]`))?.getAttribute('content') || '';
   const article = new Readability(document, { charThreshold: 300, keepClasses: false }).parse();
@@ -116,7 +133,7 @@ export default {
     if (!ALLOWED_ORIGINS.includes(origin) && !(env && env.ALLOW_ANY_ORIGIN)) return json({ error: 'Доступ только для купола' }, 403, origin);
     let target; try { target = new URL(url.searchParams.get('url') || ''); } catch { return json({ error: 'Нужен параметр url' }, 400, origin); }
     if (!/^https?:$/.test(target.protocol) || privateHost(target.hostname)) return json({ error: 'Недопустимый адрес' }, 400, origin);
-    const cache = typeof caches !== 'undefined' ? caches.default : null, key = new Request('https://kupol-reader.cache/' + encodeURIComponent(target.href) + '#' + (ALLOWED_ORIGINS.includes(origin) ? origin : ''));
+    const cache = typeof caches !== 'undefined' ? caches.default : null, key = new Request('https://kupol-reader.cache/v3/' + encodeURIComponent(target.href) + '#' + (ALLOWED_ORIGINS.includes(origin) ? origin : ''));
     if (cache) { const hit = await cache.match(key); if (hit) return hit; }
     try {
       const data = await extract(target.href);
