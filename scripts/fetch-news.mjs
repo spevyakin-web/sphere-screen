@@ -71,6 +71,25 @@ async function getFeed(f) {
   finally { clearTimeout(tm); }
 }
 
+const embedCache = new Map();
+async function canEmbed(url) {
+  let host = ''; try { host = new URL(url).hostname; } catch { return false; }
+  if (embedCache.has(host)) return embedCache.get(host);
+  const p = (async () => {
+    const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 8000);
+    try {
+      const r = await fetch(url, { signal: ctl.signal, redirect: 'follow', headers: { 'user-agent': 'Mozilla/5.0 (compatible; sphere-screen/1.0)', accept: 'text/html' } });
+      try { await r.body?.cancel(); } catch {}
+      if (!r.ok) return false;
+      const xfo = (r.headers.get('x-frame-options') || '').toLowerCase(), csp = (r.headers.get('content-security-policy') || '').toLowerCase();
+      if (xfo) return false;
+      const fa = /frame-ancestors([^;]*)/.exec(csp); if (fa && !/\*|https:/.test(fa[1])) return false;
+      return true;
+    } catch { return false; } finally { clearTimeout(tm); }
+  })();
+  embedCache.set(host, p); return p;
+}
+
 async function pageText(url) {
   const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 12000);
   try {
@@ -120,6 +139,8 @@ if (KEY) {
   }
 }
 for (const n of items) { if (!n.t) n.t = n.title; if (!n.c) n.c = guessCat(n.title + ' ' + n.summary); }
+await Promise.all(items.map(async n => { n.embed = await canEmbed(n.url); }));
+console.log('Встраивание:', [...embedCache.keys()].length, 'доменов, разрешено у', items.filter(n => n.embed).length, 'новостей');
 for (const n of items) delete n.full;
 const out = { updated: new Date().toISOString(), translated: !!KEY, count: items.length, items };
 await writeFile(OUT, JSON.stringify(out));
