@@ -58,7 +58,7 @@ function clean(node, base, doc) {
 const txtLen = el => (el.textContent || '').replace(/\s+/g, ' ').trim().length;
 const linkLen = el => [...(el.querySelectorAll ? el.querySelectorAll('a') : [])].reduce((t, a) => t + txtLen(a), 0);
 const BIO = /^([A-ZА-ЯЁ][\p{L}.' -]{2,60}\s+)?(is|was|—|–|-)\s+(a|an|the)?\s*[\p{L} ,-]{0,60}(writer|reporter|editor|journalist|correspondent|columnist|contributor|author)\b/iu;
-const JUNK = /^(by|автор|фото|photo|image|share|поделиться|читайте также|read more|related|advertisement|реклама|календарь)\s*:?\s*$|^(\d{1,2}\s+\p{L}+\s+\d{4}|\p{L}{3,9}\.? \d{1,2}, \d{4})[,\s\d:apmAPMUTC]*$/iu;
+const JUNK = /^(by|автор|фото|photo|image|share|поделиться|читайте также|read more|related|advertisement|реклама|календарь|самое интересное в обзорах|skip to content)\s*:?\s*$|^(\d{1,2}\s+\p{L}+\s+\d{4}|\p{L}{3,9}\.? \d{1,2}, \d{4})[,\s\d:apmAPMUTC]*$/iu;
 function isReal(el) {
   if (el.nodeType !== 1) return false; const t = el.tagName.toLowerCase();
   if (t === 'p' || t === 'blockquote') { const n = txtLen(el); return n >= 80 && linkLen(el) / n < 0.4 && !BIO.test(el.textContent.trim()); }
@@ -66,6 +66,7 @@ function isReal(el) {
 }
 function tidy(root) {
   // 0. Таблицы-раскладки (внутри абзацы, картинки) — разворачиваем; ссылки на авторов с фото — убираем
+  for (const c of [...root.querySelectorAll('tbody, thead, tr, td, th')]) { let up = c.parentNode, inTable = false; while (up && up !== root) { if (up.tagName === 'TABLE') { inTable = true; break; } up = up.parentNode; } if (!inTable || c.querySelector('p, img, figure, h2, h3')) c.replaceWith(...c.childNodes); }
   for (const t of [...root.querySelectorAll('table')]) if (t.querySelector('p, img, figure, h2, h3')) { for (const c of [...t.querySelectorAll('tbody, thead, tr, td, th')]) c.replaceWith(...c.childNodes); t.replaceWith(...t.childNodes); }
   for (const a of [...root.querySelectorAll('a')]) if (/\/(authors?|people|profile|users?)\//i.test(a.getAttribute('href') || '') && (a.querySelector('img') || txtLen(a) < 40)) { const p = a.parentNode; a.remove(); if (p && p.tagName === 'P' && !txtLen(p) && !p.querySelector('img, video, iframe')) p.remove(); }
   for (const p of [...root.querySelectorAll('p, h2, h3, h4, div, span')]) { const t = (p.textContent || '').replace(/\s+/g, ' ').trim(); if (t.length < 60 && JUNK.test(t) && !p.querySelector('img, video, iframe')) p.remove(); }
@@ -133,7 +134,7 @@ export default {
     if (!ALLOWED_ORIGINS.includes(origin) && !(env && env.ALLOW_ANY_ORIGIN)) return json({ error: 'Доступ только для купола' }, 403, origin);
     let target; try { target = new URL(url.searchParams.get('url') || ''); } catch { return json({ error: 'Нужен параметр url' }, 400, origin); }
     if (!/^https?:$/.test(target.protocol) || privateHost(target.hostname)) return json({ error: 'Недопустимый адрес' }, 400, origin);
-    const cache = typeof caches !== 'undefined' ? caches.default : null, key = new Request('https://kupol-reader.cache/v3/' + encodeURIComponent(target.href) + '#' + (ALLOWED_ORIGINS.includes(origin) ? origin : ''));
+    const cache = typeof caches !== 'undefined' ? caches.default : null, key = new Request('https://kupol-reader.cache/v4/' + encodeURIComponent(target.href) + '#' + (ALLOWED_ORIGINS.includes(origin) ? origin : ''));
     if (cache) { const hit = await cache.match(key); if (hit) return hit; }
     try {
       const data = await extract(target.href);
