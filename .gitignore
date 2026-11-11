@@ -1,2 +1,4 @@
 scripts/node_modules/
 scripts/package-lock.json
+reader/node_modules/
+reader/.wrangler/

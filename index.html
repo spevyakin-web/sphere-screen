@@ -30,6 +30,31 @@ body{font-family:'Inter',sans-serif;color:#F3F2EE}
 .rd-btn{height:40px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#F3F2EE;display:inline-flex;align-items:center;font:500 14px Inter,sans-serif;cursor:pointer;text-decoration:none;white-space:nowrap}
 .rd-x{width:40px;padding:0;justify-content:center;font-size:16px}
 .rd iframe{flex:1;width:100%;border:0;background:#fff}
+.rd-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:radial-gradient(120% 80% at 50% 0%,rgba(255,255,255,.05),transparent 60%),#0B0C0F}
+.rd-art{max-width:720px;margin:0 auto;padding:34px 24px 60px;color:#E9E8E3;font:400 19px/1.62 Inter,system-ui,sans-serif}
+.rd-meta{font-size:14px;color:#9B9A93;letter-spacing:.02em;margin-bottom:12px}
+.rd-art h1{font:600 34px/1.18 Inter,system-ui,sans-serif;color:#F7F6F2;margin:0 0 10px;letter-spacing:-.01em}
+.rd-orig{font-size:15px;color:#8C8B85;margin-bottom:8px}
+.rd-by{font-size:15px;color:#BDBCB5;margin-bottom:8px}
+.rd-hero{width:100%;border-radius:18px;margin:18px 0 6px;display:block}
+.rd-body{margin-top:18px;overflow-wrap:anywhere}
+.rd-body p{margin:0 0 1.05em}
+.rd-body h2,.rd-body h3,.rd-body h4{color:#F7F6F2;line-height:1.25;margin:1.5em 0 .5em}
+.rd-body h2{font-size:26px} .rd-body h3{font-size:22px} .rd-body h4{font-size:19px}
+.rd-body a{color:#8FB7FF;text-decoration:underline;text-decoration-color:rgba(143,183,255,.4);text-underline-offset:3px}
+.rd-body img,.rd-body video{max-width:100%;height:auto;border-radius:14px;display:block;margin:1.2em auto}
+.rd-body iframe{width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:14px;margin:1.2em 0;background:#000}
+.rd-body figure{margin:1.4em 0} .rd-body figcaption{font-size:14px;color:#9B9A93;text-align:center;margin-top:-.4em}
+.rd-body blockquote{margin:1.2em 0;padding:.2em 0 .2em 18px;border-left:3px solid rgba(255,255,255,.25);color:#CFCEC8}
+.rd-body pre{background:rgba(255,255,255,.06);padding:14px;border-radius:12px;overflow-x:auto;font-size:15px}
+.rd-body code{font:15px ui-monospace,Menlo,monospace}
+.rd-body ul,.rd-body ol{padding-left:1.3em;margin:0 0 1.05em} .rd-body li{margin:.3em 0}
+.rd-body table{width:100%;border-collapse:collapse;font-size:16px;margin:1em 0;display:block;overflow-x:auto} .rd-body td,.rd-body th{border:1px solid rgba(255,255,255,.15);padding:6px 8px}
+.rd-end{margin-top:36px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:14px;color:#8C8B85} .rd-end a{color:#BDBCB5}
+.rd-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;height:100%;min-height:240px;color:#BDBCB5;font:500 17px Inter,sans-serif;text-align:center;padding:24px}
+.rd-spin{width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,.15);border-top-color:#F3F2EE;animation:rdspin .9s linear infinite}
+@keyframes rdspin{to{transform:rotate(360deg)}}
+@media (max-width:600px){.rd-art{padding:24px 18px 50px;font-size:18px} .rd-art h1{font-size:27px}}
 button,.peb,.fs,input{touch-action:manipulation}
 .pnl,.pnl *{-webkit-user-select:text;user-select:text}
 button{font:inherit}
@@ -76,13 +101,44 @@ class Component extends DCLogic {
   newsAt(i, j) { if (this.order) { const k = this.order.get(i + ',' + j); return k === undefined ? null : this.NEWS[k]; } return this.NEWS[this.idx(i, j)]; }
   rel(iso) { const t = new Date(iso), d = (Date.now() - t) / 60000; if (!(d >= 0)) return ''; if (d < 1) return 'сейчас'; if (d < 60) return Math.round(d) + ' мин'; if (d < 24 * 60) return Math.round(d / 60) + ' ч';
     const M = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек']; return t.getDate() + ' ' + M[t.getMonth()]; }
+  clean(html, base) {
+    const KEEP = /^(P|H2|H3|H4|UL|OL|LI|BLOCKQUOTE|FIGURE|FIGCAPTION|IMG|A|STRONG|B|EM|I|PRE|CODE|BR|HR|VIDEO|SOURCE|IFRAME|TABLE|THEAD|TBODY|TR|TD|TH|SUP|SUB)$/, VH = /^(www\.)?(youtube\.com|youtube-nocookie\.com|player\.vimeo\.com|rutube\.ru|vk\.com|vkvideo\.ru)$/;
+    const ATTR = { IMG: ['src', 'alt'], A: ['href'], IFRAME: ['src'], VIDEO: ['src', 'poster'], SOURCE: ['src', 'type'], TD: ['colspan'], TH: ['colspan'] };
+    const ok = u => { try { const x = new URL(u, base); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch (e) { return ''; } };
+    const doc = new DOMParser().parseFromString('<div>' + html + '</div>', 'text/html'), root = doc.body.firstChild;
+    const walk = node => { for (const el of [...node.children]) { const t = el.tagName;
+      if (!KEEP.test(t)) { if (/^(SCRIPT|STYLE|NOSCRIPT|FORM|OBJECT|EMBED|SVG|MATH|TEMPLATE|LINK|META|BASE)$/.test(t)) { el.remove(); continue; } walk(el); el.replaceWith(...el.childNodes); continue; }
+      const keep = ATTR[t] || []; for (const at of [...el.attributes]) if (!keep.includes(at.name)) el.removeAttribute(at.name);
+      for (const k of ['src', 'href', 'poster']) if (el.hasAttribute(k)) { const u = ok(el.getAttribute(k)); if (u) el.setAttribute(k, u); else el.removeAttribute(k); }
+      if (t === 'IMG') { if (!el.getAttribute('src')) { el.remove(); continue; } el.setAttribute('loading', 'lazy'); el.setAttribute('referrerpolicy', 'no-referrer'); }
+      if (t === 'A') { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener noreferrer'); }
+      if (t === 'IFRAME') { let h = ''; try { h = new URL(el.getAttribute('src') || '').hostname; } catch (e) {} if (!VH.test(h)) { el.remove(); continue; } el.setAttribute('allow', 'encrypted-media; picture-in-picture; fullscreen'); el.setAttribute('allowfullscreen', ''); el.setAttribute('loading', 'lazy'); }
+      if (t === 'VIDEO') { el.setAttribute('controls', ''); el.setAttribute('playsinline', ''); el.setAttribute('preload', 'metadata'); }
+      walk(el); } };
+    walk(root); const f = root.firstElementChild, nt = x => (x || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+    if (f && /^H[1-4]$/.test(f.tagName) && this.rTitles && this.rTitles.some(t => t && nt(t) === nt(f.textContent))) f.remove();
+    return root.innerHTML; }
+  async openReader(a) {
+    this.stopSpeak(); const tok = this.rTok = (this.rTok || 0) + 1, src = a.src + ' · ' + (a.link || '');
+    if (!this.readerUrl) { this.setState({ reader: a.url, readerSrc: src, rmode: 'frame', rdata: null, rerr: '' }); return; }
+    this.setState({ reader: a.url, readerSrc: src, rmode: 'read', rdata: null, rerr: '' });
+    try {
+      const r = await fetch(this.readerUrl + '/?url=' + encodeURIComponent(a.url)), j = await r.json().catch(() => ({}));
+      if (tok !== this.rTok) return; if (!r.ok || !j.html) throw new Error(j.error || 'Не получилось открыть');
+      let dt = ''; const d = new Date(j.published || a.date); try { if (!isNaN(d)) dt = d.toLocaleString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace(' г.', ''); } catch (e) {}
+      this.rTitles = [j.title, a.h, a.orig]; const body = this.clean(j.html, j.url || a.url), hasImg = /<img|<video|<iframe/i.test(body);
+      this.setState({ rdata: { title: a.h || j.title || '', orig: a.orig || '', site: j.site || a.src, byline: j.byline || '', dt, min: j.minutes ? j.minutes + ' мин чтения' : '', hero: !hasImg && j.image ? j.image : (!hasImg && a.img ? a.img : ''), html: body, url: j.url || a.url } });
+    } catch (err) {
+      if (tok !== this.rTok) return;
+      if (a.embedOk) this.setState({ rmode: 'frame' }); else this.setState({ rerr: (err && err.message) || 'Не получилось открыть' });
+    } }
   norm(n) { const CAT = { 'ИИ': '#C49BFF', 'Железо': '#FF8A7A', 'Софт': '#8FB7FF', 'Безопасность': '#FFB547', 'Бизнес': '#5EE6C8', 'Наука': '#7FD67A', 'Космос': '#9FB3FF', 'Гаджеты': '#F38BC8', 'Игры': '#7FE0F0', 'Интернет': '#8FB7FF', 'Связь': '#5EE6C8', 'Право': '#D9C27A' };
     let dom = ''; try { dom = new URL(n.url).hostname.replace(/^www\./, ''); } catch (e) {}
     const v = n.video || null, isYt = !!(v && v.type === 'youtube' && v.id), isMp4 = !!(v && v.type === 'mp4' && v.src), body = (n.s || n.summary || '').trim(), orig = n.lang === 'en' && n.t && n.t !== n.title ? n.title : '';
     const dt = new Date(n.date); let dfull = ''; try { dfull = dt.toLocaleString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace(' г.', '').replace(' г', ''); } catch (e) {}
     return { id: n.id, dfull, h: n.t || n.title, cat: n.c || 'Софт', reg: n.src, src: n.src, foot: dom, d: this.rel(n.date), col: CAT[n.c] || '#8FB7FF', facts: (n.f || []).map(t => ({ t })), link: dom, url: n.url,
       img: n.img || '', hasImg: !!n.img && !isMp4 && !isYt, isMp4, vsrc: isMp4 ? v.src : '', isYt, ytId: isYt ? v.id : '', ytUrl: isYt ? 'https://www.youtube.com/watch?v=' + v.id : '', ytThumb: isYt ? 'https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg' : '',
-      body, hasText: !!body, noText: !body, canEmbed: !!n.embed, orig, hasOrig: !!orig, hasUrl: !!n.url, date: n.date }; }
+      body, hasText: !!body, noText: !body, canEmbed: !!n.embed || !!this.readerUrl, embedOk: !!n.embed, orig, hasOrig: !!orig, hasUrl: !!n.url, date: n.date }; }
   setData(list) {
     this.NEWS = list.map(n => this.norm(n)); this.sc = null;
     const cells = []; for (let j = -16; j <= 16; j++) for (let i = -16; i <= 16; i++) { const c = this.cellXY(i, j); cells.push({ i, j, d: Math.hypot(c.x, c.y * 1.05), a: Math.atan2(c.y, c.x) }); }
@@ -94,6 +150,7 @@ class Component extends DCLogic {
   hiddenSet() { try { return new Set(JSON.parse(this.ls('kupol.hidden') || '[]')); } catch (e) { return new Set(); } }
   applyFilter() { if (!this.raw) return; const h = this.hiddenSet(); const list = this.raw.filter(n => !h.has(n.src)); if (list.length) this.setData(list); }
   async load() {
+    if (this.readerUrl === undefined) { this.readerUrl = ''; try { const r = await fetch('reader.json', { cache: 'no-store' }); if (r.ok) { const j = await r.json(); if (j && /^https:\/\//.test(j.url || '')) this.readerUrl = j.url.replace(/\/+$/, ''); } } catch (e) {} }
     try { const r = await fetch('news.json', { cache: 'no-store' }); if (!r.ok) return; const j = await r.json(); if (j && Array.isArray(j.items) && j.items.length) { this.updated = j.updated; this.raw = j.items; this.applyFilter(); } } catch (e) {}
   }
   async gh(path, opts) {
@@ -429,8 +486,10 @@ class Component extends DCLogic {
       cardTap: () => { if (this.artMoved) { this.artMoved = false; return; } if (performance.now() - this.suppress < 350) return; this.suppress = performance.now(); this.closeCard(); },
       stop: e => e.stopPropagation(),
       reader: this.state.reader || '', readerSrc: this.state.readerSrc || '',
-      readHere: e => { if (e) e.stopPropagation(); this.stopSpeak(); this.setState({ reader: a.url, readerSrc: a.src + ' · ' + (a.link || '') }); },
-      closeReader: e => { if (e) e.stopPropagation(); this.setState({ reader: '' }); }, a, fs, hintO: this.state.hint.toFixed(2),
+      readHere: e => { if (e) e.stopPropagation(); this.openReader(a); },
+      closeReader: e => { if (e) e.stopPropagation(); this.rTok = (this.rTok || 0) + 1; this.setState({ reader: '', rdata: null, rerr: '' }); },
+      rFrame: this.state.rmode === 'frame', rRead: this.state.rmode !== 'frame', rLoad: this.state.rmode === 'read' && !this.state.rdata && !this.state.rerr, rErr: this.state.rerr || '',
+      rd: this.state.rdata, rHtml: this.state.rdata ? { __html: this.state.rdata.html } : null, a, fs, hintO: this.state.hint.toFixed(2),
       setCanvas: el => { if (el) { this.cv = el; this.dirty = true; } },
       setRoot: el => { if (el && el !== this.root) { this.root = el; el.addEventListener('wheel', ev => { if (ev.ctrlKey || !this.state.act) ev.preventDefault(); }, { passive: false }); } },
       flip: () => { this.suppress = performance.now(); this.flipToggle(); },
@@ -613,13 +672,14 @@ ${v.vp.list.map(vo => html`
 <div style="font-size: 18px; line-height: 1.45; color: #A6A59E; flex: none; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1)">Самые живые голоса: в браузере Edge — «Microsoft … Online (Natural)»; на iPhone и Mac скачайте «Милена (улучшенный)» в Настройках → Универсальный доступ → Устный контент → Голоса.</div>
 </div>
 ` : null}
-</div></div>${v.reader ? html`<div class="rd-back" onClick=${v.closeReader}><div class="rd" onClick=${e => e.stopPropagation()}><div class="rd-bar"><span class="rd-src">${v.readerSrc}</span><a class="rd-btn" href=${v.reader} target="_blank" rel="noopener">Открыть в браузере ↗</a><button class="rd-btn rd-x" type="button" aria-label="Закрыть" onClick=${v.closeReader}>✕</button></div><iframe src=${v.reader} title="Статья" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div>` : null}`;
+</div></div>${v.reader ? html`<div class="rd-back" onClick=${v.closeReader}><div class="rd" onClick=${e => e.stopPropagation()}><div class="rd-bar"><span class="rd-src">${v.readerSrc}</span><a class="rd-btn" href=${v.reader} target="_blank" rel="noopener">Открыть в браузере ↗</a><button class="rd-btn rd-x" type="button" aria-label="Закрыть" onClick=${v.closeReader}>✕</button></div>${v.rFrame ? html`<iframe src=${v.reader} title="Статья" referrerpolicy="no-referrer-when-downgrade"></iframe>` : html`<div class="rd-scroll">${v.rLoad ? html`<div class="rd-msg"><span class="rd-spin"></span>Готовлю режим чтения…</div>` : null}${v.rErr ? html`<div class="rd-msg">${v.rErr}.<br/><a class="rd-btn" href=${v.reader} target="_blank" rel="noopener">Открыть оригинал ↗</a></div>` : null}${v.rd ? html`<article class="rd-art"><div class="rd-meta">${v.rd.site}${v.rd.dt ? ' · ' + v.rd.dt : ''}${v.rd.min ? ' · ' + v.rd.min : ''}</div><h1>${v.rd.title}</h1>${v.rd.orig ? html`<div class="rd-orig">${v.rd.orig}</div>` : null}${v.rd.byline ? html`<div class="rd-by">${v.rd.byline}</div>` : null}${v.rd.hero ? html`<img class="rd-hero" src=${v.rd.hero} alt="" referrerpolicy="no-referrer"/>` : null}<div class="rd-body" dangerouslySetInnerHTML=${v.rHtml}></div><div class="rd-end">Текст получен из источника в режиме чтения и не хранится. Оригинал: <a href=${v.rd.url} target="_blank" rel="noopener">${v.rd.site} ↗</a></div></article>` : null}</div>`}</div></div>` : null}`;
 }
 function fit() { const vw = window.innerWidth, vh = window.innerHeight, s = Math.min(vw, vh) / 1360, w = vw / s, h = vh / s, ENL = 1.12;
   for (const [sel, k] of [['.wrap', ENL], ['.ringl', 1]]) { const st = document.querySelector(sel); if (!st) continue; st.style.width = w + 'px'; st.style.height = h + 'px'; st.style.margin = (-h / 2) + 'px 0 0 ' + (-w / 2) + 'px'; st.style.transform = 'scale(' + (s * k) + ')'; } }
 window.addEventListener('resize', fit); fit();
 ['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
 document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
+document.addEventListener('error', e => { const t = e.target; if (t && t.tagName === 'IMG' && t.closest && t.closest('.rd-body, .rd-art')) { const f = t.closest('figure'); (f || t).style.display = 'none'; } }, true);
 document.addEventListener('keydown', e => { const d = window.__dome; if (!d || e.key !== 'Escape') return; if (d.state.reader) d.setState({ reader: '' }); else if (d.state.panel) d.setState({ panel: false }); else if (d.state.vpanel) { d.stopSpeak(); d.setState({ vpanel: false }); } else if (d.state.act) d.closeCard(); });
 let lastTouchEnd = 0; document.addEventListener('touchend', e => { const now = Date.now(); if (now - lastTouchEnd < 320 && !(e.target.closest && e.target.closest('button, a, input, .rd-back, .pnl'))) e.preventDefault(); lastTouchEnd = now; }, { passive: false });
 document.addEventListener('touchmove', e => { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });

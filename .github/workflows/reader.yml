@@ -1,0 +1,46 @@
+name: Deploy reader
+on:
+  push:
+    branches: [main]
+    paths: ['reader/**', '.github/workflows/reader.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: reader, cancel-in-progress: true }
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check keys
+        id: keys
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::warning::Нет ключей Cloudflare (CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID) — пропускаю."
+            echo "ok=0" >> "$GITHUB_OUTPUT"
+          else echo "ok=1" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/setup-node@v4
+        if: steps.keys.outputs.ok == '1'
+        with: { node-version: 20 }
+      - name: Deploy
+        if: steps.keys.outputs.ok == '1'
+        working-directory: reader
+        run: |
+          npm install --no-audit --no-fund
+          npx wrangler deploy 2>&1 | tee deploy.log
+          URL=$(grep -oE 'https://[a-zA-Z0-9.-]+\.workers\.dev' deploy.log | head -1)
+          if [ -z "$URL" ]; then echo "::error::Не нашёл адрес workers.dev. Включите поддомен workers.dev в Cloudflare → Workers."; exit 1; fi
+          echo "{\"url\":\"$URL\"}" > ../reader.json
+          curl -fsS "$URL/" || true
+      - name: Commit reader.json
+        if: steps.keys.outputs.ok == '1'
+        run: |
+          git config user.name news-bot
+          git config user.email news-bot@users.noreply.github.com
+          git add reader.json
+          git diff --cached --quiet && exit 0
+          git commit -m "reader: адрес посредника"
+          git pull --rebase && git push
