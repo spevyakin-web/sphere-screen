@@ -48,6 +48,7 @@ class Component extends DCLogic {
     this.tw = {}; this.panRaf = 0; this.hits = []; this.dirty = true; this.alive = true; this.downT = 0; this.cv = null; this.sprites = false;
   }
   componentDidMount() {
+    try { window.__dome = this; } catch (e) {}
     this.onRs = () => this.forceUpdate(); window.addEventListener('resize', this.onRs); requestAnimationFrame(() => this.forceUpdate());
     const loop = () => { if (!this.alive) return; try { this.frame(); } catch (err) { } requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
@@ -256,6 +257,8 @@ class Component extends DCLogic {
       const gr = c.createLinearGradient(cx + ux * w / 2, cy + uy * h / 2, cx, cy);
       gr.addColorStop(0, 'rgba(255,255,255,' + (0.12 + 0.22 * nr).toFixed(2) + ')'); gr.addColorStop(1, 'rgba(255,255,255,0)');
       c.globalAlpha = 1; c.strokeStyle = gr; c.lineWidth = 1.4; c.beginPath(); this.rr(c, x + 0.5, y + 0.5, w - 1, h - 1, rad); c.stroke();
+      const cf0 = Math.min(1, Math.max(0, g / 0.13)), cf = cf0 * cf0 * (3 - 2 * cf0), sa = (1 - cf) * Math.max(0, 1 - ag.f * 2.5);
+      if (sa > 0.01) { const sc = w / 360; c.globalAlpha = sa; c.drawImage(this.fg[this.idx(act.i, act.j)], x, y, 360 * sc, 236 * sc); c.globalAlpha = 1; }
     }
     c.globalAlpha = 1; if (!window.__cssVignette) c.drawImage(this.vig, 0, 0, WU, HU);
     this.hits = hits;
@@ -272,7 +275,7 @@ class Component extends DCLogic {
       br: Math.round(lerp(26 * M, 110, gg)), pt: 70, pb: 56, px: 80,
       gap: 24, f1: 21, f2: 46, dot: 14,
       sc: (w / 900).toFixed(4), ih: Math.round(h * 900 / w), imt: -Math.round(h * 900 / w / 2), ibr: Math.round(lerp(26 * M, 110, gg) * 900 / w),
-      bo: (this.state.open ? go : 0).toFixed(2), fo: f < 0.5 ? 1 : 0, bko: f >= 0.5 ? 1 : 0, pe: this.state.open && go > 0.5 ? 'auto' : 'none' };
+      bo: (this.state.open ? go : 0).toFixed(2), fo: f < 0.5 ? (() => { const q = Math.min(1, Math.max(0, (g - 0.11) / 0.22)); return (q * q * (3 - 2 * q)).toFixed(3); })() : 0, bko: f >= 0.5 ? 1 : 0, pe: this.state.open && go > 0.5 ? 'auto' : 'none' };
     this.actRect = { w, h }; this.actGeo = { w, h, br: actv.br, f };
     const screen = !act ? 'field' : (f > 0.5 || !this.state.open ? 'back' : 'article'), sp = this.state.speaking;
     const sc = () => (this.state.f > 0.5 ? this.scB : this.scF);
