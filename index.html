@@ -261,6 +261,40 @@ class Component extends DCLogic {
   }
   stopSpeak() { this.sq = null; try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} if (this.state.speaking) this.setState({ speaking: false }); }
   openVoices() { this.stopSpeak(); this.loadVoices(); const a = this.state.act && this.newsAt(this.state.act.i, this.state.act.j); this.setState({ vpanel: true, vtab: 'ru' }); setTimeout(() => this.loadVoices(), 300); }
+  // Пульт и клавиатура: стрелки — соседняя карточка (или листание статьи), OK/Enter — открыть/перевернуть, Назад — закрыть.
+  navFrom() { const n = this.navT && performance.now() - this.navT.t < 450 ? this.navT : this.nearestIJ(this.ox, this.oy); return n; }
+  neighbor(c, dir) { let i = c.i, j = c.j;
+    for (let k = 0; k < 8; k++) {
+      if (dir === 'L') i--; else if (dir === 'R') i++;
+      else { const x = this.cellXY(i, j).x + ((j & 1) ? -1 : 1) * this.DX * 0.25, y = (j + (dir === 'U' ? -1 : 1)) * this.DY, q = this.nearestIJ(x, y); i = q.i; j = q.j; }
+      if (this.newsAt(i, j)) return { i, j }; }
+    return null; }
+  key(e) {
+    const k = e.key, kc = e.keyCode, back = k === 'Escape' || k === 'GoBack' || k === 'BrowserBack' || k === 'Backspace' || kc === 461 || kc === 10009;
+    const dir = { ArrowLeft: 'L', ArrowRight: 'R', ArrowUp: 'U', ArrowDown: 'D', Left: 'L', Right: 'R', Up: 'U', Down: 'D' }[k] || { 37: 'L', 38: 'U', 39: 'R', 40: 'D' }[kc];
+    const ok = k === 'Enter' || k === ' ' || kc === 13 || k === 'Select', st = this.state;
+    if (st.reader) { const el = document.querySelector('.rd-scroll');
+      if (back) { this.rTok = (this.rTok || 0) + 1; this.setState({ reader: '', rdata: null, rerr: '' }); return true; }
+      if (el && (dir === 'U' || dir === 'D')) { el.scrollBy({ top: (dir === 'D' ? 1 : -1) * el.clientHeight * 0.6, behavior: 'smooth' }); return true; }
+      return !!dir; }
+    if (st.panel || st.vpanel) { if (back) { if (st.vpanel) this.stopSpeak(); this.setState({ panel: false, vpanel: false }); return true; } return false; }
+    this.dismissHint();
+    if (st.act) {
+      if (back) { this.closeCard(); return true; }
+      const a = this.newsAt(st.act.i, st.act.j);
+      if (k === 'i' || k === 'I' || k === 'Info' || kc === 457 || k === 'ContextMenu') { this.flipToggle(); return true; }
+      if (k === 'MediaPlayPause' || k === 'MediaPlay' || kc === 179 || kc === 415 || k === 'p' || k === 'P') { if (this.sq) this.stopSpeak(); else if (a) this.speak(a.h + '.\n\n' + (a.body || (this.scF ? this.scF.innerText : ''))); this.forceUpdate(); return true; }
+      if (ok) { if (st.f > 0.5) { this.flipToggle(); return true; } if (a && a.url && (this.readerUrl || a.canEmbed)) this.openReader(a); else this.flipToggle(); return true; }
+      const sc = st.f > 0.5 ? this.scB : this.scF;
+      if ((dir === 'U' || dir === 'D') && sc) { sc.scrollBy({ top: (dir === 'D' ? 1 : -1) * sc.clientHeight * 0.55, behavior: 'smooth' }); return true; }
+      if (dir === 'L' || dir === 'R') { const n = this.neighbor(st.act, dir); if (n) { this.stopSpeak(); if (st.f > 0.5) this.anim('f', 0, 300); if (this.scF) this.scF.scrollTop = 0; if (this.scB) this.scB.scrollTop = 0; const c = this.cellXY(n.i, n.j); this.pan(c.x, c.y, 300); this.setState({ act: { i: n.i, j: n.j }, open: true }); if (st.g < 1) this.anim('g', 1, 400); } return true; }
+      return false; }
+    if (back) return false;
+    if (ok) { const c = this.navFrom(); if (this.newsAt(c.i, c.j)) this.openCard(c.i, c.j); return true; }
+    if (k === '+' || k === '=' || kc === 107) { this.zoomStep(1); return true; }
+    if (k === '-' || kc === 109) { this.zoomStep(-1); return true; }
+    if (dir) { const n = this.neighbor(this.navFrom(), dir); if (n) { const c = this.cellXY(n.i, n.j); this.navT = { i: n.i, j: n.j, t: performance.now() }; this.pan(c.x, c.y, 260); } return true; }
+    return false; }
   centerIJ() { return this.nearestIJ(this.ox, this.oy); }
   setLight(p) { this.lx = p.x; this.ly = p.y; this.dirty = true; }
   mk(w, h) { const c = document.createElement('canvas'); c.width = Math.max(1, w); c.height = Math.max(1, h); return c; }
@@ -682,7 +716,7 @@ window.addEventListener('resize', fit); fit();
 ['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
 document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
 document.addEventListener('error', e => { const t = e.target; if (t && t.tagName === 'IMG' && t.closest && t.closest('.rd-body, .rd-art')) { const f = t.closest('figure'); (f || t).style.display = 'none'; } }, true);
-document.addEventListener('keydown', e => { const d = window.__dome; if (!d || e.key !== 'Escape') return; if (d.state.reader) d.setState({ reader: '' }); else if (d.state.panel) d.setState({ panel: false }); else if (d.state.vpanel) { d.stopSpeak(); d.setState({ vpanel: false }); } else if (d.state.act) d.closeCard(); });
+document.addEventListener('keydown', e => { const d = window.__dome; if (!d) return; const t = e.target; if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) { if (e.key === 'Escape') t.blur(); return; } if (e.key === 'Enter' && t && t.closest && t.closest('button, a') && !t.closest('.ringl')) return; try { if (d.key(e)) e.preventDefault(); } catch (err) {} });
 let lastTouchEnd = 0; document.addEventListener('touchend', e => { const now = Date.now(); if (now - lastTouchEnd < 320 && !(e.target.closest && e.target.closest('button, a, input, .rd-back, .pnl'))) e.preventDefault(); lastTouchEnd = now; }, { passive: false });
 document.addEventListener('touchmove', e => { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
 if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
