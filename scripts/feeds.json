@@ -8,5 +8,5 @@
   { "name": "The Verge",    "lang": "en", "url": "https://www.theverge.com/rss/index.xml" },
   { "name": "Ars Technica", "lang": "en", "url": "https://feeds.arstechnica.com/arstechnica/index" },
   { "name": "The Register", "lang": "en", "url": "https://www.theregister.com/headlines.atom" },
-  { "name": "Hacker News",  "lang": "en", "url": "https://hnrss.org/frontpage?points=150" }
+  { "name": "Hacker News",  "lang": "en", "url": "https://news.ycombinator.com/rss" }
 ]
