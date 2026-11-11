@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Купол">
+<title>Купол новостей</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Unbounded:wght@400;500;600&amp;display=swap">
+<style>
+html,body{margin:0;height:100%;background:#000;overflow:hidden;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter',sans-serif;color:#F3F2EE}
+#app{position:fixed;inset:0}
+.stage{position:absolute;left:50%;top:50%;width:1360px;height:1360px;margin:-680px 0 0 -680px;transform:scale(var(--s,0.5));border-radius:50%;overflow:hidden;background:#07080A}
+button{font:inherit}
+a{color:#F3F2EE;text-decoration:none}
+.fs{position:fixed;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#F3F2EE;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.55;transition:opacity .2s}
+.fs:hover{opacity:1}
+.fs.hide{display:none}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<button class="fs" id="fs" type="button" aria-label="На весь экран"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V4h4"/><path d="M20 8V4h-4"/><path d="M4 16v4h4"/><path d="M20 16v4h-4"/></svg></button>
+<script src="htm-preact.js"></script>
+<script>
+const { html, render, Component: PComponent } = window.htmPreact;
+class DCLogic extends PComponent { render() { return view(this.renderVals()); } }
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p); this.NEWS = [{"cat": "Переговоры", "reg": "Абу-Даби", "d": "10 ноя", "h": "Россия, Украина и США проводят трёхсторонние переговоры в Абу-Даби", "src": "Reuters", "col": "#8FB7FF", "facts": [{"t": "Формат: Россия, Украина и США"}, {"t": "Место: Абу-Даби"}, {"t": "Даты: 10–11 ноября"}], "link": "fdd.org · Overnight Brief, 4 ноя (со ссылкой на Reuters)"}, {"cat": "Климат", "reg": "Белен", "d": "10 ноя", "h": "COP31 открылся спором о климатических деньгах между богатыми и развивающимися странами", "src": "Business Standard", "col": "#7FD67A", "facts": [{"t": "Открылась конференция ООН по климату COP31"}, {"t": "Спор о финансировании между богатыми и развивающимися странами"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Экономика", "reg": "США", "d": "10 ноя", "h": "Инфляция в США в октябре выросла на 0,4%, ставку ФРС в декабре могут поднять", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Рост цен в октябре: 0,4% за месяц"}, {"t": "Это повышает шансы на рост ставки ФРС в декабре"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Рынки", "reg": "Мир", "d": "10 ноя", "h": "Мировые биржи растут, нефть ниже $90 на надеждах на переговоры США и Ирана", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Нефть опустилась ниже $90"}, {"t": "Причина: надежды на переговоры США и Ирана"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "ООН", "reg": "Женева", "d": "10 ноя", "h": "США станут первой страной, полностью отказавшейся от обзора в Совете ООН по правам человека", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "США не будут проходить обзор в Совете ООН по правам человека"}, {"t": "Это первый такой случай"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Климат", "reg": "ООН", "d": "10 ноя", "h": "Климатический кризис может толкнуть в крайнюю бедность ещё 141 млн женщин", "src": "Business Standard", "col": "#7FD67A", "facts": [{"t": "Оценка ООН: ещё до 141 млн женщин"}, {"t": "Риск: крайняя бедность из-за климатического кризиса"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Торговля", "reg": "Канада", "d": "10 ноя", "h": "Канада рассчитывает на смягчение пошлин США после выборов", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Канада ждёт смягчения пошлин США"}, {"t": "Контекст: итоги выборов в США"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Технологии", "reg": "Япония", "d": "10 ноя", "h": "SoftBank получил убыток $7 млрд из-за затрат на дата-центры в США", "src": "Business Standard", "col": "#C49BFF", "facts": [{"t": "Убыток SoftBank: $7 млрд"}, {"t": "Причина: затраты на дата-центры в США"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Азия", "reg": "Мьянма", "d": "10 ноя", "h": "Армия Мьянмы захватила ключевой штаб сопротивления и 10 баз оппозиции", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Захвачен ключевой штаб сопротивления"}, {"t": "А также 10 баз оппозиции"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Бизнес", "reg": "США", "d": "10 ноя", "h": "PepsiCo сократит более 1000 рабочих мест из-за слабых продаж", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Сокращение: более 1000 рабочих мест"}, {"t": "Причина: слабые продажи в Северной Америке"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Экономика", "reg": "Мир", "d": "10 ноя", "h": "Moody’s: дорогие кредиты ослабят мировые кредитные условия в 2027 году", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Прогноз Moody’s на 2027 год"}, {"t": "Дорогое финансирование ослабит кредитные условия"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Вода", "reg": "Индия", "d": "10 ноя", "h": "Всемирный банк назвал управление водой в Индии образцом для развивающихся стран", "src": "Business Standard", "col": "#7FD67A", "facts": [{"t": "Оценка Всемирного банка"}, {"t": "Управление водой в Индии — модель для развивающихся стран"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "США", "reg": "Вашингтон", "d": "10 ноя", "h": "Хегсет назвал попытку импичмента политической и пообещал бороться", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Республиканцы в Конгрессе начали процедуру импичмента"}, {"t": "Хегсет называет её политической"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Европа", "reg": "Париж", "d": "8 ноя", "h": "Европейцы будут участвовать в переговорах по Украине в Абу-Даби", "src": "Reuters", "col": "#FF8A7A", "facts": [{"t": "Европейцы участвуют в переговорах в Абу-Даби"}, {"t": "Заявление главы МИД Франции Жан-Ноэля Барро"}], "link": "devdiscourse.com · Reuters World News Summary"}, {"cat": "Африка", "reg": "Судан", "d": "8 ноя", "h": "Армия Судана задержала Ахмеда Харуна, которого разыскивает МУС", "src": "Reuters", "col": "#FF8A7A", "facts": [{"t": "Задержан Ахмед Харун, глава бывшей правящей партии"}, {"t": "Его разыскивает Международный уголовный суд"}], "link": "devdiscourse.com · Reuters World News Summary"}, {"cat": "Европа", "reg": "Италия", "d": "7 ноя", "h": "Мелони обвинила пророссийских хакеров в кибератаке на главу МИД", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Кибератака на главу МИД Италии"}, {"t": "Мелони винит пророссийских хакеров"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Европа", "reg": "Финляндия", "d": "7 ноя", "h": "Финляндия думает о противотанковых заграждениях по украинскому образцу", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Рассматриваются противотанковые заграждения"}, {"t": "Образец — оборона Украины"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Выборы", "reg": "Новая Зеландия", "d": "7 ноя", "h": "В Новой Зеландии закрылись участки, ждут самого плотного результата за годы", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Избирательные участки закрыты"}, {"t": "Ожидается самый плотный результат за годы"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Китай", "reg": "Пекин", "d": "7 ноя", "h": "Пекин против санкций США против двух китайских компаний и обещает ответ", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Санкции США против двух китайских компаний"}, {"t": "Пекин обещает ответные меры"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Ближний Восток", "reg": "Иран", "d": "7 ноя", "h": "США предлагают $20 млн за сведения о ядерной программе Ирана", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Награда: $20 млн"}, {"t": "За сведения о ядерной программе Ирана"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Рынки", "reg": "Нью-Йорк", "d": "7 ноя", "h": "Уолл-стрит отыгралась: акции чипмейкеров выросли после распродажи", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Рост акций производителей чипов"}, {"t": "Индекс полупроводников Филадельфии: +4,2% за день"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Дипломатия", "reg": "Китай", "d": "7 ноя", "h": "Китай: обсуждается встреча Си, Трампа и Путина", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Обсуждается трёхсторонняя встреча"}, {"t": "Си Цзиньпин, Трамп и Путин"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Авто", "reg": "США", "d": "6 ноя", "h": "Tesla свернёт выпуск Cybertruck к середине 2027 года из-за слабых продаж", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Выпуск Cybertruck свернут к середине 2027 года"}, {"t": "Причина: слабые продажи"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Бизнес", "reg": "Доха", "d": "5 ноя", "h": "На инвестфоруме в Дохе обсуждали, как превращать инвестиции в рабочие места", "src": "Euronews", "col": "#5EE6C8", "facts": [{"t": "Всемирный инвестиционный форум в Дохе"}, {"t": "Тема: как превращать инвестиции в рабочие места"}], "link": "euronews.com · 5 ноября 2026"}, {"cat": "Игры", "reg": "Мир", "d": "4 ноя", "h": "Rockstar: новой игре нужно до 212 ГБ, выход 19 ноября", "src": "Anadolu", "col": "#C49BFF", "facts": [{"t": "Объём игры: до 212 ГБ"}, {"t": "Выход: 19 ноября, PS5 и Xbox Series X|S"}], "link": "aa.com.tr · Anadolu"}, {"cat": "Язык", "reg": "Великобритания", "d": "3 ноя", "h": "Словарь Collins выбрал словом 2026 года «mogging»", "src": "NewsBytes", "col": "#C49BFF", "facts": [{"t": "Слово года 2026: «mogging»"}, {"t": "Выбор словаря Collins"}], "link": "newsbytesapp.com · World News"}, {"cat": "США", "reg": "Вашингтон", "d": "2 ноя", "h": "Американцы идут на промежуточные выборы в мрачном экономическом настроении", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Промежуточные выборы в США"}, {"t": "Избиратели в мрачном настроении из-за экономики"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Ближний Восток", "reg": "Иран", "d": "2 ноя", "h": "Иран: контакты с США продолжаются, хотя переговоры в Катаре без сделки", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Переговоры в Катаре закончились без сделки"}, {"t": "Контакты с США продолжаются"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Здоровье", "reg": "Индия", "d": "2 ноя", "h": "Одобрение индийского укола от ВИЧ даёт надежду бедным странам", "src": "Business Standard", "col": "#7FD67A", "facts": [{"t": "Одобрен укол для профилактики ВИЧ индийского производства"}, {"t": "Надежда для бедных стран"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Рынки", "reg": "Сингапур", "d": "2 ноя", "h": "Биткоин устоял после взлома Binance, но нервозность осталась", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Биткоин около $78 300 (2 ноября)"}, {"t": "После взлома биржи Binance"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Азия", "reg": "Бангладеш", "d": "2 ноя", "h": "Протесты швейников закрыли 529 фабрик в Бангладеш", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Закрыто 529 фабрик"}, {"t": "Требование рабочих: минимум 30 000 така в месяц"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Европа", "reg": "Франция", "d": "2 ноя", "h": "Во Франции протесты стихают, в Германии прошли беспорядки", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Во Франции протесты стихают"}, {"t": "В Германии прошли беспорядки"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Кибер", "reg": "Европа", "d": "2 ноя", "h": "Кибератаки отключили холодильники супермаркетов по всей Европе", "src": "Business Standard", "col": "#C49BFF", "facts": [{"t": "Атаки на холодильное оборудование супермаркетов"}, {"t": "Последствия: потери продуктов в Европе"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Кибер", "reg": "Россия, Украина", "d": "2 ноя", "h": "Россия и Украина сообщили о кибератаках на системы оповещения", "src": "Business Standard", "col": "#C49BFF", "facts": [{"t": "Атакованы системы оповещения о воздушной тревоге"}, {"t": "Об атаках сообщили обе стороны"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Нефть", "reg": "ОПЕК+", "d": "2 ноя", "h": "ОПЕК+ сохранит план добычи на декабрь", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "План добычи на декабрь без изменений"}, {"t": "На фоне перебоев из-за войны"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "США", "reg": "Суд", "d": "1 ноя", "h": "Судья отклонил иск Трампа о клевете против WSJ", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Иск Трампа против WSJ отклонён"}, {"t": "Сумма иска — несколько миллиардов долларов"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Энергетика", "reg": "Украина", "d": "30 окт", "h": "Украина приостановила удары по российским НПЗ после давления США", "src": "FDD / WSJ", "col": "#7FD67A", "facts": [{"t": "Удары по российским НПЗ приостановлены"}, {"t": "После давления США"}], "link": "fdd.org · Overnight Brief, 30 окт"}, {"cat": "Китай", "reg": "Пекин", "d": "30 окт", "h": "Си требует больше лояльности, чистки сокращают партийную элиту", "src": "FDD / WSJ", "col": "#FF8A7A", "facts": [{"t": "Си требует большей лояльности"}, {"t": "Чистки сокращают партийную элиту"}], "link": "fdd.org · Overnight Brief, 30 окт"}];
+    this.DX = 380; this.DY = 256; this.RM = 662; this.P = 1.6;
+    this.ox = 0; this.oy = 0; this.m = 1.45; this.lx = 330; this.ly = 250;
+    this.state = { g: 0, f: 0, act: null, open: false, fs: 30, hint: 1 };
+    this.pts = new Map(); this.drag = null; this.moved = false; this.pinch = null; this.suppress = 0; this.lastWheel = 0;
+    this.tw = {}; this.panRaf = 0; this.hits = []; this.dirty = true; this.alive = true; this.downT = 0; this.cv = null; this.sprites = false;
+  }
+  componentDidMount() {
+    const loop = () => { if (!this.alive) return; try { this.frame(); } catch (err) { } requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { this.sprites = false; this.dirty = true; });
+  }
+  componentDidUpdate() { this.dirty = true; }
+  componentWillUnmount() { this.alive = false; cancelAnimationFrame(this.artRaf); clearTimeout(this.wheelT); cancelAnimationFrame(this.panRaf); Object.values(this.tw).forEach(cancelAnimationFrame); }
+  pos(e) { const el = this.root || e.currentTarget; const r = el.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * 1360, y: (e.clientY - r.top) / r.height * 1360 }; }
+  cellXY(i, j) { return { x: i * this.DX + ((j & 1) ? this.DX / 2 : 0), y: j * this.DY }; }
+  idx(i, j) { const n = this.NEWS.length; return ((i * 7 + j * 17 + (i * j) % 5) % n + n) % n; }
+  newsAt(i, j) { return this.NEWS[this.idx(i, j)]; }
+  nearestIJ(x, y) { const j0 = Math.round(y / this.DY); let best = null, bd = 1e9; for (let j = j0 - 1; j <= j0 + 1; j++) { const off = (j & 1) ? this.DX / 2 : 0; const i0 = Math.round((x - off) / this.DX); for (let i = i0 - 1; i <= i0 + 1; i++) { const c = this.cellXY(i, j), d = Math.hypot(c.x - x, c.y - y); if (d < bd) { bd = d; best = { i, j, x: c.x, y: c.y }; } } } return best; }
+  pan(tx, ty, ms) {
+    cancelAnimationFrame(this.panRaf); const sx = this.ox, sy = this.oy, t0 = performance.now();
+    const step = now => { const k = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3); this.ox = sx + (tx - sx) * e; this.oy = sy + (ty - sy) * e; this.dirty = true; if (k < 1) this.panRaf = requestAnimationFrame(step); };
+    this.panRaf = requestAnimationFrame(step);
+  }
+  anim(key, to, ms, done) {
+    cancelAnimationFrame(this.tw[key]); const s = this.state[key], t0 = performance.now();
+    const step = now => { const k = Math.min(1, (now - t0) / ms), e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; this.setState({ [key]: s + (to - s) * e }); if (k < 1) this.tw[key] = requestAnimationFrame(step); else if (done) done(); };
+    this.tw[key] = requestAnimationFrame(step);
+  }
+  snapTo(x, y) { const n = this.nearestIJ(x, y); this.pan(n.x, n.y, 480); }
+  dismissHint() { if (this.state.hint === 1) this.anim('hint', 0, 600); }
+  openCard(i, j) { const c = this.cellXY(i, j); this.pan(c.x, c.y, 260); this.setState({ act: { i, j }, open: true }); this.anim('g', 1, 520); }
+  closeCard() { this.anim('f', 0, 420); this.anim('g', 0, 480, () => this.setState({ act: null, open: false })); }
+  flipToggle() {
+    if (this.state.f > 0.5) { this.anim('f', 0, 640); if (!this.state.open) this.anim('g', 0, 640, () => this.setState({ act: null })); }
+    else this.anim('f', 1, 640);
+  }
+  hitAt(p) { for (let k = this.hits.length - 1; k >= 0; k--) { const h = this.hits[k]; if (p.x >= h.x && p.x <= h.x + h.w && p.y >= h.y && p.y <= h.y + h.h) return h; } return null; }
+  tap(p) {
+    this.dismissHint(); const h = this.hitAt(p); if (!h) return;
+    const ctr = this.nearestIJ(this.ox, this.oy), settled = Math.hypot(ctr.x - this.ox, ctr.y - this.oy) < 2;
+    if (settled && h.i === ctr.i && h.j === ctr.j) this.openCard(h.i, h.j); else { const c = this.cellXY(h.i, h.j); this.pan(c.x, c.y, 480); }
+  }
+  twoTap(p) {
+    this.dismissHint();
+    if (this.state.act) { this.flipToggle(); return; }
+    let h = this.hitAt(p);
+    if (!h) { let bd = 1e9; for (const q of this.hits) { const d = Math.hypot(q.x + q.w / 2 - p.x, q.y + q.h / 2 - p.y); if (d < bd && q.w > 60) { bd = d; h = q; } } if (bd > 300) h = null; }
+    if (!h) return;
+    const c = this.cellXY(h.i, h.j); this.pan(c.x, c.y, 380);
+    this.setState({ act: { i: h.i, j: h.j }, open: false }); this.anim('g', 0.62, 560); this.anim('f', 1, 700);
+  }
+  setLight(p) { this.lx = p.x; this.ly = p.y; this.dirty = true; }
+  mk(w, h) { const c = document.createElement('canvas'); c.width = Math.max(1, w); c.height = Math.max(1, h); return c; }
+  rr(c, x, y, w, h, r) { r = Math.max(0, Math.min(r, w / 2, h / 2)); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  wrap(c, t, mw) { const ws = t.split(' '), out = []; let line = ''; for (const w of ws) { const tst = line ? line + ' ' + w : w; if (c.measureText(tst).width > mw && line) { out.push(line); line = w; } else line = tst; } if (line) out.push(line); return out; }
+  content(c, n, dim) {
+    const tx = dim ? 'rgba(243,242,238,0.78)' : '#F6F5F1', t2 = dim ? 'rgba(180,179,172,0.72)' : '#BDBCB5';
+    c.textBaseline = 'middle'; c.textAlign = 'left';
+    c.fillStyle = n.col; c.beginPath(); c.arc(27, 30, 5, 0, 6.2832); c.fill();
+    c.font = '500 15px Inter, sans-serif'; c.fillStyle = tx; c.fillText(n.cat, 40, 30);
+    const cw = c.measureText(n.cat).width;
+    c.font = '400 15px Inter, sans-serif'; c.fillStyle = t2; c.textAlign = 'right'; c.fillText(n.d, 338, 30);
+    const dw = c.measureText(n.d).width; c.textAlign = 'left';
+    let reg = '· ' + n.reg; const room = 338 - dw - 10 - (46 + cw);
+    while (reg.length > 2 && c.measureText(reg).width > room) reg = reg.slice(0, -2) + '…';
+    if (room > 20) c.fillText(reg, 46 + cw, 30);
+    c.textBaseline = 'alphabetic'; c.font = '500 25px Inter, sans-serif'; c.fillStyle = tx;
+    const lines = this.wrap(c, n.h, 316); const L = lines.slice(0, 4); if (lines.length > 4) L[3] = L[3].replace(/\s*\S*$/, '') + '…';
+    L.forEach((l, k) => c.fillText(l, 22, 80 + k * 30));
+    c.font = '400 14px Inter, sans-serif'; c.fillStyle = t2; c.fillText(n.src, 22, 220);
+  }
+  build() {
+    const SF = 1.9, SB = 1.15; this.SF = SF;
+    this.fg = this.NEWS.map(n => { const c = this.mk(Math.round(360 * SF), Math.round(236 * SF)), x = c.getContext('2d'); x.scale(SF, SF); x.shadowColor = 'rgba(0,0,0,0.6)'; x.shadowBlur = 4; x.shadowOffsetY = 1; this.content(x, n, false); return c; });
+    this.bg = this.NEWS.map(n => { const c = this.mk(Math.round(360 * SB), Math.round(236 * SB)), x = c.getContext('2d'); x.scale(SB, SB);
+      x.fillStyle = 'rgba(255,255,255,0.06)'; x.beginPath(); this.rr(x, 1, 1, 358, 234, 26); x.fill(); x.strokeStyle = 'rgba(255,255,255,0.14)'; x.lineWidth = 1.5; x.stroke();
+      this.content(x, n, true); return c; });
+    const pal = ['47,107,255', '24,199,160', '155,92,255', '255,106,77', '255,181,71', '63,180,255'];
+    this.orbs = pal.map(rgb => { const c = this.mk(256, 256), x = c.getContext('2d'); const gr = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+      gr.addColorStop(0, 'rgba(' + rgb + ',0.55)'); gr.addColorStop(0.4, 'rgba(' + rgb + ',0.2)'); gr.addColorStop(1, 'rgba(' + rgb + ',0)'); x.fillStyle = gr; x.fillRect(0, 0, 256, 256); return c; });
+    const blob = this.mk(256, 256), bx = blob.getContext('2d'), bg = bx.createRadialGradient(128, 128, 0, 128, 128, 128);
+    bg.addColorStop(0, 'rgba(255,255,255,1)'); bg.addColorStop(0.35, 'rgba(255,255,255,0.25)'); bg.addColorStop(1, 'rgba(255,255,255,0)'); bx.fillStyle = bg; bx.fillRect(0, 0, 256, 256); this.blob = blob;
+    const sheen = this.mk(64, 128), sx = sheen.getContext('2d'), sg = sx.createLinearGradient(0, 0, 0, 128);
+    sg.addColorStop(0, 'rgba(255,255,255,0.13)'); sg.addColorStop(0.5, 'rgba(255,255,255,0.03)'); sg.addColorStop(1, 'rgba(255,255,255,0)'); sx.fillStyle = sg; sx.fillRect(0, 0, 64, 128); this.sheen = sheen;
+    const sh = this.mk(220, 160), shx = sh.getContext('2d'); shx.shadowColor = 'rgba(0,0,0,0.6)'; shx.shadowBlur = 22; shx.shadowOffsetY = 12; shx.fillStyle = 'rgba(0,0,0,0.6)'; shx.beginPath(); this.rr(shx, 30, 24, 160, 105, 14); shx.fill(); this.shadow = sh;
+    const vg = this.mk(512, 512), vx = vg.getContext('2d'), vgr = vx.createRadialGradient(256, 256, 170, 256, 256, 256);
+    vgr.addColorStop(0, 'rgba(8,9,11,0)'); vgr.addColorStop(0.75, 'rgba(8,9,11,0.35)'); vgr.addColorStop(1, 'rgba(8,9,11,0.95)'); vx.fillStyle = vgr; vx.fillRect(0, 0, 512, 512); this.vig = vg;
+  }
+  proj(dx, dy, M) {
+    const RM = this.RM, P = this.P, K = RM * P / M, r = Math.hypot(dx, dy), u = r / K, R = RM * (1 - Math.pow(1 + u, -P));
+    const st = r < 0.5 ? M : R / r, sr = (RM * P / K) * Math.pow(1 + u, -P - 1), s = st * Math.pow(Math.max(sr / st, 0.05), 0.18);
+    return { r, u, R, s, X: r < 0.5 ? 0 : dx / r * R, Y: r < 0.5 ? 0 : dy / r * R, K };
+  }
+  squeeze(p, cmp) {
+    if (cmp <= 0 || p.r < 0.5) return p; const k = p.R / this.RM, push = 110 * cmp * Math.pow(Math.max(0, 1 - k), 1.4), R = p.R + push, s = p.s * (1 - 0.1 * cmp);
+    return { r: p.r, u: p.u, R, s, X: p.X / p.R * R, Y: p.Y / p.R * R, K: p.K };
+  }
+  frame() {
+    const cv = this.cv; if (!cv) return;
+    if (!this.sprites) { this.build(); this.sprites = true; this.dirty = true; }
+    const rect = cv.getBoundingClientRect(); if (!rect.width) return;
+    const pr = Math.max(0.5, Math.min(1.6, rect.width * (window.devicePixelRatio || 1) / 1360)), W = Math.round(1360 * pr);
+    if (cv.width !== W || !this.S) { cv.width = W; cv.height = W; this.S = this.mk(W, W); this.dirty = true; }
+    if (!this.dirty) return; this.dirty = false; this.pr = pr;
+    const M = this.m, g = this.state.g, cmp = Math.min(1, g / 0.62), act = this.state.act, acc = this.props.accent ?? '#FFB547';
+    const c = cv.getContext('2d'); c.setTransform(pr, 0, 0, pr, 0, 0); c.globalAlpha = 1; c.fillStyle = '#07080A'; c.fillRect(0, 0, 1360, 1360);
+    c.globalAlpha = 1;
+    const K = this.RM * this.P / M, UMAX = Math.min(4.6, 3500 / K), rmax = UMAX * K, jr = Math.ceil(rmax / this.DY) + 1, ir = Math.ceil(rmax / this.DX) + 1;
+    const j0 = Math.round(this.oy / this.DY), i0 = Math.round(this.ox / this.DX), list = [];
+    for (let j = j0 - jr; j <= j0 + jr; j++) for (let i = i0 - ir; i <= i0 + ir; i++) {
+      const cc = this.cellXY(i, j); let p = this.proj(cc.x - this.ox, cc.y - this.oy, M); if (p.u > UMAX) continue;
+      const k0 = p.R / this.RM; p = this.squeeze(p, cmp); list.push({ i, j, p, k0 });
+    }
+    list.sort((a, q) => q.p.r - a.p.r);
+    const ctr = this.nearestIJ(this.ox, this.oy), settled = Math.hypot(ctr.x - this.ox, ctr.y - this.oy) < 2 && !this.drag && !act;
+    const hits = [], lx = this.lx, ly = this.ly, NB = 6, MMAX = 1.32, S = this.S, sx = S.getContext('2d');
+    const cuts = [2.4, 1.7, 1.15, 0.7, 0.3].map(v => v * K); let ci = 0, snapped = false;
+    const snap = () => { sx.setTransform(1, 0, 0, 1, 0, 0); sx.globalAlpha = 1; sx.drawImage(cv, 0, 0); snapped = true; };
+    for (const it of list) {
+      while (ci < cuts.length && it.p.r < cuts[ci]) { ci++; snapped = false; }
+      const { i, j, p } = it, s = p.s, k = it.k0;
+      let o = Math.max(0, Math.min(1, (0.935 - k) / 0.05)); o = Math.max(o, k < 0.935 ? 0.14 : 0); 
+      if (act && act.i === i && act.j === j) continue; if (o <= 0.01) continue;
+      const w = 360 * s, h = 236 * s, x = 680 + p.X - w / 2, y = 680 + p.Y - h / 2, rad = 26 * s, ix = this.idx(i, j), n = this.NEWS[ix];
+      c.globalAlpha = o;
+      if (s < 0.2) {
+        c.fillStyle = 'rgba(255,255,255,0.07)'; c.beginPath(); this.rr(c, x, y, w, h, rad); c.fill();
+        c.fillStyle = n.col; c.globalAlpha = o * 0.75; c.fillRect(x + w * 0.08, y + h * 0.1, w * 0.3, Math.max(1, h * 0.06));
+        c.globalAlpha = o * 0.5; c.fillStyle = '#F3F2EE'; c.fillRect(x + w * 0.08, y + h * 0.32, w * 0.8, Math.max(0.6, h * 0.07)); c.fillRect(x + w * 0.08, y + h * 0.48, w * 0.6, Math.max(0.6, h * 0.07));
+        c.globalAlpha = o * 0.5; c.fillStyle = '#07080A'; c.beginPath(); this.rr(c, x, y, w, h, rad); c.fill();
+        continue;
+      }
+      hits.push({ i, j, x, y, w, h });
+      const cx = x + w / 2, cy = y + h / 2;
+      if (s >= 0.3) {
+        if (!snapped) snap();
+        const depth = Math.min(w, h) * 0.5;
+        for (let bnd = 1; bnd <= NB; bnd++) {
+          const t = bnd / NB, sm = t * t * (3 - 2 * t), ins = depth * 0.72 * (bnd - 1) / NB, mg = 1 + (MMAX - 1) * sm;
+          const bw = w - 2 * ins, bh = h - 2 * ins; if (bw < 4 || bh < 4) break;
+          c.save(); c.beginPath(); this.rr(c, x + ins, y + ins, bw, bh, Math.max(2, rad - ins * 0.6)); c.clip();
+          const sw = w / mg, shh = h / mg; c.globalAlpha = 1;
+          c.drawImage(S, (cx - sw / 2) * pr, (cy - shh / 2) * pr, sw * pr, shh * pr, x, y, w, h);
+          if (bnd >= NB - 2) { c.globalAlpha = 0.28; const d = 1.6 * s; c.drawImage(S, (cx - sw / 2 + d) * pr, (cy - shh / 2) * pr, sw * pr, shh * pr, x, y, w, h); c.drawImage(S, (cx - sw / 2) * pr, (cy - shh / 2 + d) * pr, sw * pr, shh * pr, x, y, w, h); }
+          c.globalAlpha = 0.34 * sm * o; c.fillStyle = '#0C0E12'; c.fillRect(x, y, w, h);
+          c.globalAlpha = 0.035 * sm * o; c.fillStyle = '#FFFFFF'; c.fillRect(x, y, w, h);
+          c.restore();
+        }
+        const vx = lx - cx, vy = ly - cy, dd = Math.hypot(vx, vy) || 1, ux = vx / dd, uy = vy / dd, nr = Math.max(0, 1 - dd / 900);
+        c.save(); c.beginPath(); this.rr(c, x, y, w, h, rad); c.clip();
+        c.globalAlpha = o * (0.05 + 0.12 * nr); const bs = w * 1.2; c.drawImage(this.blob, cx + ux * w * 0.38 - bs / 2, cy + uy * h * 0.38 - bs / 2, bs, bs);
+        c.restore();
+        const gr = c.createLinearGradient(cx + ux * w / 2, cy + uy * h / 2, cx, cy);
+        gr.addColorStop(0, 'rgba(255,255,255,' + (0.10 + 0.22 * nr).toFixed(2) + ')'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+        c.globalAlpha = o; c.strokeStyle = gr; c.lineWidth = Math.max(0.6, 1.1 * s); c.beginPath(); this.rr(c, x + 0.5, y + 0.5, w - 1, h - 1, rad); c.stroke();
+      } else {
+        c.fillStyle = 'rgba(12,14,18,0.30)'; c.beginPath(); this.rr(c, x, y, w, h, rad); c.fill();
+      }
+      c.globalAlpha = o;
+      if (s * pr > this.SF * 1.05) { c.save(); c.translate(x, y); c.scale(s, s); this.content(c, n, false); c.restore(); }
+      else c.drawImage(this.fg[ix], x, y, w, h);
+      { const q = Math.min(1, p.r / (K * 0.55)), dim = Math.min(0.8, 0.5 * q * q * (3 - 2 * q) + 0.25 * cmp);
+        if (dim > 0.01) { c.globalAlpha = dim * o; c.fillStyle = '#07080A'; c.beginPath(); this.rr(c, x, y, w, h, rad); c.fill(); c.globalAlpha = o; } }
+      if (settled && i === ctr.i && j === ctr.j) {
+        const pw = 112 * s, ph = 34 * s, px = x + w - pw - 18 * s, py = y + h - ph - 14 * s;
+        c.fillStyle = acc; c.beginPath(); this.rr(c, px, py, pw, ph, ph / 2); c.fill();
+        c.fillStyle = '#1A1206'; c.font = '500 ' + (15 * s).toFixed(1) + 'px Inter, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('Открыть', px + pw / 2, py + ph / 2 + 0.5); c.textAlign = 'left';
+      }
+    }
+    c.globalAlpha = 1; c.drawImage(this.vig, 0, 0, 1360, 1360); c.globalAlpha = 1;
+    this.hits = hits;
+  }
+  renderVals() {
+    const acc = this.props.accent ?? '#FFB547';
+    const { g, f, fs } = this.state, M = this.m, act = this.state.act;
+    const lerp = (a, b, t) => a + (b - a) * t, gg = Math.min(1, g), go = Math.max(0, (g - 0.62) / 0.38);
+    const w = Math.round(lerp(360 * M, 900, gg)), h = Math.round(g <= 0.62 ? lerp(236 * M, 640, g / 0.62) : lerp(640, 1020, go));
+    const a = act ? this.newsAt(act.i, act.j) : this.NEWS[0];
+    const actv = { show: !!act, w, h, ml: -Math.round(w / 2), mt: -Math.round(h / 2), rot: (f * 180).toFixed(1),
+      br: Math.round(lerp(26 * M, 110, gg)), pt: Math.round(lerp(18 * M, 70, gg)), pb: Math.round(lerp(18 * M, 56, gg)), px: Math.round(lerp(20 * M, 80, gg)),
+      gap: Math.round(lerp(9 * M, 24, gg)), f1: Math.round(lerp(15 * M, 21, gg)), f2: Math.round(lerp(25 * M, 46, gg)), dot: Math.round(lerp(10 * M, 14, gg)),
+      bo: (this.state.open ? go : 0).toFixed(2), pe: this.state.open && go > 0.5 ? 'auto' : 'none' };
+    this.actRect = { w, h };
+    return {
+      accent: acc, act: actv,
+      setScrollF: el => { if (el) this.scF = el; },
+      setScrollB: el => { if (el) this.scB = el; },
+      cardTap: () => { if (this.artMoved) { this.artMoved = false; return; } if (performance.now() - this.suppress < 350) return; this.suppress = performance.now(); this.closeCard(); },
+      stop: e => e.stopPropagation(), a, fs, hintO: this.state.hint.toFixed(2),
+      setCanvas: el => { if (el) { this.cv = el; this.dirty = true; } },
+      setRoot: el => { if (el && el !== this.root) { this.root = el; el.addEventListener('wheel', ev => { if (ev.ctrlKey || !this.state.act) ev.preventDefault(); }, { passive: false }); } },
+      flip: () => { this.suppress = performance.now(); this.flipToggle(); },
+      close: () => { this.suppress = performance.now(); this.closeCard(); },
+      smaller: () => this.setState({ fs: Math.max(24, fs - 4) }),
+      bigger: () => this.setState({ fs: Math.min(46, fs + 4) }),
+      ctx: e => { e.preventDefault(); this.suppress = performance.now(); this.twoTap(this.pos(e)); },
+      down: e => {
+        const p = this.pos(e); this.pts.set(e.pointerId, p); this.setLight(p);
+        if (this.pts.size === 2) {
+          const [p1, p2] = [...this.pts.values()]; this.drag = null;
+          cancelAnimationFrame(this.panRaf); const mid = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 }; this.pinch = { d0: Math.hypot(p1.x - p2.x, p1.y - p2.y), m0: this.m, t0: performance.now(), moved: false, mid, ox0: this.ox, oy0: this.oy, hist: [{ x: mid.x, y: mid.y, t: performance.now() }] };
+          try { (this.root || e.currentTarget).setPointerCapture(e.pointerId); } catch (_) {}
+          return;
+        }
+        if (this.pts.size > 2) return;
+        if (this.state.act) { const ar = this.actRect; if (ar && (Math.abs(p.x - 680) > ar.w / 2 || Math.abs(p.y - 680) > ar.h / 2)) { this.suppress = performance.now(); this.closeCard(); return; }
+          const sc = this.state.f > 0.5 ? this.scB : this.scF; cancelAnimationFrame(this.artRaf); this.artMoved = false;
+          if (sc) this.art = { y: p.y, st: sc.scrollTop, sc, hist: [{ y: p.y, t: performance.now() }] };
+          return; }
+        cancelAnimationFrame(this.panRaf); this.downT = performance.now();
+        this.drag = { x: p.x, y: p.y, ox: this.ox, oy: this.oy, hist: [{ x: p.x, y: p.y, t: this.downT }] }; this.moved = false;
+      },
+      move: e => {
+        const p = this.pos(e); if (this.pts.size < 2) this.setLight(p);
+        if (!this.pts.has(e.pointerId)) return; this.pts.set(e.pointerId, p);
+        if (this.art && this.pts.size === 1) { const a = this.art, dy = p.y - a.y;
+          if (!this.artMoved && Math.abs(dy) > 8) { this.artMoved = true; try { (this.root || e.currentTarget).setPointerCapture(e.pointerId); } catch (_) {} }
+          if (this.artMoved) { a.sc.scrollTop = a.st - dy; a.hist.push({ y: p.y, t: performance.now() }); if (a.hist.length > 6) a.hist.shift(); }
+          return; }
+        if (this.pinch && this.pts.size >= 2) {
+          const pc = this.pinch, [p1, p2] = [...this.pts.values()], ratio = Math.hypot(p1.x - p2.x, p1.y - p2.y) / Math.max(1, pc.d0);
+          const mid = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 }, mx = mid.x - pc.mid.x, my = mid.y - pc.mid.y;
+          if (!pc.moved && (Math.abs(ratio - 1) > 0.06 || Math.hypot(mx, my) > 10)) { pc.moved = true; this.dismissHint(); try { (this.root || e.currentTarget).setPointerCapture(e.pointerId); } catch (_) {} }
+          if (pc.moved && !this.state.act) {
+            this.m = Math.max(1.1, Math.min(2.6, pc.m0 * ratio)); this.ox = pc.ox0 - mx * 1.15; this.oy = pc.oy0 - my * 1.15;
+            pc.hist.push({ x: mid.x, y: mid.y, t: performance.now() }); if (pc.hist.length > 6) pc.hist.shift(); this.dirty = true;
+          }
+          return;
+        }
+        if (!this.drag) return; const mx = p.x - this.drag.x, my = p.y - this.drag.y;
+        if (!this.moved && Math.hypot(mx, my) < 8) return;
+        if (!this.moved) { this.moved = true; this.dismissHint(); try { (this.root || e.currentTarget).setPointerCapture(e.pointerId); } catch (_) {} }
+        this.drag.hist.push({ x: p.x, y: p.y, t: performance.now() }); if (this.drag.hist.length > 6) this.drag.hist.shift();
+        this.ox = this.drag.ox - mx * 1.15; this.oy = this.drag.oy - my * 1.15; this.dirty = true;
+      },
+      up: e => {
+        const p = this.pos(e); this.pts.delete(e.pointerId);
+        if (this.art) { const a = this.art; this.art = null;
+          if (this.artMoved) { const hh = a.hist, a0 = hh[0], b = hh[hh.length - 1], dt = Math.max(16, b.t - a0.t); let vel = -(b.y - a0.y) / dt * 16;
+            const step = () => { a.sc.scrollTop += vel; vel *= 0.95; if (Math.abs(vel) > 0.3) this.artRaf = requestAnimationFrame(step); };
+            if (Math.abs(vel) > 0.5) this.artRaf = requestAnimationFrame(step); }
+          return; }
+        if (this.pinch) {
+          const pc = this.pinch; this.pinch = null; this.suppress = performance.now();
+          if (this.pts.size === 1 && pc.moved && !this.state.act) {
+            const q = [...this.pts.values()][0], t = performance.now();
+            this.drag = { x: q.x, y: q.y, ox: this.ox, oy: this.oy, hist: [{ x: q.x, y: q.y, t }] }; this.moved = true; return;
+          }
+          this.drag = null; this.moved = false;
+          if (pc.moved) { const hh = pc.hist, a0 = hh[0], b = hh[hh.length - 1], dt = Math.max(16, b.t - a0.t);
+            if (!this.state.act) this.snapTo(this.ox - (b.x - a0.x) / dt * 1.15 * 200, this.oy - (b.y - a0.y) / dt * 1.15 * 200); }
+          else if (performance.now() - pc.t0 < 450) this.twoTap(pc.mid);
+          return;
+        }
+        const d = this.drag; this.drag = null;
+        if (d && this.moved) { const hh = d.hist, a0 = hh[0], b = hh[hh.length - 1], dt = Math.max(16, b.t - a0.t);
+          this.snapTo(this.ox - (b.x - a0.x) / dt * 1.15 * 200, this.oy - (b.y - a0.y) / dt * 1.15 * 200); }
+        else if (d && performance.now() - this.downT < 500 && performance.now() - this.suppress > 300 && e.button !== 2) this.tap(p);
+        this.moved = false; this.dirty = true;
+      },
+      wheel: e => {
+        if (this.state.act) return;
+        const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1;
+        if (e.ctrlKey) { this.dismissHint(); this.m = Math.max(1.1, Math.min(2.6, this.m * Math.exp(-e.deltaY * unit * 0.012))); this.dirty = true; return; }
+        this.dismissHint(); cancelAnimationFrame(this.panRaf);
+        const dx = e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX, dy = e.shiftKey && !e.deltaX ? 0 : e.deltaY;
+        this.ox += dx * unit * 0.55; this.oy += dy * unit * 0.55; this.dirty = true;
+        clearTimeout(this.wheelT); this.wheelT = setTimeout(() => this.snapTo(this.ox, this.oy), 160);
+      }
+    };
+  }
+}
+
+
+function view(v) {
+  return html`<div class="stage"><div ref=${v.setRoot} onPointerDown=${v.down} onPointerMove=${v.move} onPointerUp=${v.up} onPointerCancel=${v.up} onWheel=${v.wheel} onContextMenu=${v.ctx} style="position: absolute; left: 0; top: 0; width: 1360px; height: 1360px; touch-action: none; user-select: none">
+<canvas ref=${v.setCanvas} role="img" aria-label="Купол новостей: карточки под стеклом" style="position: absolute; left: 0; top: 0; width: 1360px; height: 1360px; display: block"></canvas>
+${v.act.show ? html`
+<div style="position: absolute; left: 680px; top: 680px; width: ${v.act.w}px; height: ${v.act.h}px; margin-left: ${v.act.ml}px; margin-top: ${v.act.mt}px; perspective: 2600px">
+<div style="position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(${v.act.rot}deg)">
+<div onClick=${v.cardTap} style="position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-sizing: border-box; border-radius: ${v.act.br}px; background: rgba(16,18,23,0.48); backdrop-filter: blur(14px) saturate(165%); -webkit-backdrop-filter: blur(14px) saturate(165%); border: 1px solid rgba(255,255,255,0.30); box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(255,255,255,0.12), inset 2px 0 3px rgba(255,80,120,0.10), inset -2px 0 3px rgba(80,170,255,0.12), 0 30px 80px rgba(0,0,0,0.45); overflow: hidden; display: flex; flex-direction: column; gap: ${v.act.gap}px; padding: ${v.act.pt}px ${v.act.px}px ${v.act.pb}px ${v.act.px}px">
+<div style="display: flex; align-items: center; gap: 10px; font-size: ${v.act.f1}px; color: #A6A59E; flex: none">
+<span style="width: ${v.act.dot}px; height: ${v.act.dot}px; border-radius: 50%; background: ${v.a.col}; flex: none"></span>
+<span style="color: #F3F2EE; font-weight: 500">${v.a.cat}</span>
+<span style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">· ${v.a.reg}</span>
+<span>${v.a.d}</span>
+</div>
+<div style="font-size: ${v.act.f2}px; font-weight: 500; line-height: 1.18; letter-spacing: -0.3px; flex: none">${v.a.h}</div>
+<div ref=${v.setScrollF} style="flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; touch-action: none; opacity: ${v.act.bo}; font-size: ${v.fs}px; line-height: 1.55; color: #D6D5CF; padding-right: 8px"><p style="margin: 0 0 1.05em 0">Здесь идёт полный текст статьи из ленты источника. Карточка раскрылась на месте: заголовок остался сверху, а текст уходит вниз — листайте его пальцем.</p><p style="margin: 0 0 1.05em 0">Колонка держится в пределах 60–70 знаков в строке, поэтому даже на большом экране текст читается как в книге, а не как на билборде.</p><p style="margin: 0 0 1.05em 0">Кнопки по краям нижней панели меняют размер шрифта. Остальные новости остались на своих местах — только немного расступились, чтобы дать статье место.</p><p style="margin: 0 0 1.05em 0">Коснитесь карточки двумя пальцами или нажмите «Источники и факты» — она перевернётся, и на обороте будут источник и факты, на которые опирается материал.</p><p style="margin: 0 0 1.05em 0">Чтобы вернуться в купол, коснитесь любого места вне кнопок или нажмите крестик. Позиция в ленте сохраняется.</p><p style="margin: 0 0 1.05em 0">[Конец демонстрационного текста. В рабочей версии здесь продолжение статьи из ленты источника.]</p></div>
+<div onClick=${v.stop} style="flex: none; display: flex; justify-content: center; gap: 14px; opacity: ${v.act.bo}; pointer-events: ${v.act.pe}; padding: 26px 30px; margin: -26px -30px">
+<button type="button" aria-label="Мельче" onClick=${v.smaller} style="width: 76px; height: 76px; border-radius: 50%; background: transparent; color: #F3F2EE; border: 1.5px solid #2A2C31; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19v-10.5a3.5 3.5 0 1 1 7 0v10.5" /> <path d="M4 13h7" /> <path d="M21 12h-6" /></svg></button><button type="button" onClick=${v.flip} style="height: 76px; padding: 0 26px; border-radius: 999px; background: ${v.accent}; color: #1A1206; border: none; font-size: 22px; font-weight: 500; display: flex; align-items: center; gap: 10px; cursor: pointer"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 6h3a1 1 0 0 1 1 1v11a2 2 0 0 1 -4 0v-13a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v12a3 3 0 0 0 3 3h11" /> <path d="M8 8l4 0" /> <path d="M8 12l4 0" /> <path d="M8 16l4 0" /></svg><span>Источники и факты</span></button><button type="button" aria-label="Закрыть" onClick=${v.close} style="width: 76px; height: 76px; border-radius: 50%; background: transparent; color: #F3F2EE; border: 1.5px solid #2A2C31; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></svg></button><button type="button" aria-label="Крупнее" onClick=${v.bigger} style="width: 76px; height: 76px; border-radius: 50%; background: transparent; color: #F3F2EE; border: 1.5px solid #2A2C31; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19v-10.5a3.5 3.5 0 1 1 7 0v10.5" /> <path d="M4 13h7" /> <path d="M18 9v6" /> <path d="M21 12h-6" /></svg></button>
+</div>
+</div>
+<div onClick=${v.cardTap} style="position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform: rotateY(180deg); box-sizing: border-box; border-radius: ${v.act.br}px; background: rgba(16,18,23,0.56); backdrop-filter: blur(14px) saturate(165%); -webkit-backdrop-filter: blur(14px) saturate(165%); border: 1px solid rgba(255,255,255,0.30); box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(255,255,255,0.12), inset 2px 0 3px rgba(255,80,120,0.10), inset -2px 0 3px rgba(80,170,255,0.12), 0 30px 80px rgba(0,0,0,0.45); overflow: hidden; display: flex; flex-direction: column; gap: 22px; padding: 64px 70px 56px 70px">
+<div style="font-size: 20px; color: #A6A59E; flex: none">Обратная сторона · ${v.a.cat}</div>
+<div style="font-family: 'Unbounded', 'Inter', sans-serif; font-size: 40px; font-weight: 500; flex: none">Источники и факты</div>
+<div ref=${v.setScrollB} style="flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; touch-action: none; display: flex; flex-direction: column; gap: 26px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 19px; color: #A6A59E">Источник</div>
+<div style="font-size: 27px; font-weight: 500">${v.a.src}</div>
+<div style="font-size: 20px; color: #A6A59E">${v.a.link}</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 19px; color: #A6A59E">Факты из материала</div>
+${v.a.facts.map(f => html`
+<div style="display: flex; gap: 14px; align-items: flex-start; font-size: 25px; line-height: 1.35"><span style="color: ${v.a.col}; display: flex; margin-top: 3px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5l10 -10" /></svg></span><span>${f.t}</span></div>
+`)}
+</div>
+<div style="font-size: 19px; color: #A6A59E; line-height: 1.45">Заголовок пересказан своими словами. Факты взяты только из этого материала и не дополнялись.</div>
+</div>
+<div onClick=${v.stop} style="flex: none; display: flex; justify-content: center; gap: 14px; padding: 26px 30px; margin: -26px -30px"><button type="button" onClick=${v.flip} style="height: 76px; padding: 0 26px; border-radius: 999px; background: transparent; color: #F3F2EE; border: 1.5px solid #2A2C31; font-size: 22px; font-weight: 500; display: flex; align-items: center; gap: 10px; cursor: pointer"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l14 0" /> <path d="M5 12l6 6" /> <path d="M5 12l6 -6" /></svg><span>Перевернуть обратно</span></button><button type="button" aria-label="Закрыть" onClick=${v.close} style="width: 76px; height: 76px; border-radius: 50%; background: transparent; color: #F3F2EE; border: 1.5px solid #2A2C31; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></svg></button></div>
+</div>
+</div>
+</div>
+` : null}
+<div style="position: absolute; left: 360px; top: 1242px; width: 640px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #A6A59E; opacity: ${v.hintO}; pointer-events: none">Щипок — масштаб · касание — статья · два пальца — источники</div>
+</div></div>`;
+}
+function fit() { const s = Math.min(window.innerWidth, window.innerHeight) / 1360; document.documentElement.style.setProperty('--s', s); }
+window.addEventListener('resize', fit); fit();
+render(html`<${Component} />`, document.getElementById('app'));
+const fsb = document.getElementById('fs');
+const canFs = !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen);
+if (!canFs || (window.navigator.standalone)) fsb.classList.add('hide');
+fsb.addEventListener('click', () => {
+  try {
+    const d = document;
+    if (d.fullscreenElement || d.webkitFullscreenElement) { (d.exitFullscreen || d.webkitExitFullscreen).call(d); return; }
+    const el = d.documentElement, p = (el.requestFullscreen || el.webkitRequestFullscreen).call(el);
+    if (p && p.catch) p.catch(() => {});
+  } catch (e) {}
+});
+document.addEventListener('fullscreenchange', () => { fsb.style.opacity = document.fullscreenElement ? '0.2' : ''; });
+try { if ('serviceWorker' in navigator && window.self === window.top) navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (e) {}
+</script>
+</body>
+</html>
