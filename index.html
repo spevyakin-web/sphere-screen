@@ -124,7 +124,7 @@ class Component extends DCLogic {
     this.setState({ reader: a.url, readerSrc: src, rmode: 'read', rdata: null, rerr: '' });
     try {
       this.rItem = a; let r, j;
-      for (let k = 0; k < 2; k++) { try { r = await fetch(this.readerUrl + '/?url=' + encodeURIComponent(a.url)); j = await r.json().catch(() => ({})); if (r.ok || r.status < 500) break; } catch (e) { if (k) throw new Error('Посредник не ответил'); } if (tok !== this.rTok) return; await new Promise(z => setTimeout(z, 700)); }
+      for (let k = 0; k < 2; k++) { try { r = await fetch(this.readerUrl + '/?v=4&url=' + encodeURIComponent(a.url)); j = await r.json().catch(() => ({})); if (r.ok || r.status < 500) break; } catch (e) { if (k) throw new Error('Посредник не ответил'); } if (tok !== this.rTok) return; await new Promise(z => setTimeout(z, 700)); }
       if (tok !== this.rTok) return; if (!r.ok || !j.html) throw new Error(j.error || 'Не получилось открыть');
       let dt = ''; const d = new Date(j.published || a.date); try { if (!isNaN(d)) dt = d.toLocaleString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace(' г.', ''); } catch (e) {}
       this.rTitles = [j.title, a.h, a.orig]; const body = this.clean(j.html, j.url || a.url); if (body.replace(/<[^>]+>/g, '').trim().length < 200) throw new Error('В этой статье почти нет текста'); const hasImg = /<img|<video|<iframe/i.test(body);
