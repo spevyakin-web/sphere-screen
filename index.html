@@ -19,7 +19,7 @@ body{font-family:'Inter',sans-serif;color:#F3F2EE}
 #app{position:fixed;inset:0}
 .wrap{position:absolute;left:50%;top:50%;transform-origin:center center}
 .ringl{position:absolute;left:50%;top:50%;transform-origin:center center;pointer-events:none}
-.stage{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#07080A}
+.stage{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#000}
 .peb:active{filter:brightness(1.3)}
 *{touch-action:none}
 .rd-back{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom))}
@@ -58,7 +58,7 @@ body{font-family:'Inter',sans-serif;color:#F3F2EE}
 button,.peb,.fs,input{touch-action:manipulation}
 .pnl,.pnl *{-webkit-user-select:text;user-select:text}
 button{font:inherit}
-.vig{position:absolute;inset:0;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,rgba(8,9,11,0) 66%,rgba(8,9,11,.35) 88%,rgba(8,9,11,.95) 100%)}
+.vig{position:absolute;inset:-1px;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,0) 50%,rgba(0,0,0,.18) 62%,rgba(0,0,0,.5) 75%,rgba(0,0,0,.82) 87%,rgba(0,0,0,.96) 95%,#000 100%)}
 a{color:#F3F2EE;text-decoration:none}
 .fs{position:fixed;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#F3F2EE;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.55;transition:opacity .2s}
 .fs:hover{opacity:1}
@@ -292,8 +292,8 @@ class Component extends DCLogic {
     const sheen = this.mk(64, 128), sx = sheen.getContext('2d'), sg = sx.createLinearGradient(0, 0, 0, 128);
     sg.addColorStop(0, 'rgba(255,255,255,0.13)'); sg.addColorStop(0.5, 'rgba(255,255,255,0.03)'); sg.addColorStop(1, 'rgba(255,255,255,0)'); sx.fillStyle = sg; sx.fillRect(0, 0, 64, 128); this.sheen = sheen;
     const sh = this.mk(220, 160), shx = sh.getContext('2d'); shx.shadowColor = 'rgba(0,0,0,0.6)'; shx.shadowBlur = 22; shx.shadowOffsetY = 12; shx.fillStyle = 'rgba(0,0,0,0.6)'; shx.beginPath(); this.rr(shx, 30, 24, 160, 105, 14); shx.fill(); this.shadow = sh;
-    const vg = this.mk(512, 512), vx = vg.getContext('2d'), vgr = vx.createRadialGradient(256, 256, 170, 256, 256, 256);
-    vgr.addColorStop(0, 'rgba(8,9,11,0)'); vgr.addColorStop(0.75, 'rgba(8,9,11,0.35)'); vgr.addColorStop(1, 'rgba(8,9,11,0.95)'); vx.fillStyle = vgr; vx.fillRect(0, 0, 512, 512); this.vig = vg;
+    const vg = this.mk(512, 512), vx = vg.getContext('2d'), vgr = vx.createRadialGradient(256, 256, 128, 256, 256, 256);
+    vgr.addColorStop(0, 'rgba(0,0,0,0)'); vgr.addColorStop(0.25, 'rgba(0,0,0,0.18)'); vgr.addColorStop(0.5, 'rgba(0,0,0,0.5)'); vgr.addColorStop(0.75, 'rgba(0,0,0,0.82)'); vgr.addColorStop(0.9, 'rgba(0,0,0,0.96)'); vgr.addColorStop(1, '#000'); vx.fillStyle = vgr; vx.fillRect(0, 0, 512, 512); this.vig = vg;
   }
   proj(dx, dy, M) {
     const AX = this.AX, AY = this.AY, dxn = dx / AX, dyn = dy / AY;
@@ -316,7 +316,7 @@ class Component extends DCLogic {
     if (!this.dirty) { const now = performance.now(); if (this.q < 1 && now - (this.lastDraw || 0) > 350 && now - (this.lastQ || 0) > 350) { this.q = 1; this.lastQ = now; this.dirty = true; } return; }
     this.dirty = false; this.pr = pr; this.budget = 6; const tStart = performance.now();
     const M = this.m, g = this.state.g, cmp = Math.min(1, g / 0.62), act = this.state.act, acc = this.props.accent ?? '#FFB547';
-    const c = cv.getContext('2d'); c.setTransform(pr, 0, 0, pr, 0, 0); c.globalAlpha = 1; c.fillStyle = '#07080A'; c.fillRect(0, 0, WU, HU);
+    const c = cv.getContext('2d'); c.setTransform(pr, 0, 0, pr, 0, 0); c.globalAlpha = 1; c.fillStyle = '#040506'; c.fillRect(0, 0, WU, HU);
     c.globalAlpha = 1;
     const K = this.RM * this.P / M, UMAX = Math.min(4.6, 4300 / K), rmax = UMAX * K, jr = Math.ceil(rmax * this.AY / this.DY) + 1, ir = Math.ceil(rmax * this.AX / this.DX) + 1;
     const j0 = Math.round(this.oy / this.DY), i0 = Math.round(this.ox / this.DX), list = [];
