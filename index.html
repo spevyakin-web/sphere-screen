@@ -126,7 +126,7 @@ class Component extends DCLogic {
       const r = await fetch(this.readerUrl + '/?url=' + encodeURIComponent(a.url)), j = await r.json().catch(() => ({}));
       if (tok !== this.rTok) return; if (!r.ok || !j.html) throw new Error(j.error || 'Не получилось открыть');
       let dt = ''; const d = new Date(j.published || a.date); try { if (!isNaN(d)) dt = d.toLocaleString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace(' г.', ''); } catch (e) {}
-      this.rTitles = [j.title, a.h, a.orig]; const body = this.clean(j.html, j.url || a.url), hasImg = /<img|<video|<iframe/i.test(body);
+      this.rTitles = [j.title, a.h, a.orig]; const body = this.clean(j.html, j.url || a.url); if (body.replace(/<[^>]+>/g, '').trim().length < 200) throw new Error('В этой статье почти нет текста'); const hasImg = /<img|<video|<iframe/i.test(body);
       this.setState({ rdata: { title: a.h || j.title || '', orig: a.orig || '', site: j.site || a.src, byline: j.byline || '', dt, min: j.minutes ? j.minutes + ' мин чтения' : '', hero: !hasImg && j.image ? j.image : (!hasImg && a.img ? a.img : ''), html: body, url: j.url || a.url } });
     } catch (err) {
       if (tok !== this.rTok) return;
