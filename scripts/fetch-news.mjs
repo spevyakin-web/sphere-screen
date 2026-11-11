@@ -62,7 +62,7 @@ async function getFeed(f) {
       const date = new Date(txt(it.pubDate) || txt(it['dc:date']) || txt(it.published) || txt(it.updated) || Date.now());
       if (isNaN(date) || Date.now() - date > MAX_AGE_DAYS * 864e5) continue;
       const { img, video } = findMedia(it, html, link);
-      let summary = clip(strip(html).replace(/(Читать далее|Read more|Comments)\s*(→|»)?\s*$/i, ''), 900);
+      let summary = clip(strip(html).replace(/(Читать далее|Read more|Comments)\s*(→|»)?\s*$/i, ''), 1600);
       if (summary === title) summary = '';
       out.push({ id: createHash('sha1').update(link).digest('hex').slice(0, 12), src: f.name, lang: f.lang, url: link, date: date.toISOString(), title, summary, img, video });
     }
@@ -71,16 +71,27 @@ async function getFeed(f) {
   finally { clearTimeout(tm); }
 }
 
+async function pageText(url) {
+  const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 12000);
+  try {
+    const r = await fetch(url, { signal: ctl.signal, headers: { 'user-agent': 'Mozilla/5.0 (compatible; sphere-screen/1.0)', accept: 'text/html' } });
+    if (!r.ok) return '';
+    let h = await r.text(); const art = /<article[\s\S]*?<\/article>/i.exec(h); if (art) h = art[0];
+    const ps = [...h.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map(m => strip(m[1])).filter(t => t.length > 60);
+    return clip(ps.join('\n\n'), 6000);
+  } catch { return ''; } finally { clearTimeout(tm); }
+}
+
 async function claude(batch) {
-  const list = batch.map((n, k) => ({ k, lang: n.lang, title: n.title, text: clip(n.summary, 700) }));
+  const list = batch.map((n, k) => ({ k, lang: n.lang, title: n.title, text: clip(n.full || n.summary, 4500) }));
   const prompt = `Ты редактор русскоязычной ленты IT-новостей. Для каждой новости верни JSON-объект:
-{"k": номер, "t": заголовок на русском (до 110 символов, без кликбейта), "s": пересказ на русском в 2–4 предложения ТОЛЬКО по тексту ниже, "f": 2–3 коротких факта строго из текста ниже (числа, имена, даты), "c": тема из списка ${JSON.stringify(CATS)}}
+{"k": номер, "t": заголовок на русском (до 110 символов, без кликбейта), "s": подробный пересказ на русском своими словами, 6–9 предложений (120–220 слов), 2–3 абзаца через пустую строку, ТОЛЬКО по тексту ниже, без цитирования длинных фрагментов, "f": 2–3 коротких факта строго из текста ниже (числа, имена, даты), "c": тема из списка ${JSON.stringify(CATS)}}
 Если новость уже на русском — заголовок не переводи, только сократи при необходимости. Ничего не добавляй от себя: если фактов в тексте нет — верни пустой массив f.
 Ответь только JSON-массивом без пояснений.
 Новости:
 ${JSON.stringify(list)}`;
   const r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'x-api-key': KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
-    body: JSON.stringify({ model: MODEL, max_tokens: 4000, messages: [{ role: 'user', content: prompt }] }) });
+    body: JSON.stringify({ model: MODEL, max_tokens: 6000, messages: [{ role: 'user', content: prompt }] }) });
   if (!r.ok) throw new Error('Claude API ' + r.status + ' ' + (await r.text()).slice(0, 200));
   const j = await r.json(); const t = j.content?.map(c => c.text || '').join('') || '[]';
   const m = t.match(/\[[\s\S]*\]/); return m ? JSON.parse(m[0]) : [];
@@ -101,13 +112,15 @@ function pick(p) { const o = {}; for (const k of ['t', 's', 'f', 'c', 'ai']) if 
 
 if (KEY) {
   const todo = items.filter(n => !n.ai).slice(0, 80);
-  for (let i = 0; i < todo.length; i += 8) {
-    const b = todo.slice(i, i + 8);
+  for (let i = 0; i < todo.length; i += 4) {
+    const b = todo.slice(i, i + 4);
+    await Promise.all(b.map(async n => { n.full = await pageText(n.url); }));
     try { const res = await claude(b); for (const r of res) { const n = b[r.k]; if (!n) continue; n.t = String(r.t || n.title).slice(0, 140); n.s = String(r.s || ''); n.f = arr(r.f).map(String).slice(0, 3); n.c = CATS.includes(r.c) ? r.c : guessCat(n.title + ' ' + n.summary); n.ai = 1; } }
     catch (e) { console.log('Claude:', e.message); break; }
   }
 }
 for (const n of items) { if (!n.t) n.t = n.title; if (!n.c) n.c = guessCat(n.title + ' ' + n.summary); }
+for (const n of items) delete n.full;
 const out = { updated: new Date().toISOString(), translated: !!KEY, count: items.length, items };
 await writeFile(OUT, JSON.stringify(out));
 console.log(`Итого: ${items.length} новостей, перевод: ${KEY ? 'да' : 'нет (нет ANTHROPIC_API_KEY)'}`);
