@@ -174,13 +174,33 @@ class Component extends DCLogic {
     const step = now => { const k = Math.min(1, (now - t0) / 320), e = 1 - Math.pow(1 - k, 3); this.m = s + (to - s) * e; this.dirty = true; if (k < 1) this.tw.m = requestAnimationFrame(step); };
     this.tw.m = requestAnimationFrame(step);
   }
-  speak(text) {
+  loadVoices() { try { const ss = window.speechSynthesis; if (!ss) return; this.voices = ss.getVoices() || [];
+    if (!this.vHooked) { this.vHooked = true; ss.addEventListener && ss.addEventListener('voiceschanged', () => { this.voices = ss.getVoices() || []; if (this.state.vpanel) this.forceUpdate(); }); } } catch (e) {} }
+  vScore(v) { const n = (v.name + ' ' + (v.voiceURI || '')).toLowerCase(); let s = 0;
+    if (/natural|online/.test(n)) s += 100; if (/neural/.test(n)) s += 90; if (/premium/.test(n)) s += 85; if (/enhanced|улучш|siri/.test(n)) s += 70; if (/google/.test(n)) s += 50; if (/microsoft/.test(n)) s += 20;
+    if (/compact|espeak|robot/.test(n)) s -= 60; if (v.localService === false) s += 8; if (v.default) s += 3; return s; }
+  vQuality(v) { const n = (v.name + ' ' + (v.voiceURI || '')).toLowerCase(); if (/natural|online|neural/.test(n)) return 'нейросетевой'; if (/premium|enhanced|улучш|siri/.test(n)) return 'улучшенный'; if (/google/.test(n)) return 'Google'; return 'системный'; }
+  vList(lang) { this.loadVoices(); return (this.voices || []).filter(v => (v.lang || '').toLowerCase().startsWith(lang)).sort((p, q) => this.vScore(q) - this.vScore(p) || p.name.localeCompare(q.name)); }
+  pickVoice(lang) { const list = this.vList(lang), saved = this.ls('kupol.voice.' + lang); return (saved && list.find(v => v.voiceURI === saved)) || list[0] || null; }
+  speak(text, opts) {
     try { const ss = window.speechSynthesis; if (!ss) return;
-      if (ss.speaking || this.state.speaking) { ss.cancel(); this.setState({ speaking: false }); return; }
-      const u = new SpeechSynthesisUtterance(text); u.lang = 'ru-RU'; u.onend = () => this.setState({ speaking: false }); u.onerror = () => this.setState({ speaking: false });
-      ss.speak(u); this.setState({ speaking: true }); } catch (e) { this.setState({ speaking: false }); }
+      if (!opts && (ss.speaking || this.state.speaking)) { this.stopSpeak(); return; }
+      ss.cancel();
+      const cyr = (text.match(/[а-яё]/gi) || []).length, lat = (text.match(/[a-z]/gi) || []).length, lang = (opts && opts.lang) || (lat > cyr * 1.5 ? 'en' : 'ru');
+      const voice = (opts && opts.voice) || this.pickVoice(lang);
+      const chunks = []; String(text).replace(/https?:\/\/\S+/g, '').split(/\n\s*\n/).forEach(par => {
+        const ss2 = par.replace(/\s+/g, ' ').trim().match(/[^.!?…]+[.!?…]+["»)]*|[^.!?…]+$/g) || []; let buf = '';
+        ss2.forEach(s => { s = s.trim(); if (!s) return; if ((buf + ' ' + s).length > 220 && buf) { chunks.push({ t: buf, p: 160 }); buf = s; } else buf = buf ? buf + ' ' + s : s; });
+        if (buf) chunks.push({ t: buf, p: 160 }); if (chunks.length) chunks[chunks.length - 1].p = 420; });
+      const token = {}; this.sq = token; let k = 0;
+      const next = () => { if (this.sq !== token) return; if (k >= chunks.length) { this.sq = null; if (!opts) this.setState({ speaking: false }); return; }
+        const ch = chunks[k++], u = new SpeechSynthesisUtterance(ch.t); if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = lang === 'en' ? 'en-US' : 'ru-RU';
+        u.rate = 0.96; u.pitch = 1; u.onend = () => setTimeout(next, ch.p); u.onerror = () => { if (this.sq === token) setTimeout(next, 50); }; ss.speak(u); };
+      if (!opts) this.setState({ speaking: true }); next();
+    } catch (e) { this.setState({ speaking: false }); }
   }
-  stopSpeak() { try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} if (this.state.speaking) this.setState({ speaking: false }); }
+  stopSpeak() { this.sq = null; try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} if (this.state.speaking) this.setState({ speaking: false }); }
+  openVoices() { this.stopSpeak(); this.loadVoices(); const a = this.state.act && this.newsAt(this.state.act.i, this.state.act.j); this.setState({ vpanel: true, vtab: 'ru' }); setTimeout(() => this.loadVoices(), 300); }
   centerIJ() { return this.nearestIJ(this.ox, this.oy); }
   setLight(p) { this.lx = p.x; this.ly = p.y; this.dirty = true; }
   mk(w, h) { const c = document.createElement('canvas'); c.width = Math.max(1, w); c.height = Math.max(1, h); return c; }
@@ -353,6 +373,14 @@ class Component extends DCLogic {
         toggle: () => { const h = this.hiddenSet(); if (h.has(fd.name)) h.delete(fd.name); else h.add(fd.name); this.ls('kupol.hidden', JSON.stringify([...h])); this.applyFilter(); this.forceUpdate(); },
         dlabel: arm ? 'Точно?' : '', dbg: arm ? 'rgba(226,75,74,0.55)' : 'transparent',
         del: () => { if (this.state.delArm !== fd.name) { this.setState({ delArm: fd.name }); return; } this.saveFeeds((this.state.feeds || []).filter(q => q.name !== fd.name), 'Источники: удалён ' + fd.name); } }; });
+    const vt = this.state.vtab === 'en' ? 'en' : 'ru', vl = this.state.vpanel ? this.vList(vt) : [], cur = this.state.vpanel ? this.pickVoice(vt) : null;
+    const SAMPLE = { ru: 'Привет! Вот так я буду читать новости в куполе.', en: 'Hello! This is how I will read the news in the dome.' };
+    const vp = { open: !!this.state.vpanel, close: () => { this.stopSpeak(); this.setState({ vpanel: false }); }, empty: !vl.length,
+      tabRu: () => this.setState({ vtab: 'ru' }), tabEn: () => this.setState({ vtab: 'en' }), nRu: this.state.vpanel ? this.vList('ru').length : 0, nEn: this.state.vpanel ? this.vList('en').length : 0,
+      ruBg: vt === 'ru' ? '#F3F2EE' : 'transparent', ruFg: vt === 'ru' ? '#0B0B0B' : '#F3F2EE', enBg: vt === 'en' ? '#F3F2EE' : 'transparent', enFg: vt === 'en' ? '#0B0B0B' : '#F3F2EE',
+      list: vl.map((v, k) => { const sel = cur && v.voiceURI === cur.voiceURI; return { name: v.name, sub: v.lang + ' · ' + this.vQuality(v) + (k === 0 ? ' · лучший на устройстве' : ''),
+        bg: sel ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.04)', bd: sel ? 'rgba(255,255,255,0.45)' : 'transparent', plabel: sel ? 'Выбран' : 'Выбрать', pbg: sel ? '#F3F2EE' : 'transparent', pfg: sel ? '#0B0B0B' : '#F3F2EE',
+        play: () => this.speak(SAMPLE[vt], { voice: v, lang: vt }), pick: () => { this.ls('kupol.voice.' + vt, v.voiceURI); this.speak(SAMPLE[vt], { voice: v, lang: vt }); this.forceUpdate(); } }; }) };
     const st = this.state, ru = st.flang !== 'en';
     const pn = { open: !!st.panel, loading: !!st.pLoading, feeds, canEdit, noEdit: !canEdit, fname: st.fname, furl: st.furl, tok: st.tok,
       close: () => this.setState({ panel: false }), setName: e => this.setState({ fname: e.target.value }), setUrl: e => this.setState({ furl: e.target.value }), setTok: e => this.setState({ tok: e.target.value }),
@@ -375,7 +403,7 @@ class Component extends DCLogic {
         [sp ? 'player-stop' : 'volume', sp ? 'Остановить' : 'Слушать заголовок', () => { const c = this.centerIJ(), n = this.newsAt(c.i, c.j); this.speak(n.h + '. ' + n.src); }]],
       article: [['text-decrease', 'Шрифт меньше', () => this.setState({ fs: Math.max(24, this.state.fs - 4) })], ['text-increase', 'Шрифт больше', () => this.setState({ fs: Math.min(46, this.state.fs + 4) })], ['list-check', 'Источники и факты', () => this.flipToggle()],
         ['arrow-up', 'Наверх', () => { const s = sc(); if (s) s.scrollTo({ top: 0, behavior: 'smooth' }); }], ['x', 'Закрыть', () => this.closeCard()],
-        [sp ? 'player-stop' : 'volume', sp ? 'Остановить' : 'Слушать статью', () => this.speak(a.h + '. ' + (this.scF ? this.scF.innerText : ''))]],
+        [sp ? 'player-stop' : 'volume', sp ? 'Остановить' : 'Слушать статью', () => this.speak(a.h + '.\n\n' + (a.body || (this.scF ? this.scF.innerText : '')))]],
       back: [['arrow-back-up', this.state.open ? 'Назад к статье' : 'Перевернуть', () => this.flipToggle()], [this.state.copied ? 'check' : 'copy', this.state.copied ? 'Скопировано' : 'Скопировать источник', () => {
           try { navigator.clipboard.writeText(a.h + '\n' + a.src + ' — ' + a.link).then(() => { this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 1500); }).catch(() => {}); } catch (e) {} }],
         ['news', 'Открыть статью', () => { if (!this.state.open) { this.setState({ open: true }); this.anim('g', 1, 520); } this.anim('f', 0, 640); }],
@@ -384,14 +412,14 @@ class Component extends DCLogic {
     };
     const ANG = [-125, -55, 0, 55, 125, 180], BR = ['54% 46% 50% 50% / 48% 54% 46% 52%', '46% 54% 52% 48% / 52% 46% 54% 48%', '50% 50% 46% 54% / 46% 52% 48% 54%', '52% 48% 54% 46% / 50% 48% 52% 50%', '48% 52% 50% 50% / 54% 50% 50% 46%', '50% 50% 52% 48% / 48% 52% 50% 50%'];
     this.dims(); const app = !!window.__cssVignette, RX = app ? (this.WU / 2 - 100) / this.WU * 100 : 44.6, RY = app ? (this.HU / 2 - 100) / this.HU * 100 : 44.6, KEYS = ["home", "plus", "minus", "news", "rotate-clockwise-2", "volume", "player-stop", "text-decrease", "text-increase", "list-check", "arrow-up", "x", "arrow-back-up", "copy", "check"];
-    const LP = screen === 'field';
-    const btns = DEF[screen].map((d, k) => { const rad = ANG[k] * Math.PI / 180, lp = LP && k === 0, o = { label: lp ? d[1] + ' (удерживайте — источники)' : d[1],
+    const btns = DEF[screen].map((d, k) => { const rad = ANG[k] * Math.PI / 180, lpAct = screen === 'field' && k === 0 ? () => this.openPanel() : k === 5 ? () => this.openVoices() : null, lp = !!lpAct,
+      o = { label: lp ? d[1] + (k === 0 ? ' (удерживайте — источники)' : ' (удерживайте — выбор голоса)') : d[1],
       go: lp ? () => { if (this.lpFired) { this.lpFired = false; return; } d[2](); } : d[2],
-      down: lp ? () => { clearTimeout(this.lpT); this.lpFired = false; this.lpT = setTimeout(() => { this.lpFired = true; this.openPanel(); }, 600); } : () => {},
+      down: lp ? () => { clearTimeout(this.lpT); this.lpFired = false; this.lpT = setTimeout(() => { this.lpFired = true; lpAct(); }, 600); } : () => {},
       up: lp ? () => { clearTimeout(this.lpT); } : () => {}, ctx: e => { if (e && e.preventDefault) e.preventDefault(); }, x: (50 + RX * Math.cos(rad)).toFixed(2), y: (50 + RY * Math.sin(rad)).toFixed(2), br: BR[k] };
       KEYS.forEach(q => { o['is_' + q.replace(/-/g, '_')] = q === d[0]; }); return o; });
     return {
-      accent: acc, act: actv, btns, pn,
+      accent: acc, act: actv, btns, pn, vp,
       setScrollF: el => { if (el) this.scF = el; },
       setScrollB: el => { if (el) this.scB = el; },
       cardTap: () => { if (this.artMoved) { this.artMoved = false; return; } if (performance.now() - this.suppress < 350) return; this.suppress = performance.now(); this.closeCard(); },
@@ -563,6 +591,24 @@ ${v.pn.noEdit ? html`
 ${v.pn.hasStatus ? html`<div style="font-size: 19px; color: ${v.pn.statusCol}; flex: none">${v.pn.status}</div>` : null}
 </div>
 ` : null}
+${v.vp.open ? html`
+<div class="pnl" role="dialog" aria-label="Голос озвучки" style="position: absolute; left: 50%; top: 50%; width: 940px; max-height: 94%; margin-left: -470px; transform: translateY(-50%); pointer-events: auto; box-sizing: border-box; border-radius: 64px; background: rgba(10,12,15,0.95); backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px) saturate(150%); border: 1px solid rgba(255,255,255,0.22); box-shadow: 0 40px 100px rgba(0,0,0,0.6); padding: 52px 56px; display: flex; flex-direction: column; gap: 20px; color: #F3F2EE; font-size: 24px; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 16px; flex: none"><div style="flex: 1; font-family: 'Unbounded', 'Inter', sans-serif; font-size: 44px; font-weight: 500">Голос озвучки</div><button type="button" aria-label="Закрыть" onClick=${v.vp.close} style="width: 72px; height: 72px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.22); background: transparent; color: #F3F2EE; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: manipulation"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></svg></button></div>
+<div style="display: flex; gap: 10px; flex: none"><button type="button" onClick=${v.vp.tabRu} style="height: 60px; padding: 0 22px; border-radius: 999px; font-size: 20px; font-weight: 500; cursor: pointer; white-space: nowrap; touch-action: manipulation; background: ${v.vp.ruBg}; color: ${v.vp.ruFg}; border: 1.5px solid rgba(255,255,255,0.22)">Русский · ${v.vp.nRu}</button><button type="button" onClick=${v.vp.tabEn} style="height: 60px; padding: 0 22px; border-radius: 999px; font-size: 20px; font-weight: 500; cursor: pointer; white-space: nowrap; touch-action: manipulation; background: ${v.vp.enBg}; color: ${v.vp.enFg}; border: 1.5px solid rgba(255,255,255,0.22)">English · ${v.vp.nEn}</button></div>
+<div style="font-size: 19px; line-height: 1.45; color: #A6A59E; flex: none">Голоса берутся из этого устройства. Сверху — самые естественные. Выбор запоминается на этом устройстве отдельно для русского и английского текста.</div>
+<div style="flex: 1 1 auto; min-height: 120px; overflow-y: auto; overscroll-behavior: contain; touch-action: pan-y; display: flex; flex-direction: column; gap: 10px">
+${v.vp.empty ? html`<div style="color: #A6A59E; padding: 20px; line-height: 1.45">На этом устройстве нет голосов для этого языка.</div>` : null}
+${v.vp.list.map(vo => html`
+<div style="display: flex; align-items: center; gap: 14px; padding: 12px 14px 12px 22px; border-radius: 24px; background: ${vo.bg}; border: 1.5px solid ${vo.bd}">
+<div style="flex: 1; min-width: 0"><div style="font-weight: 500; font-size: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${vo.name}</div><div style="font-size: 17px; color: #A6A59E">${vo.sub}</div></div>
+<button type="button" aria-label="Прослушать ${vo.name}" onClick=${vo.play} style="height: 60px; padding: 0 22px; border-radius: 999px; font-size: 20px; font-weight: 500; cursor: pointer; white-space: nowrap; touch-action: manipulation; background: transparent; color: #F3F2EE; border: 1.5px solid rgba(255,255,255,0.22); display: flex; align-items: center; gap: 8px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16l13 -8l-13 -8" /></svg><span>Прослушать</span></button>
+<button type="button" onClick=${vo.pick} style="height: 60px; padding: 0 22px; border-radius: 999px; font-size: 20px; font-weight: 500; cursor: pointer; white-space: nowrap; touch-action: manipulation; background: ${vo.pbg}; color: ${vo.pfg}; border: 1.5px solid rgba(255,255,255,0.22)">${vo.plabel}</button>
+</div>
+`)}
+</div>
+<div style="font-size: 18px; line-height: 1.45; color: #A6A59E; flex: none; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1)">Самые живые голоса: в браузере Edge — «Microsoft … Online (Natural)»; на iPhone и Mac скачайте «Милена (улучшенный)» в Настройках → Универсальный доступ → Устный контент → Голоса.</div>
+</div>
+` : null}
 </div></div>${v.reader ? html`<div class="rd-back" onClick=${v.closeReader}><div class="rd" onClick=${e => e.stopPropagation()}><div class="rd-bar"><span class="rd-src">${v.readerSrc}</span><a class="rd-btn" href=${v.reader} target="_blank" rel="noopener">Открыть в браузере ↗</a><button class="rd-btn rd-x" type="button" aria-label="Закрыть" onClick=${v.closeReader}>✕</button></div><iframe src=${v.reader} title="Статья" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div>` : null}`;
 }
 function fit() { const vw = window.innerWidth, vh = window.innerHeight, s = Math.min(vw, vh) / 1360, w = vw / s, h = vh / s, st = document.querySelector('.wrap');
@@ -570,7 +616,7 @@ function fit() { const vw = window.innerWidth, vh = window.innerHeight, s = Math
 window.addEventListener('resize', fit); fit();
 ['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
 document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
-document.addEventListener('keydown', e => { const d = window.__dome; if (!d || e.key !== 'Escape') return; if (d.state.reader) d.setState({ reader: '' }); else if (d.state.panel) d.setState({ panel: false }); else if (d.state.act) d.closeCard(); });
+document.addEventListener('keydown', e => { const d = window.__dome; if (!d || e.key !== 'Escape') return; if (d.state.reader) d.setState({ reader: '' }); else if (d.state.panel) d.setState({ panel: false }); else if (d.state.vpanel) { d.stopSpeak(); d.setState({ vpanel: false }); } else if (d.state.act) d.closeCard(); });
 let lastTouchEnd = 0; document.addEventListener('touchend', e => { const now = Date.now(); if (now - lastTouchEnd < 320 && !(e.target.closest && e.target.closest('button, a, input, .rd-back, .pnl'))) e.preventDefault(); lastTouchEnd = now; }, { passive: false });
 document.addEventListener('touchmove', e => { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
 if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
