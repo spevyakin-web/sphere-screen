@@ -24,12 +24,10 @@ a{color:#F3F2EE;text-decoration:none}
 .fs{position:fixed;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#F3F2EE;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.55;transition:opacity .2s}
 .fs:hover{opacity:1}
 .fs.hide{display:none}
-.fs.md{right:max(76px,calc(env(safe-area-inset-right) + 60px))}
 </style>
 </head>
 <body>
 <div id="app"></div>
-<button class="fs md" id="md" type="button" aria-label="Переключить искажение" title="Вогнутое / выпуклое"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" id="mdi"><path d="M4 4c3 3 3 13 0 16"/><path d="M20 4c-3 3-3 13 0 16"/><path d="M9 12h6"/></svg></button>
 <button class="fs" id="fs" type="button" aria-label="На весь экран"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V4h4"/><path d="M20 8V4h-4"/><path d="M4 16v4h4"/><path d="M20 16v4h-4"/></svg></button>
 <script src="htm-preact.js"></script>
 <script>
@@ -40,14 +38,12 @@ class Component extends DCLogic {
   constructor(p) {
     super(p); this.NEWS = [{"cat": "Переговоры", "reg": "Абу-Даби", "d": "10 ноя", "h": "Россия, Украина и США проводят трёхсторонние переговоры в Абу-Даби", "src": "Reuters", "col": "#8FB7FF", "facts": [{"t": "Формат: Россия, Украина и США"}, {"t": "Место: Абу-Даби"}, {"t": "Даты: 10–11 ноября"}], "link": "fdd.org · Overnight Brief, 4 ноя (со ссылкой на Reuters)"}, {"cat": "Климат", "reg": "Белен", "d": "10 ноя", "h": "COP31 открылся спором о климатических деньгах между богатыми и развивающимися странами", "src": "Business Standard", "col": "#7FD67A", "facts": [{"t": "Открылась конференция ООН по климату COP31"}, {"t": "Спор о финансировании между богатыми и развивающимися странами"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Экономика", "reg": "США", "d": "10 ноя", "h": "Инфляция в США в октябре выросла на 0,4%, ставку ФРС в декабре могут поднять", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Рост цен в октябре: 0,4% за месяц"}, {"t": "Это повышает шансы на рост ставки ФРС в декабре"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Рынки", "reg": "Мир", "d": "10 ноя", "h": "Мировые биржи растут, нефть ниже $90 на надеждах на переговоры США и Ирана", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Нефть опустилась ниже $90"}, {"t": "Причина: надежды на переговоры США и Ирана"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "ООН", "reg": "Женева", "d": "10 ноя", "h": "США станут первой страной, полностью отказавшейся от обзора в Совете ООН по правам человека", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "США не будут проходить обзор в Совете ООН по правам человека"}, {"t": "Это первый такой случай"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Климат", "reg": "ООН", "d": "10 ноя", "h": "Климатический кризис может толкнуть в крайнюю бедность ещё 141 млн женщин", "src": "Business Standard", "col": "#7FD67A", "facts": [{"t": "Оценка ООН: ещё до 141 млн женщин"}, {"t": "Риск: крайняя бедность из-за климатического кризиса"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Торговля", "reg": "Канада", "d": "10 ноя", "h": "Канада рассчитывает на смягчение пошлин США после выборов", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Канада ждёт смягчения пошлин США"}, {"t": "Контекст: итоги выборов в США"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Технологии", "reg": "Япония", "d": "10 ноя", "h": "SoftBank получил убыток $7 млрд из-за затрат на дата-центры в США", "src": "Business Standard", "col": "#C49BFF", "facts": [{"t": "Убыток SoftBank: $7 млрд"}, {"t": "Причина: затраты на дата-центры в США"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Азия", "reg": "Мьянма", "d": "10 ноя", "h": "Армия Мьянмы захватила ключевой штаб сопротивления и 10 баз оппозиции", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Захвачен ключевой штаб сопротивления"}, {"t": "А также 10 баз оппозиции"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Бизнес", "reg": "США", "d": "10 ноя", "h": "PepsiCo сократит более 1000 рабочих мест из-за слабых продаж", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Сокращение: более 1000 рабочих мест"}, {"t": "Причина: слабые продажи в Северной Америке"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Экономика", "reg": "Мир", "d": "10 ноя", "h": "Moody’s: дорогие кредиты ослабят мировые кредитные условия в 2027 году", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Прогноз Moody’s на 2027 год"}, {"t": "Дорогое финансирование ослабит кредитные условия"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Вода", "reg": "Индия", "d": "10 ноя", "h": "Всемирный банк назвал управление водой в Индии образцом для развивающихся стран", "src": "Business Standard", "col": "#7FD67A", "facts": [{"t": "Оценка Всемирного банка"}, {"t": "Управление водой в Индии — модель для развивающихся стран"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "США", "reg": "Вашингтон", "d": "10 ноя", "h": "Хегсет назвал попытку импичмента политической и пообещал бороться", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Республиканцы в Конгрессе начали процедуру импичмента"}, {"t": "Хегсет называет её политической"}], "link": "business-standard.com · World News, 10 ноя"}, {"cat": "Европа", "reg": "Париж", "d": "8 ноя", "h": "Европейцы будут участвовать в переговорах по Украине в Абу-Даби", "src": "Reuters", "col": "#FF8A7A", "facts": [{"t": "Европейцы участвуют в переговорах в Абу-Даби"}, {"t": "Заявление главы МИД Франции Жан-Ноэля Барро"}], "link": "devdiscourse.com · Reuters World News Summary"}, {"cat": "Африка", "reg": "Судан", "d": "8 ноя", "h": "Армия Судана задержала Ахмеда Харуна, которого разыскивает МУС", "src": "Reuters", "col": "#FF8A7A", "facts": [{"t": "Задержан Ахмед Харун, глава бывшей правящей партии"}, {"t": "Его разыскивает Международный уголовный суд"}], "link": "devdiscourse.com · Reuters World News Summary"}, {"cat": "Европа", "reg": "Италия", "d": "7 ноя", "h": "Мелони обвинила пророссийских хакеров в кибератаке на главу МИД", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Кибератака на главу МИД Италии"}, {"t": "Мелони винит пророссийских хакеров"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Европа", "reg": "Финляндия", "d": "7 ноя", "h": "Финляндия думает о противотанковых заграждениях по украинскому образцу", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Рассматриваются противотанковые заграждения"}, {"t": "Образец — оборона Украины"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Выборы", "reg": "Новая Зеландия", "d": "7 ноя", "h": "В Новой Зеландии закрылись участки, ждут самого плотного результата за годы", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Избирательные участки закрыты"}, {"t": "Ожидается самый плотный результат за годы"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Китай", "reg": "Пекин", "d": "7 ноя", "h": "Пекин против санкций США против двух китайских компаний и обещает ответ", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Санкции США против двух китайских компаний"}, {"t": "Пекин обещает ответные меры"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Ближний Восток", "reg": "Иран", "d": "7 ноя", "h": "США предлагают $20 млн за сведения о ядерной программе Ирана", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Награда: $20 млн"}, {"t": "За сведения о ядерной программе Ирана"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Рынки", "reg": "Нью-Йорк", "d": "7 ноя", "h": "Уолл-стрит отыгралась: акции чипмейкеров выросли после распродажи", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Рост акций производителей чипов"}, {"t": "Индекс полупроводников Филадельфии: +4,2% за день"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Дипломатия", "reg": "Китай", "d": "7 ноя", "h": "Китай: обсуждается встреча Си, Трампа и Путина", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Обсуждается трёхсторонняя встреча"}, {"t": "Си Цзиньпин, Трамп и Путин"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Авто", "reg": "США", "d": "6 ноя", "h": "Tesla свернёт выпуск Cybertruck к середине 2027 года из-за слабых продаж", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Выпуск Cybertruck свернут к середине 2027 года"}, {"t": "Причина: слабые продажи"}], "link": "business-standard.com · World News, 7 ноя"}, {"cat": "Бизнес", "reg": "Доха", "d": "5 ноя", "h": "На инвестфоруме в Дохе обсуждали, как превращать инвестиции в рабочие места", "src": "Euronews", "col": "#5EE6C8", "facts": [{"t": "Всемирный инвестиционный форум в Дохе"}, {"t": "Тема: как превращать инвестиции в рабочие места"}], "link": "euronews.com · 5 ноября 2026"}, {"cat": "Игры", "reg": "Мир", "d": "4 ноя", "h": "Rockstar: новой игре нужно до 212 ГБ, выход 19 ноября", "src": "Anadolu", "col": "#C49BFF", "facts": [{"t": "Объём игры: до 212 ГБ"}, {"t": "Выход: 19 ноября, PS5 и Xbox Series X|S"}], "link": "aa.com.tr · Anadolu"}, {"cat": "Язык", "reg": "Великобритания", "d": "3 ноя", "h": "Словарь Collins выбрал словом 2026 года «mogging»", "src": "NewsBytes", "col": "#C49BFF", "facts": [{"t": "Слово года 2026: «mogging»"}, {"t": "Выбор словаря Collins"}], "link": "newsbytesapp.com · World News"}, {"cat": "США", "reg": "Вашингтон", "d": "2 ноя", "h": "Американцы идут на промежуточные выборы в мрачном экономическом настроении", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Промежуточные выборы в США"}, {"t": "Избиратели в мрачном настроении из-за экономики"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Ближний Восток", "reg": "Иран", "d": "2 ноя", "h": "Иран: контакты с США продолжаются, хотя переговоры в Катаре без сделки", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Переговоры в Катаре закончились без сделки"}, {"t": "Контакты с США продолжаются"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Здоровье", "reg": "Индия", "d": "2 ноя", "h": "Одобрение индийского укола от ВИЧ даёт надежду бедным странам", "src": "Business Standard", "col": "#7FD67A", "facts": [{"t": "Одобрен укол для профилактики ВИЧ индийского производства"}, {"t": "Надежда для бедных стран"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Рынки", "reg": "Сингапур", "d": "2 ноя", "h": "Биткоин устоял после взлома Binance, но нервозность осталась", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "Биткоин около $78 300 (2 ноября)"}, {"t": "После взлома биржи Binance"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Азия", "reg": "Бангладеш", "d": "2 ноя", "h": "Протесты швейников закрыли 529 фабрик в Бангладеш", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Закрыто 529 фабрик"}, {"t": "Требование рабочих: минимум 30 000 така в месяц"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Европа", "reg": "Франция", "d": "2 ноя", "h": "Во Франции протесты стихают, в Германии прошли беспорядки", "src": "Business Standard", "col": "#FF8A7A", "facts": [{"t": "Во Франции протесты стихают"}, {"t": "В Германии прошли беспорядки"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Кибер", "reg": "Европа", "d": "2 ноя", "h": "Кибератаки отключили холодильники супермаркетов по всей Европе", "src": "Business Standard", "col": "#C49BFF", "facts": [{"t": "Атаки на холодильное оборудование супермаркетов"}, {"t": "Последствия: потери продуктов в Европе"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Кибер", "reg": "Россия, Украина", "d": "2 ноя", "h": "Россия и Украина сообщили о кибератаках на системы оповещения", "src": "Business Standard", "col": "#C49BFF", "facts": [{"t": "Атакованы системы оповещения о воздушной тревоге"}, {"t": "Об атаках сообщили обе стороны"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Нефть", "reg": "ОПЕК+", "d": "2 ноя", "h": "ОПЕК+ сохранит план добычи на декабрь", "src": "Business Standard", "col": "#5EE6C8", "facts": [{"t": "План добычи на декабрь без изменений"}, {"t": "На фоне перебоев из-за войны"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "США", "reg": "Суд", "d": "1 ноя", "h": "Судья отклонил иск Трампа о клевете против WSJ", "src": "Business Standard", "col": "#8FB7FF", "facts": [{"t": "Иск Трампа против WSJ отклонён"}, {"t": "Сумма иска — несколько миллиардов долларов"}], "link": "business-standard.com · World News, 2 ноя"}, {"cat": "Энергетика", "reg": "Украина", "d": "30 окт", "h": "Украина приостановила удары по российским НПЗ после давления США", "src": "FDD / WSJ", "col": "#7FD67A", "facts": [{"t": "Удары по российским НПЗ приостановлены"}, {"t": "После давления США"}], "link": "fdd.org · Overnight Brief, 30 окт"}, {"cat": "Китай", "reg": "Пекин", "d": "30 окт", "h": "Си требует больше лояльности, чистки сокращают партийную элиту", "src": "FDD / WSJ", "col": "#FF8A7A", "facts": [{"t": "Си требует большей лояльности"}, {"t": "Чистки сокращают партийную элиту"}], "link": "fdd.org · Overnight Brief, 30 окт"}];
     this.DX = 380; this.DY = 256; this.RM = 662; this.P = 1.6;
-    this.mode = 'bowl'; this.ox = 0; this.oy = 0; this.WU = 1360; this.HU = 1360; this.AX = 1; this.AY = 1; this.CX = 680; this.CY = 680; this.m = 1.45; this.lx = 330; this.ly = 250;
+    this.ox = 0; this.oy = 0; this.WU = 1360; this.HU = 1360; this.AX = 1; this.AY = 1; this.CX = 680; this.CY = 680; this.m = 1.45; this.lx = 330; this.ly = 250;
     this.state = { g: 0, f: 0, act: null, open: false, fs: 30, hint: 1 };
     this.pts = new Map(); this.drag = null; this.moved = false; this.pinch = null; this.suppress = 0; this.lastWheel = 0;
     this.tw = {}; this.panRaf = 0; this.hits = []; this.dirty = true; this.alive = true; this.downT = 0; this.cv = null; this.sprites = false;
   }
-  setMode(md) { this.mode = md; this.P = 1.6; this.dirty = true; }
   componentDidMount() {
-    window.__dome = this;
     const loop = () => { if (!this.alive) return; try { this.frame(); } catch (err) { } requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { this.sprites = false; this.dirty = true; });
@@ -135,16 +131,11 @@ class Component extends DCLogic {
     const AX = this.AX, AY = this.AY, dxn = dx / AX, dyn = dy / AY;
     const RM = this.RM, P = this.P, K = RM * P / M, r = Math.hypot(dxn, dyn), u = r / K, R = RM * (1 - Math.pow(1 + u, -P));
     const st = r < 0.5 ? M : R / r, sr = (RM * P / K) * Math.pow(1 + u, -P - 1), s = st * Math.pow(Math.max(sr / st, 0.05), 0.18);
-    return { r, u, R, s, st, sr0: sr, X: r < 0.5 ? 0 : dxn / r * R * AX, Y: r < 0.5 ? 0 : dyn / r * R * AY, K };
-  }
-  projBowl(dx, dy, M) {
-    const AX = this.AX, AY = this.AY, dxn = dx / AX, dyn = dy / AY, f = 618, Rs = f / M, r = Math.hypot(dxn, dyn), phi = r / Rs;
-    const R = f * Math.tan(Math.min(phi, 1.45)), st = r < 0.5 ? M : R / r, srr = M / Math.pow(Math.cos(Math.min(phi, 1.45)), 2), sr = st * Math.pow(srr / st, 0.8);
-    return { r, u: phi, R, s: Math.sqrt(sr * st), sr, st, X: r < 0.5 ? 0 : dxn / r * R * AX, Y: r < 0.5 ? 0 : dyn / r * R * AY, K: Rs, bowl: true };
+    return { r, u, R, s, X: r < 0.5 ? 0 : dxn / r * R * AX, Y: r < 0.5 ? 0 : dyn / r * R * AY, K };
   }
   squeeze(p, cmp) {
-    if (cmp <= 0 || p.r < 0.5) return p; const k = p.R / this.RM, push = (p.bowl ? 90 : 110) * cmp * Math.pow(Math.max(0, 1 - (p.bowl ? Math.min(1, p.R / 900) : k)), 1.4), R = p.R + push, s = p.s * (1 - 0.1 * cmp);
-    return Object.assign({}, p, { R, s, sr: p.sr ? p.sr * (1 - 0.1 * cmp) : undefined, st: p.st ? p.st * (1 - 0.1 * cmp) : undefined, X: p.X / p.R * R, Y: p.Y / p.R * R });
+    if (cmp <= 0 || p.r < 0.5) return p; const k = p.R / this.RM, push = 110 * cmp * Math.pow(Math.max(0, 1 - k), 1.4), R = p.R + push, s = p.s * (1 - 0.1 * cmp);
+    return { r: p.r, u: p.u, R, s, X: p.X / p.R * R, Y: p.Y / p.R * R, K: p.K };
   }
   frame() {
     const cv = this.cv; if (!cv) return;
@@ -159,7 +150,6 @@ class Component extends DCLogic {
     const M = this.m, g = this.state.g, cmp = Math.min(1, g / 0.62), act = this.state.act, acc = this.props.accent ?? '#FFB547';
     const c = cv.getContext('2d'); c.setTransform(pr, 0, 0, pr, 0, 0); c.globalAlpha = 1; c.fillStyle = '#07080A'; c.fillRect(0, 0, WU, HU);
     c.globalAlpha = 1;
-    const bowl = this.mode === 'bowl';
     const K = this.RM * this.P / M, UMAX = Math.min(4.6, 3500 / K), rmax = UMAX * K, jr = Math.ceil(rmax * this.AY / this.DY) + 1, ir = Math.ceil(rmax * this.AX / this.DX) + 1;
     const j0 = Math.round(this.oy / this.DY), i0 = Math.round(this.ox / this.DX), list = [];
     for (let j = j0 - jr; j <= j0 + jr; j++) for (let i = i0 - ir; i <= i0 + ir; i++) {
@@ -176,52 +166,6 @@ class Component extends DCLogic {
     const snap = () => { const q = bb[ci]; if (!q || q[2] < q[0]) { snapped = true; return; }
       const x0 = Math.max(0, Math.floor(q[0] * pr) - 4), y0 = Math.max(0, Math.floor(q[1] * pr) - 4), x1 = Math.min(cv.width, Math.ceil(q[2] * pr) + 4), y1 = Math.min(cv.height, Math.ceil(q[3] * pr) + 4);
       if (x1 > x0 && y1 > y0) { sx.setTransform(1, 0, 0, 1, 0, 0); sx.globalAlpha = 1; sx.drawImage(cv, x0, y0, x1 - x0, y1 - y0, x0, y0, x1 - x0, y1 - y0); } snapped = true; };
-    if (bowl) {
-      const items = [];
-      for (const it of list) { const p = it.p; if (p.s < 0.07) continue;
-        const sq = cmp > 0 ? p.s / Math.max(1e-6, Math.sqrt((p.st || p.s) * (p.st || p.s))) : 1, st = (p.st || p.s) * sq, sr = st * Math.pow(Math.max((p.sr0 || st) / (p.st || st), 0.03), 0.7);
-        const th = Math.atan2(p.Y, p.X), cs = Math.cos(th), sn = Math.sin(th);
-        let fa = th * 180 / Math.PI; if (fa > 90) fa -= 180; if (fa <= -90) fa += 180;
-        const wgt = 0.85 * Math.min(1, p.u / 1.1), dl = wgt * fa * (1 - Math.abs(fa) / 90) * 2 * Math.PI / 180, cd = Math.cos(dl), sd = Math.sin(dl);
-        const a0 = sr * cs * cs + st * sn * sn, b0 = (sr - st) * cs * sn, d0 = sr * sn * sn + st * cs * cs;
-        const a = cd * a0 - sd * b0, b2 = sd * a0 + cd * b0, c2 = cd * b0 - sd * d0, d = sd * b0 + cd * d0;
-        const hx = Math.abs(a) * 180 + Math.abs(c2) * 118, hy = Math.abs(b2) * 180 + Math.abs(d) * 118;
-        const cxs = CX + p.X, cys = CY + p.Y; if (cxs + hx < 0 || cxs - hx > WU || cys + hy < 0 || cys - hy > HU) continue;
-        it.g = { a, b2, c2, d, hx, hy, cxs, cys, lens: p.u < 0.95 && p.s >= 0.4 && cmp < 0.5 }; items.push(it);
-        if (it.g.lens) { const q = bb[0]; q[0] = Math.min(q[0], cxs - hx); q[1] = Math.min(q[1], cys - hy); q[2] = Math.max(q[2], cxs + hx); q[3] = Math.max(q[3], cys + hy); } }
-      ci = 0; snapped = false;
-      for (const it of items) {
-        const { i, j, p } = it, G = it.g, ix = this.idx(i, j), n = this.NEWS[ix];
-        if (act && act.i === i && act.j === j) continue;
-        const k = it.k0; let o = Math.max(0, Math.min(1, (0.935 - k) / 0.05)); o = Math.max(o, k < 0.935 ? 0.14 : 0); if (o <= 0.01) continue;
-        const T = () => c.setTransform(pr * G.a, pr * G.b2, pr * G.c2, pr * G.d, pr * G.cxs, pr * G.cys);
-        const B = () => c.setTransform(pr, 0, 0, pr, 0, 0);
-        const x0 = G.cxs - G.hx, y0 = G.cys - G.hy, bw = 2 * G.hx, bh = 2 * G.hy;
-        hits.push({ i, j, x: x0, y: y0, w: bw, h: bh });
-        c.globalAlpha = o;
-        if (p.s < 0.24) { T(); c.fillStyle = 'rgba(12,14,18,0.42)'; c.fillRect(-180, -118, 360, 236); c.drawImage(this.fg[ix], -180, -118, 360, 236);
-          const q0 = Math.min(1, p.r / (K * 0.55)), dm0 = Math.min(0.8, 0.36 * q0 * q0 * (3 - 2 * q0) + 0.25 * cmp); c.globalAlpha = dm0 * o; c.fillStyle = '#07080A'; c.fillRect(-180, -118, 360, 236); B(); continue; }
-        if (G.lens) {
-          if (!snapped) snap();
-          for (let bnd = 1; bnd <= NB; bnd++) {
-            const t = bnd / NB, sm = t * t * (3 - 2 * t), ins = 118 * 0.72 * (bnd - 1) / NB, mg = 1 + (MMAX - 1) * sm;
-            c.save(); T(); c.beginPath(); this.rr(c, -180 + ins, -118 + ins, 360 - 2 * ins, 236 - 2 * ins, Math.max(2, 26 - ins * 0.6)); c.clip(); B();
-            const sw = bw / mg, shh = bh / mg; c.globalAlpha = 1; c.drawImage(S, (G.cxs - sw / 2) * pr, (G.cys - shh / 2) * pr, sw * pr, shh * pr, x0, y0, bw, bh);
-            c.globalAlpha = 0.34 * sm * o; c.fillStyle = '#0C0E12'; c.fillRect(x0, y0, bw, bh); c.restore();
-          }
-        } else { T(); c.fillStyle = 'rgba(12,14,18,0.42)'; c.beginPath(); this.rr(c, -180, -118, 360, 236, 26); c.fill(); B(); }
-        const vx = lx - G.cxs, vy = ly - G.cys, dd = Math.hypot(vx, vy) || 1, nr = Math.max(0, 1 - dd / 900);
-        T(); c.globalAlpha = o;
-        const gr = c.createLinearGradient(0, -118, 0, 118); gr.addColorStop(0, 'rgba(255,255,255,' + (0.10 + 0.18 * nr).toFixed(2) + ')'); gr.addColorStop(1, 'rgba(255,255,255,0.02)');
-        c.strokeStyle = gr; c.lineWidth = 1.2; c.beginPath(); this.rr(c, -179.5, -117.5, 359, 235, 26); c.stroke();
-        c.drawImage(this.fg[ix], -180, -118, 360, 236);
-        const q = Math.min(1, p.r / (K * 0.55)), dim = Math.min(0.8, 0.36 * q * q * (3 - 2 * q) + 0.25 * cmp);
-        if (dim > 0.01) { c.globalAlpha = dim * o; c.fillStyle = '#07080A'; c.beginPath(); this.rr(c, -180, -118, 360, 236, 26); c.fill(); c.globalAlpha = o; }
-        if (settled && i === ctr.i && j === ctr.j) { c.fillStyle = acc; c.beginPath(); this.rr(c, 360 - 130 - 180, 236 - 48 - 118, 112, 34, 17); c.fill();
-          c.fillStyle = '#1A1206'; c.font = '500 15px Inter, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('Открыть', 360 - 74 - 180, 236 - 31 - 118 + 0.5); c.textAlign = 'left'; }
-        B();
-      }
-    } else
     for (const it of list) {
       while (ci < cuts.length && it.p.r < cuts[ci]) { ci++; snapped = false; }
       const { i, j, p } = it, s = p.s, k = it.k0;
@@ -301,7 +245,6 @@ class Component extends DCLogic {
     if (now - (this.lastQ || 0) > 400) { const q0 = this.q || 1; let q1 = q0; if (this.ema > 14) q1 = Math.max(0.55, q0 - 0.15); else if (this.ema < 6 && q0 < 1) q1 = Math.min(1, q0 + 0.1); if (q1 !== q0) { this.q = q1; this.lastQ = now; this.ema = null; } }
   }
   renderVals() {
-    const dp = this.props.distortion; if (dp && dp !== this._dp) { this._dp = dp; this.setMode(dp === 'выпуклое' ? 'barrel' : 'bowl'); }
     const acc = this.props.accent ?? '#FFB547';
     const { g, f, fs } = this.state, M = this.m, act = this.state.act;
     const lerp = (a, b, t) => a + (b - a) * t, gg = Math.min(1, g), go = Math.max(0, (g - 0.62) / 0.38);
@@ -453,9 +396,6 @@ function fit() { const vw = window.innerWidth, vh = window.innerHeight, s = Math
   if (!st) return; st.style.width = w + 'px'; st.style.height = h + 'px'; st.style.margin = (-h / 2) + 'px 0 0 ' + (-w / 2) + 'px'; st.style.transform = 'scale(' + s + ')'; }
 window.addEventListener('resize', fit); fit();
 render(html`<${Component} />`, document.getElementById('app')); fit();
-const mdb = document.getElementById('md'), mdi = document.getElementById('mdi');
-const mdIcon = m => m === 'bowl' ? '<path d="M4 4c3 3 3 13 0 16"/><path d="M20 4c-3 3-3 13 0 16"/><path d="M9 12h6"/>' : '<path d="M7 4c-3 3-3 13 0 16"/><path d="M17 4c3 3 3 13 0 16"/><path d="M9 12h6"/>';
-mdb.addEventListener('click', () => { const d = window.__dome; if (!d) return; const m = d.mode === 'bowl' ? 'barrel' : 'bowl'; d.setMode(m); mdi.innerHTML = mdIcon(m); });
 const fsb = document.getElementById('fs');
 const canFs = !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen);
 if (!canFs || (window.navigator.standalone)) fsb.classList.add('hide');
