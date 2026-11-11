@@ -122,12 +122,26 @@ const guessCat = s => { const t = s.toLowerCase();
     ['Бизнес', /(инвест|выручк|акци|сделк|ipo|funding|raises|startup|стартап|увольн|layoff)/], ['Связь', /(5g|оператор|связ|telecom|интернет-провайдер)/], ['Право', /(суд|закон|штраф|регулятор|court|lawsuit|antitrust|fcc|ftc)/]];
   for (const [c, re] of R) if (re.test(t)) return c; return 'Софт'; };
 
+// Короткий анонс со страницы, когда лента не даёт описания (Hacker News): og:description или первый абзац, до ~450 знаков.
+async function pageLead(url) {
+  const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 10000);
+  try {
+    const r = await fetch(url, { signal: ctl.signal, headers: { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15', accept: 'text/html' } });
+    if (!r.ok || !/html/i.test(r.headers.get('content-type') || '')) return '';
+    const h = (await r.text()).slice(0, 800000);
+    const meta = n => { const m = new RegExp('<meta[^>]+(?:property|name)=["\']' + n + '["\'][^>]*>', 'i').exec(h); const c = m && /content=["\']([^"\']*)["\']/i.exec(m[0]); return c ? strip(c[1]) : ''; };
+    let lead = meta('og:description') || meta('description') || meta('twitter:description');
+    if (lead.length < 80) { const body = (/<article[\s\S]*?<\/article>/i.exec(h) || [h])[0]; const p = [...body.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map(m => strip(m[1])).find(t => t.length > 80); if (p && p.length > lead.length) lead = p; }
+    return lead.length >= 40 ? clip(lead, 450) : '';
+  } catch { return ''; } finally { clearTimeout(tm); }
+}
+
 let prev = {}; try { for (const n of JSON.parse(await readFile(OUT, 'utf8')).items || []) prev[n.id] = n; } catch {}
 const raw = (await Promise.all(FEEDS.map(getFeed))).flat();
 const seen = new Set(), fresh = [];
 for (const n of raw.sort((a, b) => b.date.localeCompare(a.date))) { const k = n.title.toLowerCase().slice(0, 60); if (seen.has(n.id) || seen.has(k)) continue; seen.add(n.id); seen.add(k); fresh.push(n); }
 const items = fresh.slice(0, MAX_ITEMS).map(n => prev[n.id] ? { ...n, ...pick(prev[n.id]) } : n);
-function pick(p) { const o = {}; for (const k of ['t', 's', 'f', 'c', 'ai']) if (p[k] != null) o[k] = p[k]; return o; }
+function pick(p) { const o = {}; for (const k of ['t', 's', 'f', 'c', 'ai', 'lead']) if (p[k] != null) o[k] = p[k]; return o; }
 
 if (KEY) {
   const todo = items.filter(n => !n.ai).slice(0, 80);
@@ -138,6 +152,10 @@ if (KEY) {
     catch (e) { console.log('Claude:', e.message); break; }
   }
 }
+{ const need = items.filter(n => !n.summary && n.lead === undefined);
+  for (let i = 0; i < need.length; i += 8) await Promise.all(need.slice(i, i + 8).map(async n => { n.lead = await pageLead(n.url); }));
+  for (const n of items) if (!n.summary && n.lead) n.summary = n.lead;
+  console.log('Анонсы со страниц:', need.length, 'запрошено, есть у', items.filter(n => n.lead).length); }
 for (const n of items) { if (!n.t) n.t = n.title; if (!n.c) n.c = guessCat(n.title + ' ' + n.summary); }
 await Promise.all(items.map(async n => { n.embed = await canEmbed(n.url); }));
 console.log('Встраивание:', [...embedCache.keys()].length, 'доменов, разрешено у', items.filter(n => n.embed).length, 'новостей');
