@@ -414,7 +414,7 @@ class Component extends DCLogic {
     };
     const ANG = [-125, -55, 0, 55, 125, 180], BR = ['54% 46% 50% 50% / 48% 54% 46% 52%', '46% 54% 52% 48% / 52% 46% 54% 48%', '50% 50% 46% 54% / 46% 52% 48% 54%', '52% 48% 54% 46% / 50% 48% 52% 50%', '48% 52% 50% 50% / 54% 50% 50% 46%', '50% 50% 52% 48% / 48% 52% 50% 50%'];
     this.dims(); const app = !!window.__cssVignette, PS = 200, asp = this.WU / this.HU, DXP = asp > 1 ? 22 : 26, SIN = 0.2 * PS / this.WU * 100;
-    const EDGE = [[50 - DXP, 0], [50 + DXP, 0], [100 - SIN, 50], [50 + DXP, 100], [50 - DXP, 100], [SIN, 50]];
+    const SINY = 0.24 * PS / this.HU * 100, EDGE = [[50 - DXP, SINY], [50 + DXP, SINY], [100 - SIN, 50], [50 + DXP, 100 - SINY], [50 - DXP, 100 - SINY], [SIN, 50]];
     const RX = app ? (this.WU / 2 - 100) / this.WU * 100 : 44.6, RY = app ? (this.HU / 2 - 100) / this.HU * 100 : 44.6, KEYS = ["home", "plus", "minus", "news", "rotate-clockwise-2", "volume", "player-stop", "text-decrease", "text-increase", "list-check", "arrow-up", "x", "arrow-back-up", "copy", "check"];
     const btns = DEF[screen].map((d, k) => { const rad = ANG[k] * Math.PI / 180, lpAct = screen === 'field' && k === 0 ? () => this.openPanel() : k === 5 ? () => this.openVoices() : null, lp = !!lpAct,
       o = { label: lp ? d[1] + (k === 0 ? ' (удерживайте — источники)' : ' (удерживайте — выбор голоса)') : d[1],
