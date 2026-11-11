@@ -54,6 +54,36 @@ function clean(node, base, doc) {
   }
 }
 
+// Чистка после Readability: меню, «хлебные крошки», блоки из ссылок, биография автора, мусор до начала текста и после конца.
+const txtLen = el => (el.textContent || '').replace(/\s+/g, ' ').trim().length;
+const linkLen = el => [...(el.querySelectorAll ? el.querySelectorAll('a') : [])].reduce((t, a) => t + txtLen(a), 0);
+const BIO = /^[A-ZА-ЯЁ][\p{L}.' -]{2,60}\s+(is|was|—|–|-)\s+(a|an|the)?\s*[\p{L} ,-]{0,60}(writer|reporter|editor|journalist|correspondent|columnist|contributor|author)\b/iu;
+function isReal(el) {
+  if (el.nodeType !== 1) return false; const t = el.tagName.toLowerCase();
+  if (t === 'p' || t === 'blockquote') { const n = txtLen(el); return n >= 80 && linkLen(el) / n < 0.4 && !BIO.test(el.textContent.trim()); }
+  return false;
+}
+function tidy(root) {
+  // 1. Блоки, где почти весь текст — ссылки (меню, теги, «читайте также»)
+  for (const el of [...root.querySelectorAll('ul, ol, p, h2, h3, h4, table')]) {
+    const n = txtLen(el); if (!n || el.querySelector('img, video, iframe')) continue;
+    if (linkLen(el) / n > 0.6 && n < 600) el.remove();
+  }
+  // 2. Биография автора в виде абзаца
+  for (const el of [...root.querySelectorAll('p')]) if (txtLen(el) < 400 && BIO.test(el.textContent.trim())) el.remove();
+  // 3. Всё до первого настоящего абзаца (кроме заголовков и картинок прямо перед ним)
+  const kids = [...root.childNodes]; const first = kids.findIndex(isReal);
+  if (first > 0) {
+    let keepFrom = first; while (keepFrom > 0) { const p = kids[keepFrom - 1]; if (p.nodeType === 1 && /^(figure|img|video|iframe)$/i.test(p.tagName) && txtLen(p) < 300) keepFrom--; else if (p.nodeType === 3 && !p.textContent.trim()) keepFrom--; else break; }
+    for (const k of kids.slice(0, keepFrom)) k.remove();
+  }
+  // 4. Голый текст и короткие обрывки после последнего настоящего абзаца
+  const k2 = [...root.childNodes]; let last = -1; k2.forEach((k, i) => { if (isReal(k) || (k.nodeType === 1 && /^(figure|ul|ol|pre|table|h2|h3)$/i.test(k.tagName) && txtLen(k) > 40)) last = i; });
+  if (last >= 0) for (const k of k2.slice(last + 1)) { if (k.nodeType === 3 || (k.nodeType === 1 && !k.querySelector('img, video, iframe') && txtLen(k) < 120)) k.remove(); }
+  // 5. Голые текстовые узлы прямо в корне — в абзацы
+  for (const k of [...root.childNodes]) if (k.nodeType === 3) { const t = k.textContent.replace(/\s+/g, ' ').trim(); if (t.length < 80) k.remove(); }
+}
+
 async function extract(target) {
   const r = await fetch(target, { redirect: 'follow', headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15', 'Accept': 'text/html,application/xhtml+xml', 'Accept-Language': 'ru,en;q=0.8' }, cf: { cacheTtl: 600, cacheEverything: true } });
   if (!r.ok) throw Object.assign(new Error('Сайт ответил ' + r.status), { status: 502 });
@@ -67,6 +97,7 @@ async function extract(target) {
   const { document: d2 } = parseHTML('<!doctype html><html><body><div id="r">' + article.content + '</div></body></html>');
   const root = d2.getElementById('r'); clean(root, base, d2);
   root.querySelectorAll('p, li, figcaption, blockquote').forEach(e => { if (!e.textContent.trim() && !e.querySelector('img, video, iframe')) e.remove(); });
+  tidy(root, d2);
   const words = (article.textContent || '').trim().split(/\s+/).length;
   return {
     url: base, title: article.title || meta('og:title'), byline: article.byline || meta('author') || '', site: article.siteName || meta('og:site_name') || new URL(base).hostname.replace(/^www\./, ''),
