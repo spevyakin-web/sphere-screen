@@ -1,0 +1,12 @@
+[
+  { "name": "CNews",        "lang": "ru", "url": "https://www.cnews.ru/inc/rss/news.xml" },
+  { "name": "Хабр",          "lang": "ru", "url": "https://habr.com/ru/rss/news/?fl=ru" },
+  { "name": "3DNews",       "lang": "ru", "url": "https://3dnews.ru/news/rss/" },
+  { "name": "iXBT",         "lang": "ru", "url": "https://www.ixbt.com/export/news.rss" },
+  { "name": "vc.ru",        "lang": "ru", "url": "https://vc.ru/rss/all" },
+  { "name": "TechCrunch",   "lang": "en", "url": "https://techcrunch.com/feed/" },
+  { "name": "The Verge",    "lang": "en", "url": "https://www.theverge.com/rss/index.xml" },
+  { "name": "Ars Technica", "lang": "en", "url": "https://feeds.arstechnica.com/arstechnica/index" },
+  { "name": "The Register", "lang": "en", "url": "https://www.theregister.com/headlines.atom" },
+  { "name": "Hacker News",  "lang": "en", "url": "https://hnrss.org/frontpage?points=150" }
+]
