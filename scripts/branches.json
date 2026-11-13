@@ -607,9 +607,9 @@
    "icon": "plane",
    "feeds": [
     {
-     "name": "Travel.ru",
-     "lang": "ru",
-     "url": "https://www.travel.ru/rss/"
+     "name": "The Points Guy",
+     "lang": "en",
+     "url": "https://thepointsguy.com/feed/"
     },
     {
      "name": "TourDom",
