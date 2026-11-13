@@ -564,7 +564,7 @@ class Component extends DCLogic {
       const k0 = p.R / this.RM; p = this.squeeze(p, cmp); list.push({ i, j, p, k0 });
     }
     list.sort((a, q) => q.p.r - a.p.r);
-    if (SPI && this.NEWS.length > 1 && this.spPt) { // светящаяся нить спирали — order по времени
+    if (false && SPI && this.NEWS.length > 1 && this.spPt) { // нить спирали отключена // светящаяся нить спирали — order по времени
       const last = this.SP[this.NEWS.length - 1], tmax = last ? last.t : 0, col = this.bcol || acc; c.save(); c.lineCap = 'round'; c.strokeStyle = col;
       const NBK = 7, paths = Array.from({ length: NBK }, () => []), fade = 1 - this.trA; let prev = this.squeeze(this.proj(-this.ox, -this.oy, M), cmp);
       for (let t = 0; t <= tmax + 0.001;) { const q = this.spPt(t); let p = this.proj(q.u * this.DX - this.ox, q.v * this.DY - this.oy, M);
