@@ -405,7 +405,7 @@ class Component extends DCLogic {
     if (!this.built) { this.build(); this.built = true; this.dirty = true; }
     const rect = cv.getBoundingClientRect(); if (!rect.width) return; this.dims();
     const WU = this.WU, HU = this.HU, CX = this.CX, CY = this.CY;
-    const prFull = Math.max(0.5, Math.min(1.25, rect.width * (window.devicePixelRatio || 1) / WU)), q = 1;
+    const prFull = Math.max(0.5, Math.min(1.25, rect.width * Math.min(2, window.devicePixelRatio || 1) / WU)), q = 1; // плотность не выше 2 точек на пиксель
     const pr = Math.max(0.45, prFull * q), W = Math.round(WU * pr), Hp = Math.round(HU * pr);
     if (cv.width !== W || cv.height !== Hp || !this.S) { cv.width = W; cv.height = Hp; this.S = this.mk(W, Hp); this.dirty = true; }
     if (!this.dirty) { const now = performance.now(); if (this.q < 1 && now - (this.lastDraw || 0) > 350 && now - (this.lastQ || 0) > 350) { this.q = 1; this.lastQ = now; this.dirty = true; } return; }
@@ -435,6 +435,7 @@ class Component extends DCLogic {
       const { i, j, p } = it, s = p.s, k = it.k0;
       let o = Math.max(0, Math.min(1, (0.935 - k) / 0.05)); o = Math.max(o, k < 0.935 ? 0.14 : 0); 
       if (act && act.i === i && act.j === j) continue; if (o <= 0.01) continue;
+      if (k - 0.45 * Math.max(360, 236) * s / this.RM > 0.9) continue; // целиком под тёмным краем купола — не видно, не рисуем
       const w = 360 * s, h = 236 * s, x = CX + p.X - w / 2, y = CY + p.Y - h / 2, rad = 26 * s, n = this.newsAt(i, j); if (!n) continue;
       c.globalAlpha = o;
       if (s < 0.11) { c.fillStyle = 'rgba(255,255,255,0.09)'; c.fillRect(x, y, w, h); c.fillStyle = n.col; c.globalAlpha = o * 0.6; c.fillRect(x + w * 0.08, y + h * 0.1, w * 0.3, Math.max(1, h * 0.08)); c.globalAlpha = o * (n.read ? 0.8 : 0.5); c.fillStyle = '#07080A'; c.fillRect(x, y, w, h); if (n.fav) { c.globalAlpha = o; c.fillStyle = '#FF3B30'; c.fillRect(x + w * 0.78, y, w * 0.22, Math.max(1, h * 0.2)); } continue; }
