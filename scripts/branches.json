@@ -138,14 +138,14 @@
      "url": "https://iz.ru/xml/rss/all.xml"
     },
     {
-     "name": "Газета.Ru",
+     "name": "Российская газета",
      "lang": "ru",
-     "url": "https://www.gazeta.ru/export/rss/lenta.xml"
+     "url": "https://rg.ru/xml/index.xml"
     },
     {
-     "name": "Фонтанка",
+     "name": "RT на русском",
      "lang": "ru",
-     "url": "https://www.fontanka.ru/fontanka.rss"
+     "url": "https://russian.rt.com/rss"
     }
    ]
   },
@@ -161,9 +161,9 @@
      "url": "https://www.kommersant.ru/RSS/section-economics.xml"
     },
     {
-     "name": "Банки.ру",
+     "name": "Frank Media",
      "lang": "ru",
-     "url": "https://www.banki.ru/xml/news.rss"
+     "url": "https://frankmedia.ru/feed"
     },
     {
      "name": "Финмаркет",
@@ -204,14 +204,14 @@
      "url": "https://vc.ru/rss/all"
     },
     {
-     "name": "Forbes Россия",
+     "name": "The Bell",
      "lang": "ru",
-     "url": "https://www.forbes.ru/newrss.xml"
+     "url": "https://thebell.io/feed"
     },
     {
-     "name": "Секрет фирмы",
+     "name": "Inc. Russia",
      "lang": "ru",
-     "url": "https://secretmag.ru/rss"
+     "url": "https://incrussia.ru/feed/"
     },
     {
      "name": "TechCrunch Startups",
@@ -252,9 +252,9 @@
      "url": "https://www.sports.ru/rss/all_news.xml"
     },
     {
-     "name": "ESPN",
+     "name": "Yahoo Sports",
      "lang": "en",
-     "url": "https://www.espn.com/espn/rss/news"
+     "url": "https://sports.yahoo.com/rss/"
     },
     {
      "name": "BBC Sport",
@@ -300,9 +300,9 @@
      "url": "https://www.nature.com/nature.rss"
     },
     {
-     "name": "New Scientist",
+     "name": "Quanta Magazine",
      "lang": "en",
-     "url": "https://www.newscientist.com/feed/home/"
+     "url": "https://www.quantamagazine.org/feed/"
     },
     {
      "name": "Phys.org",
@@ -333,9 +333,9 @@
      "url": "https://spacenews.com/feed/"
     },
     {
-     "name": "ESA",
+     "name": "Spaceflight Now",
      "lang": "en",
-     "url": "https://www.esa.int/rssfeed/Our_Activities/Space_News"
+     "url": "https://spaceflightnow.com/feed/"
     },
     {
      "name": "Universe Today",
@@ -356,9 +356,9 @@
    "icon": "car",
    "feeds": [
     {
-     "name": "Драйв",
+     "name": "За рулём",
      "lang": "ru",
-     "url": "https://www.drive.ru/export/rss.xml"
+     "url": "https://www.zr.ru/rss/"
     },
     {
      "name": "Autonews",
@@ -404,9 +404,9 @@
      "url": "https://dtf.ru/rss/all"
     },
     {
-     "name": "Канобу",
+     "name": "Shazoo",
      "lang": "ru",
-     "url": "https://kanobu.ru/rss/"
+     "url": "https://shazoo.ru/feed/rss"
     },
     {
      "name": "IGN",
@@ -475,9 +475,9 @@
    "icon": "music",
    "feeds": [
     {
-     "name": "The Flow",
-     "lang": "ru",
-     "url": "https://the-flow.ru/rss"
+     "name": "Stereogum",
+     "lang": "en",
+     "url": "https://www.stereogum.com/feed/"
     },
     {
      "name": "Rolling Stone",
@@ -508,14 +508,14 @@
    "icon": "palette",
    "feeds": [
     {
-     "name": "Горький",
+     "name": "Афиша Daily",
      "lang": "ru",
-     "url": "https://gorky.media/feed/"
+     "url": "https://daily.afisha.ru/rss/"
     },
     {
-     "name": "Артгид",
-     "lang": "ru",
-     "url": "https://artguide.com/rss"
+     "name": "Hyperallergic",
+     "lang": "en",
+     "url": "https://hyperallergic.com/feed/"
     },
     {
      "name": "The Guardian · Culture",
@@ -541,9 +541,9 @@
    "icon": "heart",
    "feeds": [
     {
-     "name": "Medportal",
+     "name": "Медвестник",
      "lang": "ru",
-     "url": "https://medportal.ru/rss/"
+     "url": "https://medvestnik.ru/content/rss"
     },
     {
      "name": "BBC Health",
@@ -607,14 +607,14 @@
    "icon": "plane",
    "feeds": [
     {
-     "name": "АТОР",
+     "name": "Турпром",
      "lang": "ru",
-     "url": "https://www.atorus.ru/rss"
+     "url": "https://www.tourprom.ru/rss/"
     },
     {
-     "name": "Profi.Travel",
+     "name": "TourDom",
      "lang": "ru",
-     "url": "https://profi.travel/rss"
+     "url": "https://www.tourdom.ru/rss/"
     },
     {
      "name": "Skift",

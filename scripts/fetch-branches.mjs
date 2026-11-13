@@ -12,7 +12,7 @@ const KEY = process.env.ANTHROPIC_API_KEY || '';
 const MODEL = process.env.CLAUDE_MODEL || 'claude-haiku-5-5';
 const AI_PER_BRANCH = +(process.env.AI_PER_BRANCH || 12);
 const CATS = ['ИИ', 'Железо', 'Софт', 'Безопасность', 'Бизнес', 'Наука', 'Космос', 'Гаджеты', 'Игры', 'Интернет', 'Связь', 'Право'];
-const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '@', textNodeName: '#text', cdataPropName: '#cdata', removeNSPrefix: false });
+const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '@', textNodeName: '#text', cdataPropName: '#cdata', removeNSPrefix: false, processEntities: false, htmlEntities: false });
 const arr = v => (v == null ? [] : Array.isArray(v) ? v : [v]);
 const txt = v => { if (v == null) return ''; if (typeof v === 'string' || typeof v === 'number') return String(v); if (v['#cdata'] != null) return txt(v['#cdata']); if (v['#text'] != null) return txt(v['#text']); return ''; };
 const decode = s => s.replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)));
@@ -47,7 +47,7 @@ function findMedia(it, html, link) {
 async function getFeed(f) {
   const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 20000);
   try {
-    const r = await fetch(f.url, { signal: ctl.signal, headers: { 'user-agent': 'Mozilla/5.0 (compatible; sphere-screen/1.0; +https://spevyakin-web.github.io/sphere-screen/)', accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*' } });
+    const r = await fetch(f.url, { signal: ctl.signal, headers: { 'user-agent': 'Mozilla/5.0 (compatible; sphere-screen/1.0; +https://spevyakin-web.github.io/sphere-screen/)', accept: '*/*' } });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const x = parser.parse(await r.text());
     const rss = x.rss?.channel || x['rdf:RDF'];
