@@ -47,7 +47,8 @@ function findMedia(it, html, link) {
 async function getFeed(f) {
   const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 20000);
   try {
-    const r = await fetch(f.url, { signal: ctl.signal, headers: { 'user-agent': 'Mozilla/5.0 (compatible; sphere-screen/1.0; +https://spevyakin-web.github.io/sphere-screen/)', accept: '*/*' } });
+    let r = await fetch(f.url, { signal: ctl.signal, headers: { 'user-agent': 'sphere-screen/1.0 (+https://spevyakin-web.github.io/sphere-screen/)', accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*' } });
+    if (!r.ok && [403, 406, 419, 429].includes(r.status)) r = await fetch(f.url, { signal: ctl.signal, headers: { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15', accept: '*/*', 'accept-language': 'ru,en;q=0.8' } });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const x = parser.parse(await r.text());
     const rss = x.rss?.channel || x['rdf:RDF'];

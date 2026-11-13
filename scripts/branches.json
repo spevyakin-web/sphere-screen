@@ -143,9 +143,9 @@
      "url": "https://rg.ru/xml/index.xml"
     },
     {
-     "name": "RT на русском",
+     "name": "Москва 24",
      "lang": "ru",
-     "url": "https://russian.rt.com/rss"
+     "url": "https://www.m24.ru/rss.xml"
     }
    ]
   },
@@ -356,9 +356,9 @@
    "icon": "car",
    "feeds": [
     {
-     "name": "За рулём",
-     "lang": "ru",
-     "url": "https://www.zr.ru/rss/"
+     "name": "InsideEVs",
+     "lang": "en",
+     "url": "https://insideevs.com/rss/news/all/"
     },
     {
      "name": "Autonews",
@@ -541,9 +541,9 @@
    "icon": "heart",
    "feeds": [
     {
-     "name": "Медвестник",
+     "name": "Vademecum",
      "lang": "ru",
-     "url": "https://medvestnik.ru/content/rss"
+     "url": "https://vademec.ru/rss/"
     },
     {
      "name": "BBC Health",
@@ -607,9 +607,9 @@
    "icon": "plane",
    "feeds": [
     {
-     "name": "Турпром",
+     "name": "Travel.ru",
      "lang": "ru",
-     "url": "https://www.tourprom.ru/rss/"
+     "url": "https://www.travel.ru/rss/"
     },
     {
      "name": "TourDom",
