@@ -603,14 +603,11 @@ class Component extends DCLogic {
       hits.push({ i, j, x, y, w, h });
       const cx = x + w / 2, cy = y + h / 2;
       if (it.g) {
-        { const x0 = Math.max(0, Math.floor(x * pr) - 2), y0 = Math.max(0, Math.floor(y * pr) - 2), x1 = Math.min(cv.width, Math.ceil((x + w) * pr) + 2), y1 = Math.min(cv.height, Math.ceil((y + h) * pr) + 2);
-          if (x1 > x0 && y1 > y0) { sx.setTransform(1, 0, 0, 1, 0, 0); sx.globalAlpha = 1; sx.drawImage(cv, x0, y0, x1 - x0, y1 - y0, x0, y0, x1 - x0, y1 - y0); } } // свежий снимок того, что под этой карточкой
         const depth = Math.min(w, h) * 0.5;
         for (let bnd = 1; bnd <= NB; bnd++) {
           const t = bnd / NB, sm = t * t * (3 - 2 * t), ins = depth * 0.72 * (bnd - 1) / NB, mg = 1 + (MMAX - 1) * sm;
           const bw = w - 2 * ins, bh = h - 2 * ins; if (bw < 4 || bh < 4) break;
           const rx = x + ins, ry = y + ins; c.save(); c.beginPath(); this.rr(c, rx, ry, bw, bh, Math.max(2, rad - ins * 0.6)); c.clip();
-          if (bnd > 1) { c.globalAlpha = 1; const sx0 = cx + (rx - cx) / mg, sy0 = cy + (ry - cy) / mg; c.drawImage(S, sx0 * pr, sy0 * pr, bw / mg * pr, bh / mg * pr, rx, ry, bw, bh); }
           c.globalAlpha = 0.33 * sm * o; c.fillStyle = '#0D0F13'; c.fillRect(rx, ry, bw, bh);
           c.restore();
         }
