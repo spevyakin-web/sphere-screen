@@ -416,7 +416,8 @@ class Component extends DCLogic {
     if (/compact|espeak|robot/.test(n)) s -= 60; if (v.localService === false) s += 8; if (v.default) s += 3; return s; }
   vQuality(v) { const n = (v.name + ' ' + (v.voiceURI || '')).toLowerCase(); if (/natural|online|neural/.test(n)) return 'neural'; if (/premium|enhanced|улучш|siri/.test(n)) return 'enhanced'; if (/google/.test(n)) return 'Google'; return 'system'; }
   vList(lang) { this.loadVoices(); return (this.voices || []).filter(v => (v.lang || '').toLowerCase().startsWith(lang)).sort((p, q) => this.vScore(q) - this.vScore(p) || p.name.localeCompare(q.name)); }
-  pickVoice(lang) { const list = this.vList(lang), saved = this.ls('kupol.voice.' + lang); return (saved && list.find(v => v.voiceURI === saved)) || list[0] || null; }
+  pickVoice(lang) { const list = this.vList(lang), saved = this.ls('kupol.voice.' + lang); const daniel = lang === 'en' ? list.find(v => /^daniel\b/i.test(v.name)) : null; // по умолчанию для английского — Daniel (лучшая его версия на устройстве идёт первой)
+    return (saved && list.find(v => v.voiceURI === saved)) || daniel || list[0] || null; }
   speak(text, opts) {
     const ss = window.speechSynthesis; if (!ss || !window.SpeechSynthesisUtterance) { this.flashMsg && this.flashMsg('Speech is not supported in this browser'); return; }
     if ((!opts || opts.own) && this.sq) { this.stopSpeak(); return; }
