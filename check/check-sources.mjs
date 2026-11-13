@@ -70,7 +70,8 @@ async function check(f) {
 
 const all = topics.flatMap(t => t.feeds.map(f => ({ t, f })));
 const cache = new Map(); let i = 0;
-await Promise.all(Array.from({ length: 8 }, async () => {
+if (process.env.RECHECK) { try { const prev = JSON.parse(await readFile(new URL('results.json', HERE), 'utf8')); for (const t of prev.topics) for (const f of t.feeds) if (f.status === 'ok') cache.set(f.url, f); } catch {} }
+await Promise.all(Array.from({ length: +(process.env.CONC || 8) }, async () => {
   while (i < all.length) { const { f } = all[i++]; if (!cache.has(f.url)) { cache.set(f.url, null); cache.set(f.url, await check(f)); console.log(cache.get(f.url).status.padEnd(12), f.name); } }
 }));
 while ([...cache.values()].some(v => v === null)) await new Promise(r => setTimeout(r, 500));

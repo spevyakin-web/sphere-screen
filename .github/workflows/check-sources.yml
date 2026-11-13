@@ -17,7 +17,7 @@ jobs:
         with: { node-version: 20 }
       - run: npm install --no-audit --no-fund
         working-directory: scripts
-      - run: cp check/check-sources.mjs scripts/ && sed -i "s#new URL('./', import.meta.url)#new URL('../check/', import.meta.url)#" scripts/check-sources.mjs && node scripts/check-sources.mjs
+      - run: cp check/check-sources.mjs scripts/ && sed -i "s#new URL('./', import.meta.url)#new URL('../check/', import.meta.url)#" scripts/check-sources.mjs && RECHECK=1 CONC=2 node scripts/check-sources.mjs
       - name: Сохранить отчёт
         run: |
           git config user.name news-bot

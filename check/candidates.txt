@@ -8,6 +8,10 @@ The Guardian · Politics | https://www.theguardian.com/politics/rss
 BBC Politics | https://feeds.bbci.co.uk/news/politics/rss.xml
 CBS News · Politics | https://www.cbsnews.com/latest/rss/politics
 Axios | https://api.axios.com/feed/
+The Guardian · US politics | https://www.theguardian.com/us-news/us-politics/rss
+Fox News · Politics | https://moxie.foxnews.com/google-publisher/politics.xml
+ABC News · Politics | https://feeds.abcnews.com/abcnews/politicsheadlines
+PBS NewsHour · Politics | https://www.pbs.org/newshour/feeds/rss/politics
 ## world | В мире
 BBC World | https://feeds.bbci.co.uk/news/world/rss.xml
 The Guardian · World | https://www.theguardian.com/world/rss
@@ -38,6 +42,9 @@ Law&Crime | https://lawandcrime.com/feed/
 Courthouse News | https://www.courthousenews.com/feed/
 The Independent · Crime | https://www.independent.co.uk/topic/crime/rss
 CrimeReads | https://crimereads.com/feed/
+CBS News · Crime | https://www.cbsnews.com/latest/rss/crime
+The Guardian · US crime | https://www.theguardian.com/us-news/us-crime/rss
+Fox News · US | https://moxie.foxnews.com/google-publisher/us.xml
 ## defense | Армия и оборона
 Defense News | https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml
 Breaking Defense | https://breakingdefense.com/feed/
@@ -68,6 +75,10 @@ Yahoo Finance | https://finance.yahoo.com/news/rssindex
 Investing.com | https://www.investing.com/rss/news.rss
 Seeking Alpha · Market Currents | https://seekingalpha.com/market_currents.xml
 Nasdaq · Markets | https://www.nasdaq.com/feed/rssoutbound?category=Markets
+Kiplinger · Investing | https://www.kiplinger.com/feeds/investing
+Benzinga | https://www.benzinga.com/feed
+The Guardian · Markets | https://www.theguardian.com/business/stock-markets/rss
+Fortune · Finance | https://fortune.com/section/finance/feed/
 ## business | Бизнес
 Business Insider | https://feeds.businessinsider.com/custom/all
 Fortune | https://fortune.com/feed/fortune-feeds/?id=3230629
@@ -97,6 +108,9 @@ Decrypt | https://decrypt.co/feed
 Bitcoin Magazine | https://bitcoinmagazine.com/.rss/full/
 The Block | https://www.theblock.co/rss.xml
 CryptoSlate | https://cryptoslate.com/feed/
+Crypto Briefing | https://cryptobriefing.com/feed/
+Blockworks | https://blockworks.co/feed
+BeInCrypto | https://beincrypto.com/feed/
 ## personalfinance | Личные финансы
 NerdWallet | https://www.nerdwallet.com/blog/feed/
 Kiplinger | https://www.kiplinger.com/feeds/all
@@ -151,6 +165,8 @@ BBC Health | https://feeds.bbci.co.uk/news/health/rss.xml
 ScienceDaily · Health | https://www.sciencedaily.com/rss/health_medicine.xml
 KFF Health News | https://kffhealthnews.org/feed/
 The Guardian · Health | https://www.theguardian.com/society/health/rss
+PBS NewsHour · Health | https://www.pbs.org/newshour/feeds/rss/health
+Medical News Today | https://www.medicalnewstoday.com/newsfeeds/rss/medical_all.xml
 ## climate | Экология и климат
 The Guardian · Environment | https://www.theguardian.com/environment/rss
 Inside Climate News | https://insideclimatenews.org/feed/
@@ -284,6 +300,11 @@ ESPN | https://www.espn.com/espn/rss/news
 Yahoo Sports | https://sports.yahoo.com/rss/
 CBS Sports | https://www.cbssports.com/rss/headlines/
 The Guardian · Sport | https://www.theguardian.com/uk/sport/rss
+The Independent · Sport | https://www.independent.co.uk/sport/rss
+Sky Sports · Football | https://www.skysports.com/rss/11095
+The Guardian · Football | https://www.theguardian.com/football/rss
+Fox News · Sports | https://moxie.foxnews.com/google-publisher/sports.xml
+talkSPORT | https://talksport.com/feed/
 ## esports | Киберспорт
 Dot Esports | https://dotesports.com/feed
 Esports Insider | https://esportsinsider.com/feed
@@ -291,6 +312,10 @@ Dexerto | https://www.dexerto.com/feed/
 HLTV | https://www.hltv.org/rss/news
 Esports.gg | https://esports.gg/feed/
 Dot Esports · News | https://dotesports.com/news/feed
+Dexerto · Esports | https://www.dexerto.com/esports/feed/
+Esports.net | https://www.esports.net/feed/
+Inven Global | https://www.invenglobal.com/rss
+Esports Headlines | https://esportsheadlines.com/feed/
 ## fitness | Фитнес и ЗОЖ
 Men's Health | https://www.menshealth.com/rss/all.xml/
 Women's Health | https://www.womenshealthmag.com/rss/all.xml/
@@ -316,6 +341,7 @@ Airways Magazine | https://airwaysmag.com/feed/
 AeroTime | https://www.aerotime.aero/feed
 Streetsblog USA | https://usa.streetsblog.org/feed/
 Railway Technology | https://www.railway-technology.com/feed/
+The Guardian · Transport | https://www.theguardian.com/uk/transport/rss
 ## animals | Животные
 The Guardian · Wildlife | https://www.theguardian.com/environment/wildlife/rss
 Phys.org · Plants & Animals | https://phys.org/rss-feed/biology-news/plants-animals/
@@ -331,6 +357,7 @@ Met Office Blog | https://blog.metoffice.gov.uk/feed/
 The Guardian · Weather | https://www.theguardian.com/uk/weather/rss
 NOAA News | https://www.noaa.gov/rss.xml
 FOX Weather | https://www.foxweather.com/rss
+Severe Weather (US) · Live Science | https://www.livescience.com/feeds/tag/weather
 ## goodnews | Хорошие новости
 Good News Network | https://www.goodnewsnetwork.org/feed/
 Positive News | https://www.positive.news/feed/
@@ -346,3 +373,8 @@ UPI · Odd News | https://rss.upi.com/news/odd_news.rss
 Boing Boing | https://boingboing.net/feed
 Open Culture | https://www.openculture.com/feed
 Mental Floss | https://www.mentalfloss.com/rss.xml
+
+Popular Mechanics | https://www.popularmechanics.com/rss/all.xml/
+Neatorama | https://www.neatorama.com/feed
+Kottke | https://feeds.kottke.org/main
+IFLScience | https://www.iflscience.com/rss.xml
