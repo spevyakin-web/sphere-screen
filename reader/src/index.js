@@ -130,8 +130,20 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: Object.assign(cors(origin), { 'Access-Control-Max-Age': '86400' }) });
     if (request.method !== 'GET') return json({ error: 'Только GET' }, 405, origin);
     const url = new URL(request.url);
-    if (url.pathname === '/' && !url.searchParams.get('url')) return json({ ok: true, service: 'kupol-reader' }, 200, origin);
+    if (url.pathname === '/' && !url.searchParams.get('url') && !url.searchParams.get('feed')) return json({ ok: true, service: 'kupol-reader' }, 200, origin);
     if (!ALLOWED_ORIGINS.includes(origin) && !(env && env.ALLOW_ANY_ORIGIN)) return json({ error: 'Доступ только для купола' }, 403, origin);
+    if (url.searchParams.get('feed')) { // проверка RSS/Atom-ленты для редактора веток
+      let fu; try { fu = new URL(url.searchParams.get('feed')); } catch { return json({ ok: false, error: 'неверная ссылка' }, 400, origin); }
+      if (!/^https?:$/.test(fu.protocol) || privateHost(fu.hostname)) return json({ ok: false, error: 'недопустимый адрес' }, 400, origin);
+      try { const r = await fetch(fu.href, { redirect: 'follow', headers: { 'User-Agent': 'Mozilla/5.0 (compatible; sphere-screen/1.0)', Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*' } });
+        if (!r.ok) return json({ ok: false, error: 'сайт ответил ' + r.status }, 200, origin);
+        const t = (await r.text()).slice(0, 2e6), dec = x => (x || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
+        const isFeed = /<(rss|feed|rdf:RDF)[\s>]/i.test(t); if (!isFeed) return json({ ok: false, error: 'по ссылке не RSS/Atom, а ' + (/<html/i.test(t) ? 'обычная страница' : 'что-то другое') }, 200, origin);
+        const items = t.match(/<(item|entry)[\s>]/gi) || [], head = t.split(/<(item|entry)[\s>]/i)[0], title = dec((/<title[^>]*>([\s\S]*?)<\/title>/i.exec(head) || [])[1]);
+        const first = (/<(item|entry)[\s>][\s\S]*?<\/(item|entry)>/i.exec(t) || [''])[0], latest = dec((/<title[^>]*>([\s\S]*?)<\/title>/i.exec(first) || [])[1]);
+        const lang = dec((/<language>([\s\S]*?)<\/language>/i.exec(head) || [])[1]) || ((/xml:lang="([^"]+)"/i.exec(head) || [])[1] || '');
+        return json({ ok: true, title, count: items.length, latest, lang }, 200, origin, { 'Cache-Control': 'no-store' }); }
+      catch (e) { return json({ ok: false, error: 'не удалось открыть: ' + (e.message || e) }, 200, origin); } }
     let target; try { target = new URL(url.searchParams.get('url') || ''); } catch { return json({ error: 'Нужен параметр url' }, 400, origin); }
     if (!/^https?:$/.test(target.protocol) || privateHost(target.hostname)) return json({ error: 'Недопустимый адрес' }, 400, origin);
     const cache = typeof caches !== 'undefined' ? caches.default : null, key = new Request('https://kupol-reader.cache/v4/' + encodeURIComponent(target.href) + '#' + (ALLOWED_ORIGINS.includes(origin) ? origin : ''));

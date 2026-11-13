@@ -165,7 +165,7 @@ for (const b of branches) {
   for (const n of items) { n.summary = clip(n.summary || '', 1600); }
   await writeFile(new URL(b.id + '.json', BDIR), JSON.stringify({ id: b.id, updated: new Date().toISOString(), items }));
   const hour = items.filter(n => Date.now() - new Date(n.date) < 36e5).length, top = items[0];
-  index.push({ id: b.id, name: b.name, color: b.color, icon: b.icon, count: items.length, hour,
+  index.push({ id: b.id, name: b.name, color: b.color, icon: b.icon, hidden: !!b.hidden, count: items.length, hour,
     latest: top ? { t: top.t || top.title, src: top.src, date: top.date, img: top.img || '' } : null,
     heads: items.slice(1, 4).map(n => ({ t: n.t || n.title, src: n.src })),
     feeds: (b.feeds || []).map(f => ({ name: f.name, url: f.url, lang: f.lang, off: !!f.off, ok: f.off ? null : !!(f._st && f._st.ok), n: f._st ? f._st.n : 0, err: f._st && f._st.err || '' })) });
