@@ -354,6 +354,13 @@ class Component extends DCLogic {
     const sh = this.mk(220, 160), shx = sh.getContext('2d'); shx.shadowColor = 'rgba(0,0,0,0.6)'; shx.shadowBlur = 22; shx.shadowOffsetY = 12; shx.fillStyle = 'rgba(0,0,0,0.6)'; shx.beginPath(); this.rr(shx, 30, 24, 160, 105, 14); shx.fill(); this.shadow = sh;
     const vg = this.mk(512, 512), vx = vg.getContext('2d'), vgr = vx.createRadialGradient(256, 256, 128, 256, 256, 256);
     vgr.addColorStop(0, 'rgba(0,0,0,0)'); vgr.addColorStop(0.25, 'rgba(0,0,0,0.18)'); vgr.addColorStop(0.5, 'rgba(0,0,0,0.5)'); vgr.addColorStop(0.75, 'rgba(0,0,0,0.82)'); vgr.addColorStop(0.9, 'rgba(0,0,0,0.96)'); vgr.addColorStop(1, '#000'); vx.fillStyle = vgr; vx.fillRect(0, 0, 512, 512); this.vig = vg;
+    // Лёгкое стекло: затемнение от края к центру запекается один раз (вместо 4 слоёв с clip на каждом кадре)
+    { const FW = 360, FH = 236, FR = 26, fr = this.mk(FW, FH), fx = fr.getContext('2d'), im = fx.createImageData(FW, FH), d = im.data, hw = FW / 2 - FR, hh = FH / 2 - FR;
+      for (let yy = 0; yy < FH; yy++) for (let xx = 0; xx < FW; xx++) {
+        const qx = Math.abs(xx + 0.5 - FW / 2) - hw, qy = Math.abs(yy + 0.5 - FH / 2) - hh, sd = Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - FR;
+        const t = Math.max(0, Math.min(1, -sd / 78)), sm = t * t * (3 - 2 * t), a = 0.05 + 0.58 * sm, o = (yy * FW + xx) * 4;
+        d[o] = 12; d[o + 1] = 14; d[o + 2] = 18; d[o + 3] = Math.round(a * 255); }
+      fx.putImageData(im, 0, 0); this.frost = fr; }
   }
   proj(dx, dy, M) {
     const AX = this.AX, AY = this.AY, dxn = dx / AX, dyn = dy / AY;
@@ -365,6 +372,11 @@ class Component extends DCLogic {
     if (cmp <= 0 || p.r < 0.5) return p; const k = p.R / this.RM, push = 110 * cmp * Math.pow(Math.max(0, 1 - k), 1.4), R = p.R + push, s = p.s * (1 - 0.1 * cmp);
     return { r: p.r, u: p.u, R, s, X: p.X / p.R * R, Y: p.Y / p.R * R, K: p.K };
   }
+  // Градиент светлой кромки в координатах карточки 360×236: кэш по направлению (32 шага) и яркости (12 шагов)
+  rimGrad(c, ux, uy, nr) { const ak = ((Math.round(Math.atan2(uy, ux) / 6.2832 * 32) % 32) + 32) % 32, bk = Math.round(nr * 11), key = ak * 16 + bk;
+    const gc = this.gc || (this.gc = new Map()); let g = gc.get(key); if (g) return g;
+    const an = ak / 32 * 6.2832; g = c.createLinearGradient(180 + Math.cos(an) * 180, 118 + Math.sin(an) * 118, 180, 118);
+    g.addColorStop(0, 'rgba(255,255,255,' + (0.10 + 0.22 * bk / 11).toFixed(2) + ')'); g.addColorStop(1, 'rgba(255,255,255,0)'); gc.set(key, g); return g; }
   frame() {
     const cv = this.cv; if (!cv) return;
     if (!this.built) { this.build(); this.built = true; this.dirty = true; }
@@ -372,7 +384,8 @@ class Component extends DCLogic {
     const WU = this.WU, HU = this.HU, CX = this.CX, CY = this.CY;
     const prFull = Math.max(0.5, Math.min(1.5, rect.width * (window.devicePixelRatio || 1) / WU)), q = this.q || 1;
     const pr = Math.max(0.45, prFull * q), W = Math.round(WU * pr), Hp = Math.round(HU * pr);
-    if (cv.width !== W || cv.height !== Hp || !this.S) { cv.width = W; cv.height = Hp; this.S = this.mk(W, Hp); this.SB = this.mk(Math.ceil(W * 0.55), Math.ceil(Hp * 0.55)); this.SB2 = this.mk(Math.ceil(W * 0.22), Math.ceil(Hp * 0.22)); this.dirty = true; }
+    if (cv.width !== W || cv.height !== Hp || !this.SB) { cv.width = W; cv.height = Hp; this.SB = this.mk(Math.ceil(W * 0.55), Math.ceil(Hp * 0.55)); this.SB2 = this.mk(Math.ceil(W * 0.22), Math.ceil(Hp * 0.22)); this.dirty = true; }
+    if (!this.dirty && this.wasMoving) { this.wasMoving = false; this.dirty = true; } // после остановки — один полный кадр со стеклом
     if (!this.dirty) { const now = performance.now(); if (this.q < 1 && now - (this.lastDraw || 0) > 350 && now - (this.lastQ || 0) > 350) { this.q = 1; this.lastQ = now; this.dirty = true; } return; }
     this.dirty = false; this.pr = pr; this.budget = 6; const tStart = performance.now();
     const M = this.m, g = this.state.g, cmp = Math.min(1, g / 0.62), act = this.state.act, acc = this.props.accent ?? '#FFB547';
@@ -386,16 +399,15 @@ class Component extends DCLogic {
     }
     list.sort((a, q) => q.p.r - a.p.r);
     const ctr = this.nearestIJ(this.ox, this.oy), settled = Math.hypot(ctr.x - this.ox, ctr.y - this.oy) < 2 && !this.drag && !act;
-    const hits = [], lx = this.lx, ly = this.ly, NB = 4, MMAX = 1.2, S = this.S, sx = S.getContext('2d'), SB = this.SB, sbx = SB.getContext('2d'), QB = SB.width / cv.width, SB2 = this.SB2, sbx2 = SB2.getContext('2d'), QB2 = SB2.width / cv.width;
-    const cuts = [2.4, 1.7, 1.15, 0.7, 0.3].map(v => v * K); let ci = 0, snapped = false;
-    const bb = cuts.map(() => [1e9, 1e9, -1e9, -1e9]).concat([[1e9, 1e9, -1e9, -1e9]]);
+    const hits = [], lx = this.lx, ly = this.ly, SB = this.SB, sbx = SB.getContext('2d'), QB = SB.width / cv.width, SB2 = this.SB2, sbx2 = SB2.getContext('2d'), QB2 = SB2.width / cv.width;
+    const moving = !!this.drag || this.ox !== this.pox || this.oy !== this.poy || this.m !== this.pm; this.pox = this.ox; this.poy = this.oy; this.pm = this.m; this.wasMoving = moving;
+    let snapped = false; const bb = [1e9, 1e9, -1e9, -1e9]; // общая рамка всех крупных карточек — под один снимок фона
     for (const it of list) { const s = it.p.s; if (s < 0.4) continue; const w = 360 * s, h = 236 * s, x = CX + it.p.X - w / 2, y = CY + it.p.Y - h / 2;
-      let b = 0; while (b < cuts.length && it.p.r < cuts[b]) b++; it.b = b; const q = bb[b]; q[0] = Math.min(q[0], x); q[1] = Math.min(q[1], y); q[2] = Math.max(q[2], x + w); q[3] = Math.max(q[3], y + h); }
-    const snap = () => { const q = bb[ci]; if (!q || q[2] < q[0]) { snapped = true; return; }
+      const q = bb; q[0] = Math.min(q[0], x); q[1] = Math.min(q[1], y); q[2] = Math.max(q[2], x + w); q[3] = Math.max(q[3], y + h); }
+    const snap = () => { const q = bb; if (!q || q[2] < q[0]) { snapped = true; return; }
       const x0 = Math.max(0, Math.floor(q[0] * pr) - 4), y0 = Math.max(0, Math.floor(q[1] * pr) - 4), x1 = Math.min(cv.width, Math.ceil(q[2] * pr) + 4), y1 = Math.min(cv.height, Math.ceil(q[3] * pr) + 4);
-      if (x1 > x0 && y1 > y0) { sx.setTransform(1, 0, 0, 1, 0, 0); sx.globalAlpha = 1; sx.drawImage(cv, x0, y0, x1 - x0, y1 - y0, x0, y0, x1 - x0, y1 - y0); sbx.setTransform(1, 0, 0, 1, 0, 0); sbx.globalAlpha = 1; sbx.imageSmoothingQuality = 'medium'; sbx.drawImage(cv, x0, y0, x1 - x0, y1 - y0, x0 * QB, y0 * QB, (x1 - x0) * QB, (y1 - y0) * QB); sbx2.setTransform(1, 0, 0, 1, 0, 0); sbx2.globalAlpha = 1; sbx2.imageSmoothingQuality = 'high'; sbx2.drawImage(SB, x0 * QB, y0 * QB, (x1 - x0) * QB, (y1 - y0) * QB, x0 * QB2, y0 * QB2, (x1 - x0) * QB2, (y1 - y0) * QB2); } snapped = true; };
+      if (x1 > x0 && y1 > y0) { sbx.setTransform(1, 0, 0, 1, 0, 0); sbx.globalAlpha = 1; sbx.imageSmoothingQuality = 'low'; sbx.drawImage(cv, x0, y0, x1 - x0, y1 - y0, x0 * QB, y0 * QB, (x1 - x0) * QB, (y1 - y0) * QB); sbx2.setTransform(1, 0, 0, 1, 0, 0); sbx2.globalAlpha = 1; sbx2.imageSmoothingQuality = 'low'; sbx2.drawImage(SB, x0 * QB, y0 * QB, (x1 - x0) * QB, (y1 - y0) * QB, x0 * QB2, y0 * QB2, (x1 - x0) * QB2, (y1 - y0) * QB2); } snapped = true; };
     for (const it of list) {
-      while (ci < cuts.length && it.p.r < cuts[ci]) { ci++; snapped = false; }
       const { i, j, p } = it, s = p.s, k = it.k0;
       let o = Math.max(0, Math.min(1, (0.935 - k) / 0.05)); o = Math.max(o, k < 0.935 ? 0.14 : 0); 
       if (act && act.i === i && act.j === j) continue; if (o <= 0.01) continue;
@@ -413,35 +425,24 @@ class Component extends DCLogic {
       hits.push({ i, j, x, y, w, h });
       const cx = x + w / 2, cy = y + h / 2;
       if (s >= 0.4) {
-        if (!snapped) snap();
-        const depth = Math.min(w, h) * 0.5;
-        for (let bnd = 1; bnd <= NB; bnd++) {
-          const t = bnd / NB, sm = t * t * (3 - 2 * t), ins = depth * 0.72 * (bnd - 1) / NB, mg = 1 + (MMAX - 1) * sm;
-          const bw = w - 2 * ins, bh = h - 2 * ins; if (bw < 4 || bh < 4) break;
-          c.save(); c.beginPath(); this.rr(c, x + ins, y + ins, bw, bh, Math.max(2, rad - ins * 0.6)); c.clip();
-          const sw = w / mg, shh = h / mg; c.globalAlpha = 1;
-          const SRC = bnd === 1 ? SB2 : SB, pq = pr * (bnd === 1 ? QB2 : QB); c.drawImage(SRC, (cx - sw / 2) * pq, (cy - shh / 2) * pq, sw * pq, shh * pq, x, y, w, h);
-          if (bnd === 2) { const p2 = pr * QB2; c.globalAlpha = 0.45; c.drawImage(SB2, (cx - sw / 2) * p2, (cy - shh / 2) * p2, sw * p2, shh * p2, x, y, w, h); c.globalAlpha = 1; }
-          if (bnd === NB) { c.globalAlpha = 0.3; const d = 1.4 * s; c.drawImage(SB, (cx - sw / 2 + d) * pq, (cy - shh / 2 + d) * pq, sw * pq, shh * pq, x, y, w, h); }
-          c.globalAlpha = 0.34 * sm * o; c.fillStyle = '#0C0E12'; c.fillRect(x, y, w, h);
-          c.globalAlpha = 0.035 * sm * o; c.fillStyle = '#FFFFFF'; c.fillRect(x, y, w, h);
-          c.restore();
-        }
+        if (!snapped && !moving) snap();
         const vx = lx - cx, vy = ly - cy, dd = Math.hypot(vx, vy) || 1, ux = vx / dd, uy = vy / dd, nr = Math.max(0, 1 - dd / 900);
+        const mg = 1.1, sw = w / mg, shh = h / mg, p2 = pr * QB2;
         c.save(); c.beginPath(); this.rr(c, x, y, w, h, rad); c.clip();
+        c.globalAlpha = 1; if (moving) { c.fillStyle = '#06070A'; c.fillRect(x, y, w, h); } else c.drawImage(SB2, (cx - sw / 2) * p2, (cy - shh / 2) * p2, sw * p2, shh * p2, x, y, w, h); // в движении фон за стеклом не снимаем
+        c.globalAlpha = o; c.drawImage(this.frost, x, y, w, h);
         c.globalAlpha = o * (0.05 + 0.12 * nr); const bs = w * 1.2; c.drawImage(this.blob, cx + ux * w * 0.38 - bs / 2, cy + uy * h * 0.38 - bs / 2, bs, bs);
         c.restore();
-        const gr = c.createLinearGradient(cx + ux * w / 2, cy + uy * h / 2, cx, cy);
-        gr.addColorStop(0, 'rgba(255,255,255,' + (0.10 + 0.22 * nr).toFixed(2) + ')'); gr.addColorStop(1, 'rgba(255,255,255,0)');
-        c.globalAlpha = o; c.strokeStyle = gr; c.lineWidth = Math.max(0.6, 1.1 * s); c.beginPath(); this.rr(c, x + 0.5, y + 0.5, w - 1, h - 1, rad); c.stroke();
+        c.globalAlpha = o; c.strokeStyle = this.rimGrad(c, ux, uy, nr); c.lineWidth = Math.max(0.6, 1.1 * s) / s;
+        c.save(); c.translate(x, y); c.scale(s, s); c.beginPath(); this.rr(c, 0.5 / s, 0.5 / s, 360 - 1 / s, 236 - 1 / s, 26); c.stroke(); c.restore();
       } else {
         c.fillStyle = 'rgba(12,14,18,0.30)'; c.beginPath(); this.rr(c, x, y, w, h, rad); c.fill();
       }
       c.globalAlpha = o;
       { const sp = this.spr(n, s * pr); if (sp) c.drawImage(sp, x, y, w, h); else { c.globalAlpha = o * 0.5; c.fillStyle = '#F3F2EE'; c.fillRect(x + w * 0.06, y + h * 0.3, w * 0.7, h * 0.06); c.fillRect(x + w * 0.06, y + h * 0.42, w * 0.5, h * 0.06); c.globalAlpha = o; } }
       { const q = Math.min(1, p.r / (K * 0.55)), dim = Math.min(0.8, 0.5 * q * q * (3 - 2 * q) + 0.25 * cmp);
-        if (dim > 0.01) { c.globalAlpha = dim * o; c.fillStyle = '#07080A'; c.beginPath(); this.rr(c, x, y, w, h, rad); c.fill(); c.globalAlpha = o; } }
-      if (n.read) { c.globalAlpha = 0.58 * o; c.fillStyle = '#000'; c.beginPath(); this.rr(c, x, y, w, h, rad); c.fill(); c.globalAlpha = o; }
+        const da = 1 - (1 - dim * o) * (1 - (n.read ? 0.58 * o : 0)); // затемнение и «прочитано» — одной заливкой
+        if (da > 0.01) { c.globalAlpha = da; c.fillStyle = n.read ? '#020203' : '#07080A'; c.beginPath(); this.rr(c, x, y, w, h, rad); c.fill(); c.globalAlpha = o; } }
       if (n.fav) { const fr = Math.max(1.6, 7 * s); c.globalAlpha = o; c.fillStyle = '#FF3B30'; c.beginPath(); c.arc(x + w - 15 * s, y + 15 * s, fr, 0, 6.2832); c.fill(); }
       if (settled && i === ctr.i && j === ctr.j) {
         const pw = 112 * s, ph = 34 * s, px = x + w - pw - 18 * s, py = y + h - ph - 14 * s;
@@ -452,20 +453,15 @@ class Component extends DCLogic {
     const ag = this.actGeo;
     if (act && ag) {
       const fx = Math.abs(Math.cos(Math.PI * ag.f)), w = Math.max(2, ag.w * fx), h = ag.h, x = CX - w / 2, y = CY - h / 2, rad = Math.min(ag.br, w / 2), cx = CX, cy = CY;
-      ci = cuts.length; bb[ci] = [x, y, x + w, y + h]; snapped = false; snap();
-      const depth = Math.min(w, h) * 0.5, NA = 6;
-      for (let bnd = 1; bnd <= NA; bnd++) {
-        const t = bnd / NA, sm = t * t * (3 - 2 * t), ins = depth * 0.55 * (bnd - 1) / NA, mg = 1 + 0.16 * sm, bw = w - 2 * ins, bh = h - 2 * ins; if (bw < 4 || bh < 4) break;
-        c.save(); c.beginPath(); this.rr(c, x + ins, y + ins, bw, bh, Math.max(2, rad - ins * 0.6)); c.clip();
-        const sw = w / mg, shh = h / mg; c.globalAlpha = 1; c.drawImage(S, (cx - sw / 2) * pr, (cy - shh / 2) * pr, sw * pr, shh * pr, x, y, w, h);
-        if (bnd === NA) { c.globalAlpha = 0.35; const d = 2.5; c.drawImage(S, (cx - sw / 2 + d) * pr, (cy - shh / 2 + d) * pr, sw * pr, shh * pr, x, y, w, h); }
-        c.globalAlpha = (0.72 + 0.16 * Math.min(1, Math.max(0, (ag.f - 0.3) / 0.4))) * Math.min(1, t * 2.2); c.fillStyle = '#0B0D11'; c.fillRect(x, y, w, h);
-        c.globalAlpha = 0.03 * sm; c.fillStyle = '#FFFFFF'; c.fillRect(x, y, w, h);
-        c.restore();
-      }
+      bb[0] = x; bb[1] = y; bb[2] = x + w; bb[3] = y + h; snapped = false; snap();
       const vx = lx - cx, vy = ly - cy, dd = Math.hypot(vx, vy) || 1, ux = vx / dd, uy = vy / dd, nr = Math.max(0, 1 - dd / 900);
-      c.save(); c.beginPath(); this.rr(c, x, y, w, h, rad); c.clip(); c.globalAlpha = 0.05 + 0.10 * nr; const bs = Math.max(w, h) * 1.1;
-      c.drawImage(this.blob, cx + ux * w * 0.38 - bs / 2, cy + uy * h * 0.38 - bs / 2, bs, bs); c.restore();
+      const A = 0.72 + 0.16 * Math.min(1, Math.max(0, (ag.f - 0.3) / 0.4)), mg = 1.08, sw = w / mg, shh = h / mg, p1 = pr * QB, ed = Math.min(w, h) * 0.05;
+      c.save(); c.beginPath(); this.rr(c, x, y, w, h, rad); c.clip();
+      c.globalAlpha = 1; c.drawImage(SB, (cx - sw / 2) * p1, (cy - shh / 2) * p1, sw * p1, shh * p1, x, y, w, h);
+      c.globalAlpha = 0.3 * A; c.fillStyle = '#0B0D11'; c.fillRect(x, y, w, h);
+      c.globalAlpha = 0.05 + 0.10 * nr; const bs = Math.max(w, h) * 1.1; c.drawImage(this.blob, cx + ux * w * 0.38 - bs / 2, cy + uy * h * 0.38 - bs / 2, bs, bs);
+      c.restore();
+      if (w > 2 * ed + 4) { c.globalAlpha = Math.min(1, A * 1.12); c.fillStyle = '#0B0D11'; c.beginPath(); this.rr(c, x + ed, y + ed, w - 2 * ed, h - 2 * ed, Math.max(2, rad - ed * 0.6)); c.fill(); }
       const gr = c.createLinearGradient(cx + ux * w / 2, cy + uy * h / 2, cx, cy);
       gr.addColorStop(0, 'rgba(255,255,255,' + (0.12 + 0.22 * nr).toFixed(2) + ')'); gr.addColorStop(1, 'rgba(255,255,255,0)');
       c.globalAlpha = 1; c.strokeStyle = gr; c.lineWidth = 1.4; c.beginPath(); this.rr(c, x + 0.5, y + 0.5, w - 1, h - 1, rad); c.stroke();
