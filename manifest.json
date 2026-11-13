@@ -1,6 +1,6 @@
 {
-  "name": "Купол новостей",
-  "short_name": "Купол",
+  "name": "News Dome",
+  "short_name": "Dome",
   "start_url": "./",
   "scope": "./",
   "display": "fullscreen",
@@ -8,7 +8,17 @@
   "theme_color": "#000000",
   "orientation": "any",
   "icons": [
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
