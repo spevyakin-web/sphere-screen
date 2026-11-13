@@ -1,0 +1,348 @@
+# topic: id | name
+# then: feed name | url
+## politics | Политика
+Politico | https://rss.politico.com/politics-news.xml
+The Hill | https://thehill.com/homenews/feed/
+NPR Politics | https://feeds.npr.org/1014/rss.xml
+The Guardian · Politics | https://www.theguardian.com/politics/rss
+BBC Politics | https://feeds.bbci.co.uk/news/politics/rss.xml
+CBS News · Politics | https://www.cbsnews.com/latest/rss/politics
+Axios | https://api.axios.com/feed/
+## world | В мире
+BBC World | https://feeds.bbci.co.uk/news/world/rss.xml
+The Guardian · World | https://www.theguardian.com/world/rss
+Al Jazeera | https://www.aljazeera.com/xml/rss/all.xml
+NPR World | https://feeds.npr.org/1004/rss.xml
+DW | https://rss.dw.com/rdf/rss-en-world
+France 24 | https://www.france24.com/en/rss
+CBS News · World | https://www.cbsnews.com/latest/rss/world
+Sky News · World | https://feeds.skynews.com/feeds/rss/world.xml
+## society | Общество
+The Guardian · Society | https://www.theguardian.com/society/rss
+NPR National | https://feeds.npr.org/1003/rss.xml
+The Conversation | https://theconversation.com/global/articles.atom
+Vox | https://www.vox.com/rss/index.xml
+BBC UK | https://feeds.bbci.co.uk/news/uk/rss.xml
+ABC News · US | https://feeds.abcnews.com/abcnews/usheadlines
+## incidents | Происшествия
+Sky News · UK | https://feeds.skynews.com/feeds/rss/uk.xml
+CBS News · US | https://www.cbsnews.com/latest/rss/us
+The Guardian · US news | https://www.theguardian.com/us-news/rss
+BBC England | https://feeds.bbci.co.uk/news/england/rss.xml
+Fox News · US | https://moxie.foxnews.com/google-publisher/us.xml
+UPI Top News | https://rss.upi.com/news/top_news.rss
+## crime | Криминал
+The Guardian · UK crime | https://www.theguardian.com/uk/ukcrime/rss
+The Marshall Project | https://www.themarshallproject.org/rss/recent.rss
+Law&Crime | https://lawandcrime.com/feed/
+Courthouse News | https://www.courthousenews.com/feed/
+The Independent · Crime | https://www.independent.co.uk/topic/crime/rss
+CrimeReads | https://crimereads.com/feed/
+## defense | Армия и оборона
+Defense News | https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml
+Breaking Defense | https://breakingdefense.com/feed/
+Defense One | https://www.defenseone.com/rss/all/
+Military Times | https://www.militarytimes.com/arc/outboundfeeds/rss/?outputType=xml
+The War Zone | https://www.twz.com/feed
+Task & Purpose | https://taskandpurpose.com/feed/
+The Guardian · Military | https://www.theguardian.com/uk/military/rss
+## law | Право и законы
+SCOTUSblog | https://www.scotusblog.com/feed/
+Above the Law | https://abovethelaw.com/feed/
+The Guardian · Law | https://www.theguardian.com/law/rss
+JURIST | https://www.jurist.org/news/feed/
+Lawfare | https://www.lawfaremedia.org/feeds/lawfare
+Courthouse News | https://www.courthousenews.com/feed/
+## economy | Экономика
+The Guardian · Economics | https://www.theguardian.com/business/economics/rss
+NPR Economy | https://feeds.npr.org/1017/rss.xml
+CNBC Economy | https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258
+BBC Business | https://feeds.bbci.co.uk/news/business/rss.xml
+The Economist · Finance & economics | https://www.economist.com/finance-and-economics/rss.xml
+Marginal Revolution | https://marginalrevolution.com/feed
+## markets | Финансы и рынки
+MarketWatch Top Stories | https://feeds.content.dowjones.io/public/rss/mw_topstories
+MarketWatch Market Pulse | https://feeds.content.dowjones.io/public/rss/mw_marketpulse
+CNBC Finance | https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664
+Yahoo Finance | https://finance.yahoo.com/news/rssindex
+Investing.com | https://www.investing.com/rss/news.rss
+Seeking Alpha · Market Currents | https://seekingalpha.com/market_currents.xml
+Nasdaq · Markets | https://www.nasdaq.com/feed/rssoutbound?category=Markets
+## business | Бизнес
+Business Insider | https://feeds.businessinsider.com/custom/all
+Fortune | https://fortune.com/feed/fortune-feeds/?id=3230629
+Fast Company | https://www.fastcompany.com/latest/rss
+The Guardian · Business | https://www.theguardian.com/uk/business/rss
+CNBC Business | https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147
+Inc. | https://www.inc.com/rss/
+## realestate | Недвижимость
+Inman | https://www.inman.com/feed/
+HousingWire | https://www.housingwire.com/feed/
+The Real Deal | https://therealdeal.com/feed/
+Realtor.com News | https://www.realtor.com/news/feed/
+CNBC Real Estate | https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000115
+The Guardian · Property | https://www.theguardian.com/money/property/rss
+Curbed | https://www.curbed.com/rss/index.xml
+## careers | Работа и карьера
+The Guardian · Work & careers | https://www.theguardian.com/money/work-and-careers/rss
+HR Dive | https://www.hrdive.com/feeds/news/
+Ask a Manager | https://www.askamanager.org/feed
+CNBC Make It | https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=44877279
+Fast Company · Work Life | https://www.fastcompany.com/work-life/rss
+Business Insider · Careers | https://www.businessinsider.com/sai/careers/rss
+## crypto | Криптовалюты
+CoinDesk | https://www.coindesk.com/arc/outboundfeeds/rss/
+Cointelegraph | https://cointelegraph.com/rss
+Decrypt | https://decrypt.co/feed
+Bitcoin Magazine | https://bitcoinmagazine.com/.rss/full/
+The Block | https://www.theblock.co/rss.xml
+CryptoSlate | https://cryptoslate.com/feed/
+## personalfinance | Личные финансы
+NerdWallet | https://www.nerdwallet.com/blog/feed/
+Kiplinger | https://www.kiplinger.com/feeds/all
+The Guardian · Money | https://www.theguardian.com/money/rss
+The Penny Hoarder | https://www.thepennyhoarder.com/feed/
+Get Rich Slowly | https://www.getrichslowly.org/feed/
+CNBC Personal Finance | https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=21324812
+Mr. Money Mustache | https://www.mrmoneymustache.com/feed/
+## tech | Технологии / IT
+TechCrunch | https://techcrunch.com/feed/
+The Verge | https://www.theverge.com/rss/index.xml
+Ars Technica | https://feeds.arstechnica.com/arstechnica/index
+The Register | https://www.theregister.com/headlines.atom
+Wired | https://www.wired.com/feed/rss
+Engadget | https://www.engadget.com/rss.xml
+## ai | Искусственный интеллект
+MIT Technology Review · AI | https://www.technologyreview.com/topic/artificial-intelligence/feed
+VentureBeat · AI | https://venturebeat.com/category/ai/feed/
+The Verge · AI | https://www.theverge.com/rss/ai-artificial-intelligence/index.xml
+TechCrunch · AI | https://techcrunch.com/category/artificial-intelligence/feed/
+Ars Technica · AI | https://arstechnica.com/ai/feed/
+The Guardian · AI | https://www.theguardian.com/technology/artificialintelligenceai/rss
+MarkTechPost | https://www.marktechpost.com/feed/
+## gadgets | Гаджеты
+Gizmodo | https://gizmodo.com/feed
+9to5Google | https://9to5google.com/feed/
+9to5Mac | https://9to5mac.com/feed/
+Android Authority | https://www.androidauthority.com/feed/
+GSMArena | https://www.gsmarena.com/rss-news-reviews.php3
+Digital Trends | https://www.digitaltrends.com/feed/
+Engadget | https://www.engadget.com/rss.xml
+## science | Наука
+ScienceDaily | https://www.sciencedaily.com/rss/top/science.xml
+Phys.org | https://phys.org/rss-feed/
+Quanta Magazine | https://www.quantamagazine.org/feed/
+Live Science | https://www.livescience.com/feeds/all
+Science News | https://www.sciencenews.org/feed
+New Scientist | https://www.newscientist.com/feed/home/
+The Guardian · Science | https://www.theguardian.com/science/rss
+## space | Космос
+Space.com | https://www.space.com/feeds/all
+NASA | https://www.nasa.gov/news-release/feed/
+SpaceNews | https://spacenews.com/feed/
+Spaceflight Now | https://spaceflightnow.com/feed/
+Universe Today | https://www.universetoday.com/feed/
+Phys.org · Space | https://phys.org/rss-feed/space-news/
+## health | Медицина и здоровье
+STAT | https://www.statnews.com/feed/
+Medical Xpress | https://medicalxpress.com/rss-feed/
+NPR Health | https://feeds.npr.org/1128/rss.xml
+BBC Health | https://feeds.bbci.co.uk/news/health/rss.xml
+ScienceDaily · Health | https://www.sciencedaily.com/rss/health_medicine.xml
+KFF Health News | https://kffhealthnews.org/feed/
+The Guardian · Health | https://www.theguardian.com/society/health/rss
+## climate | Экология и климат
+The Guardian · Environment | https://www.theguardian.com/environment/rss
+Inside Climate News | https://insideclimatenews.org/feed/
+Grist | https://grist.org/feed/
+Carbon Brief | https://www.carbonbrief.org/feed/
+Mongabay | https://news.mongabay.com/feed/
+Yale Environment 360 | https://e360.yale.edu/feed.xml
+BBC Science & Environment | https://feeds.bbci.co.uk/news/science_and_environment/rss.xml
+## movies | Кино и сериалы
+Variety | https://variety.com/feed/
+Deadline | https://deadline.com/feed/
+The Hollywood Reporter | https://www.hollywoodreporter.com/feed/
+IndieWire | https://www.indiewire.com/feed/
+Screen Rant | https://screenrant.com/feed/
+Collider | https://collider.com/feed/
+/Film | https://www.slashfilm.com/feed/
+The Guardian · Film | https://www.theguardian.com/film/rss
+## music | Музыка
+Stereogum | https://www.stereogum.com/feed/
+Rolling Stone · Music | https://www.rollingstone.com/music/feed/
+Pitchfork | https://pitchfork.com/rss/news/
+Billboard | https://www.billboard.com/feed/
+NME | https://www.nme.com/feed
+Consequence | https://consequence.net/feed/
+The Guardian · Music | https://www.theguardian.com/music/rss
+## books | Книги
+The Guardian · Books | https://www.theguardian.com/books/rss
+Literary Hub | https://lithub.com/feed/
+Book Riot | https://bookriot.com/feed/
+Publishers Weekly | https://www.publishersweekly.com/pw/feeds/recent/index.xml
+NPR Books | https://feeds.npr.org/1032/rss.xml
+Electric Literature | https://electricliterature.com/feed/
+## arts | Театр и искусство
+Hyperallergic | https://hyperallergic.com/feed/
+ARTnews | https://www.artnews.com/feed/
+Artnet News | https://news.artnet.com/feed
+The Art Newspaper | https://www.theartnewspaper.com/rss.xml
+The Guardian · Stage | https://www.theguardian.com/stage/rss
+The Guardian · Art & design | https://www.theguardian.com/artanddesign/rss
+Colossal | https://www.thisiscolossal.com/feed/
+BroadwayWorld | https://www.broadwayworld.com/rss/news.xml
+Playbill | https://playbill.com/rss/news
+## games | Игры
+IGN | https://feeds.feedburner.com/ign/all
+Polygon | https://www.polygon.com/rss/index.xml
+Eurogamer | https://www.eurogamer.net/feed
+PC Gamer | https://www.pcgamer.com/rss/
+Rock Paper Shotgun | https://www.rockpapershotgun.com/feed
+Kotaku | https://kotaku.com/rss
+GameSpot | https://www.gamespot.com/feeds/news/
+VGC | https://www.videogameschronicle.com/feed/
+## celebs | Шоу-бизнес и знаменитости
+People | https://people.com/feed/
+E! Online | https://www.eonline.com/syndication/feeds/rssfeeds/topstories.xml
+Page Six | https://pagesix.com/feed/
+Just Jared | https://www.justjared.com/feed/
+Us Weekly | https://www.usmagazine.com/feed/
+TMZ | https://www.tmz.com/rss.xml
+The Guardian · Celebrity | https://www.theguardian.com/lifeandstyle/celebrity/rss
+## humor | Юмор и мемы
+The Onion | https://theonion.com/feed/
+Bored Panda | https://www.boredpanda.com/feed/
+McSweeney's | https://www.mcsweeneys.net/feeds/columns
+The Babylon Bee | https://babylonbee.com/feed
+Daily Dot | https://www.dailydot.com/feed/
+Know Your Meme · News | https://knowyourmeme.com/news.rss
+The Poke | https://www.thepoke.com/feed/
+## travel | Путешествия и туризм
+The Points Guy | https://thepointsguy.com/feed/
+Skift | https://skift.com/feed/
+Condé Nast Traveler | https://www.cntraveler.com/feed/rss
+The Guardian · Travel | https://www.theguardian.com/uk/travel/rss
+Atlas Obscura | https://www.atlasobscura.com/feeds/latest
+Travel + Leisure | https://www.travelandleisure.com/syndication/feed
+## food | Еда и рестораны
+Eater | https://www.eater.com/rss/index.xml
+Bon Appétit | https://www.bonappetit.com/feed/rss
+The Guardian · Food | https://www.theguardian.com/food/rss
+The Kitchn | https://www.thekitchn.com/main.rss
+Food52 | https://food52.com/blog.rss
+Smitten Kitchen | https://smittenkitchen.com/feed/
+Serious Eats | https://www.seriouseats.com/rss
+## fashion | Мода и красота
+Fashionista | https://fashionista.com/.rss/full/
+Vogue | https://www.vogue.com/feed/rss
+Harper's Bazaar | https://www.harpersbazaar.com/rss/all.xml/
+The Guardian · Fashion | https://www.theguardian.com/fashion/rss
+Allure | https://www.allure.com/feed/rss
+Hypebeast | https://hypebeast.com/feed
+WWD | https://wwd.com/feed/
+## home | Дом и интерьер
+Dezeen | https://www.dezeen.com/feed/
+Apartment Therapy | https://www.apartmenttherapy.com/main.rss
+Architectural Digest | https://www.architecturaldigest.com/feed/rss
+Design Milk | https://design-milk.com/feed/
+ArchDaily | https://feeds.feedburner.com/Archdaily
+The Guardian · Homes | https://www.theguardian.com/lifeandstyle/homes/rss
+Yanko Design | https://www.yankodesign.com/feed/
+## family | Семья и дети
+The Guardian · Family | https://www.theguardian.com/lifeandstyle/family/rss
+Fatherly | https://www.fatherly.com/feed
+Scary Mommy | https://www.scarymommy.com/feed
+Motherly | https://www.mother.ly/feed/
+Romper | https://www.romper.com/rss
+Parents | https://www.parents.com/feed/
+## psychology | Отношения и психология
+PsyPost | https://www.psypost.org/feed/
+Psyche | https://psyche.co/feed
+Greater Good (Berkeley) | https://greatergood.berkeley.edu/site/rss/articles
+Psychology Today | https://www.psychologytoday.com/us/front/feed
+The Guardian · Relationships | https://www.theguardian.com/lifeandstyle/relationships/rss
+The Gottman Institute | https://www.gottman.com/feed/
+## education | Образование
+EdSurge | https://www.edsurge.com/articles_rss
+The Hechinger Report | https://hechingerreport.org/feed/
+Inside Higher Ed | https://www.insidehighered.com/rss.xml
+Chalkbeat | https://www.chalkbeat.org/arc/outboundfeeds/rss/?outputType=xml
+The Guardian · Education | https://www.theguardian.com/education/rss
+K-12 Dive | https://www.k12dive.com/feeds/news/
+## religion | Религия
+Religion News Service | https://religionnews.com/feed/
+The Guardian · Religion | https://www.theguardian.com/world/religion/rss
+Christianity Today | https://www.christianitytoday.com/feed/
+National Catholic Reporter | https://www.ncronline.org/feed
+Crux | https://cruxnow.com/feed
+Aleteia | https://aleteia.org/feed/
+## sport | Спорт
+BBC Sport | https://feeds.bbci.co.uk/sport/rss.xml
+Sky Sports | https://www.skysports.com/rss/12040
+ESPN | https://www.espn.com/espn/rss/news
+Yahoo Sports | https://sports.yahoo.com/rss/
+CBS Sports | https://www.cbssports.com/rss/headlines/
+The Guardian · Sport | https://www.theguardian.com/uk/sport/rss
+## esports | Киберспорт
+Dot Esports | https://dotesports.com/feed
+Esports Insider | https://esportsinsider.com/feed
+Dexerto | https://www.dexerto.com/feed/
+HLTV | https://www.hltv.org/rss/news
+Esports.gg | https://esports.gg/feed/
+Dot Esports · News | https://dotesports.com/news/feed
+## fitness | Фитнес и ЗОЖ
+Men's Health | https://www.menshealth.com/rss/all.xml/
+Women's Health | https://www.womenshealthmag.com/rss/all.xml/
+Runner's World | https://www.runnersworld.com/rss/all.xml/
+Breaking Muscle | https://breakingmuscle.com/feed/
+Well+Good | https://www.wellandgood.com/feed/
+Nerd Fitness | https://www.nerdfitness.com/feed/
+Outside | https://www.outsideonline.com/feed/
+## auto | Авто и мото
+InsideEVs | https://insideevs.com/rss/articles/all/
+Electrek | https://electrek.co/feed/
+Motor1 | https://www.motor1.com/rss/articles/all/
+Carscoops | https://www.carscoops.com/feed/
+Autocar | https://www.autocar.co.uk/rss
+The Drive | https://www.thedrive.com/feed
+RideApart (moto) | https://www.rideapart.com/rss/articles/all/
+Visordown (moto) | https://www.visordown.com/rss.xml
+## transport | Транспорт и авиация
+Simple Flying | https://simpleflying.com/feed/
+One Mile at a Time | https://onemileatatime.com/feed/
+AirlineGeeks | https://airlinegeeks.com/feed/
+Airways Magazine | https://airwaysmag.com/feed/
+AeroTime | https://www.aerotime.aero/feed
+Streetsblog USA | https://usa.streetsblog.org/feed/
+Railway Technology | https://www.railway-technology.com/feed/
+## animals | Животные
+The Guardian · Wildlife | https://www.theguardian.com/environment/wildlife/rss
+Phys.org · Plants & Animals | https://phys.org/rss-feed/biology-news/plants-animals/
+ScienceDaily · Animals | https://www.sciencedaily.com/rss/plants_animals.xml
+Bored Panda · Animals | https://www.boredpanda.com/animals/feed/
+A-Z Animals | https://a-z-animals.com/feed/
+The Dodo | https://www.thedodo.com/rss
+Mongabay | https://news.mongabay.com/feed/
+## weather | Погода
+Severe Weather Europe | https://www.severe-weather.eu/feed/
+Yale Climate Connections | https://yaleclimateconnections.org/feed/
+Met Office Blog | https://blog.metoffice.gov.uk/feed/
+The Guardian · Weather | https://www.theguardian.com/uk/weather/rss
+NOAA News | https://www.noaa.gov/rss.xml
+FOX Weather | https://www.foxweather.com/rss
+## goodnews | Хорошие новости
+Good News Network | https://www.goodnewsnetwork.org/feed/
+Positive News | https://www.positive.news/feed/
+Reasons to be Cheerful | https://reasonstobecheerful.world/feed/
+The Optimist Daily | https://www.optimistdaily.com/feed/
+The Guardian · The Upside | https://www.theguardian.com/world/series/the-upside/rss
+Upworthy | https://www.upworthy.com/feed
+## weird | Необычное / Интересное
+Atlas Obscura | https://www.atlasobscura.com/feeds/latest
+Oddity Central | https://www.odditycentral.com/feed
+Smithsonian · Smart News | https://www.smithsonianmag.com/rss/smart-news/
+UPI · Odd News | https://rss.upi.com/news/odd_news.rss
+Boing Boing | https://boingboing.net/feed
+Open Culture | https://www.openculture.com/feed
+Mental Floss | https://www.mentalfloss.com/rss.xml

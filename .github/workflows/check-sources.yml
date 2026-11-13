@@ -1,0 +1,28 @@
+name: Проверка источников
+on:
+  push:
+    branches: [check-sources]
+    paths: ['check/candidates.txt', 'check/check-sources.mjs', '.github/workflows/check-sources.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: check-sources, cancel-in-progress: true }
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install --no-audit --no-fund
+        working-directory: scripts
+      - run: cp check/check-sources.mjs scripts/ && sed -i "s#new URL('./', import.meta.url)#new URL('../check/', import.meta.url)#" scripts/check-sources.mjs && node scripts/check-sources.mjs
+      - name: Сохранить отчёт
+        run: |
+          git config user.name news-bot
+          git config user.email news-bot@users.noreply.github.com
+          git add check/results.json check/report.md
+          git diff --cached --quiet && exit 0
+          git commit -m "Проверка источников: $(date -u +'%Y-%m-%d %H:%M') UTC"
+          git push
