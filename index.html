@@ -293,23 +293,31 @@ class Component extends DCLogic {
   vList(lang) { this.loadVoices(); return (this.voices || []).filter(v => (v.lang || '').toLowerCase().startsWith(lang)).sort((p, q) => this.vScore(q) - this.vScore(p) || p.name.localeCompare(q.name)); }
   pickVoice(lang) { const list = this.vList(lang), saved = this.ls('kupol.voice.' + lang); return (saved && list.find(v => v.voiceURI === saved)) || list[0] || null; }
   speak(text, opts) {
-    try { const ss = window.speechSynthesis; if (!ss) return;
-      if (!opts && (ss.speaking || this.state.speaking)) { this.stopSpeak(); return; }
-      ss.cancel();
-      const cyr = (text.match(/[а-яё]/gi) || []).length, lat = (text.match(/[a-z]/gi) || []).length, lang = (opts && opts.lang) || (lat > cyr * 1.5 ? 'en' : 'ru');
-      const voice = (opts && opts.voice) || this.pickVoice(lang);
-      const chunks = []; String(text).replace(/https?:\/\/\S+/g, '').split(/\n\s*\n/).forEach(par => {
-        const ss2 = par.replace(/\s+/g, ' ').trim().match(/[^.!?…]+[.!?…]+["»)]*|[^.!?…]+$/g) || []; let buf = '';
-        ss2.forEach(s => { s = s.trim(); if (!s) return; if ((buf + ' ' + s).length > 220 && buf) { chunks.push({ t: buf, p: 160 }); buf = s; } else buf = buf ? buf + ' ' + s : s; });
-        if (buf) chunks.push({ t: buf, p: 160 }); if (chunks.length) chunks[chunks.length - 1].p = 420; });
-      const token = {}; this.sq = token; let k = 0;
-      const next = () => { if (this.sq !== token) return; if (k >= chunks.length) { this.sq = null; if (!opts) this.setState({ speaking: false }); return; }
-        const ch = chunks[k++], u = new SpeechSynthesisUtterance(ch.t); if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = lang === 'en' ? 'en-US' : 'ru-RU';
-        u.rate = 0.96; u.pitch = 1; u.onend = () => setTimeout(next, ch.p); u.onerror = () => { if (this.sq === token) setTimeout(next, 50); }; ss.speak(u); };
-      if (!opts) this.setState({ speaking: true }); next();
-    } catch (e) { this.setState({ speaking: false }); }
+    const ss = window.speechSynthesis; if (!ss || !window.SpeechSynthesisUtterance) { this.flashMsg && this.flashMsg('Speech is not supported in this browser'); return; }
+    if ((!opts || opts.own) && this.sq) { this.stopSpeak(); return; }
+    const clean = String(text || '').replace(/https?:\/\/\S+/g, '').replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').replace(/[ \t]+/g, ' ').trim(); if (!clean) return;
+    const cyr = (clean.match(/[а-яё]/gi) || []).length, lat = (clean.match(/[a-z]/gi) || []).length, lang = (opts && opts.lang) || (cyr > lat ? 'ru' : 'en');
+    const voice = (opts && opts.voice) || this.pickVoice(lang), FULL = { ru: 'ru-RU', en: 'en-US', de: 'de-DE', fr: 'fr-FR', es: 'es-ES', it: 'it-IT', pt: 'pt-PT', uk: 'uk-UA', pl: 'pl-PL', tr: 'tr-TR', zh: 'zh-CN', ja: 'ja-JP', ko: 'ko-KR', nl: 'nl-NL', sv: 'sv-SE', cs: 'cs-CZ' };
+    // фразы до ~170 знаков: короткие куски не обрываются в Chrome и быстрее стартуют
+    const chunks = []; clean.split(/\n\s*\n/).forEach(par => { const sents = par.replace(/\s+/g, ' ').trim().split(/(?<=[.!?…]["»”)]*)\s+(?=[^a-zа-яё0-9])/u); let buf = '';
+      const push = t => { t = t.trim(); if (t) chunks.push({ t, p: 120 }); };
+      for (let s0 of sents) { s0 = s0.trim(); if (!s0) continue; while (s0.length > 170) { let cut = s0.lastIndexOf(', ', 170); if (cut < 60) cut = s0.lastIndexOf(' ', 170); if (cut < 40) cut = 170; if (buf) { push(buf); buf = ''; } push(s0.slice(0, cut + 1)); s0 = s0.slice(cut + 1).trim(); }
+        if (buf && (buf + ' ' + s0).length > 170) { push(buf); buf = s0; } else buf = buf ? buf + ' ' + s0 : s0; }
+      push(buf); if (chunks.length) chunks[chunks.length - 1].p = 380; });
+    if (!chunks.length) return;
+    const token = {}; this.sq = token; let k = 0; clearTimeout(this.sqWd); clearInterval(this.sqKa);
+    const finish = () => { if (this.sq !== token) return; this.sq = null; clearTimeout(this.sqWd); clearInterval(this.sqKa); this.setState({ speaking: false }); };
+    const say = () => { clearTimeout(this.sqWd); if (this.sq !== token) return; if (k >= chunks.length) { finish(); return; }
+      const ch = chunks[k++], u = new SpeechSynthesisUtterance(ch.t); u.lang = voice ? voice.lang : (FULL[lang] || lang); if (voice) u.voice = voice; u.rate = 1; u.pitch = 1; u.volume = 1;
+      let done = false; const go = () => { if (done) return; done = true; clearTimeout(this.sqWd); if (this.sq === token) setTimeout(say, ch.p); };
+      u.onend = go; u.onerror = e => { if (this.sq !== token) return; if (e && (e.error === 'interrupted' || e.error === 'canceled') && !ss.speaking) return go(); go(); };
+      this.sqWd = setTimeout(() => { if (this.sq === token && !ss.speaking) go(); else if (this.sq === token) this.sqWd = setTimeout(go, ch.t.length * 90 + 4000); }, ch.t.length * 95 + 2500); // страховка, если браузер не сообщил о конце фразы
+      ss.speak(u); if (ss.paused) ss.resume(); };
+    this.setState({ speaking: true });
+    if (ss.speaking || ss.pending) { ss.cancel(); setTimeout(say, 160); } else say(); // сразу после cancel Safari и Chrome иногда «теряют» фразу
+    if (/Chrome\//.test(navigator.userAgent) && !/Android|Mobile|Edg\//.test(navigator.userAgent)) this.sqKa = setInterval(() => { if (this.sq !== token) { clearInterval(this.sqKa); return; } if (ss.speaking && !ss.paused) { ss.pause(); ss.resume(); } }, 9000); // Chrome обрывает чтение через ~15 c
   }
-  stopSpeak() { this.sq = null; try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} if (this.state.speaking) this.setState({ speaking: false }); }
+  stopSpeak() { this.sq = null; clearTimeout(this.sqWd); clearInterval(this.sqKa); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} if (this.state.speaking) this.setState({ speaking: false }); }
   openVoices() { this.stopSpeak(); this.loadVoices(); const a = this.state.act && this.newsAt(this.state.act.i, this.state.act.j); this.setState({ vpanel: true, vtab: 'ru' }); setTimeout(() => this.loadVoices(), 300); }
   // Пульт и клавиатура: стрелки — соседняя карточка (или листание статьи), OK/Enter — открыть/перевернуть, Назад — закрыть.
   navFrom() { return this.gRaf && this.navT ? this.navT : this.nearestIJ(this.ox, this.oy); }
@@ -579,7 +587,7 @@ class Component extends DCLogic {
       readHere: e => { if (e) e.stopPropagation(); this.openReader(a); },
       favToggle: e => { if (e) { e.stopPropagation(); e.preventDefault(); } this.suppress = performance.now(); this.toggleFav(a); },
       rRetry: e => { if (e) e.stopPropagation(); if (this.rItem) this.openReader(this.rItem); },
-      closeReader: e => { if (e) e.stopPropagation(); this.rTok = (this.rTok || 0) + 1; this.setState({ reader: '', rdata: null, rerr: '' }); },
+      closeReader: e => { if (e) e.stopPropagation(); this.stopSpeak(); this.rTok = (this.rTok || 0) + 1; this.setState({ reader: '', rdata: null, rerr: '' }); },
       rFrame: this.state.rmode === 'frame', rRead: this.state.rmode !== 'frame', rLoad: this.state.rmode === 'read' && !this.state.rdata && !this.state.rerr, rErr: this.state.rerr || '',
       rd: this.state.rdata, rHtml: this.state.rdata ? { __html: this.state.rtr === 'on' && this.state.rdata.trHtml ? this.state.rdata.trHtml : this.state.rdata.html } : null, rTrShow: !!(this.state.rdata && this.state.rdata.foreign), rTrLabel: this.state.rtrLabel || 'Перевести', rTrOn: this.state.rtr === 'on', rTrLink: this.state.rtrLink || '', rTitle: this.state.rdata ? (this.state.rtr === 'on' && this.state.rdata.trTitle ? this.state.rdata.trTitle : this.state.rdata.title) : '', rTr: e => { if (e) e.stopPropagation(); this.translateReader(); }, a, fs, hintO: this.state.hint.toFixed(2),
       setCanvas: el => { if (el) { this.cv = el; this.dirty = true; } },
@@ -656,7 +664,7 @@ class Component extends DCLogic {
       wheel: e => {
         if (this.state.act) return;
         const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1;
-        if (e.ctrlKey) { this.dismissHint(); this.m = Math.max(this.MMIN, Math.min(this.MMAX, this.m * Math.exp(-e.deltaY * unit * 0.012))); this.dirty = true; return; }
+        if (e.ctrlKey && window.__gzoom) return; if (e.ctrlKey) { this.dismissHint(); this.m = Math.max(this.MMIN, Math.min(this.MMAX, this.m * Math.exp(-e.deltaY * unit * 0.012))); this.dirty = true; return; }
         this.dismissHint(); cancelAnimationFrame(this.panRaf);
         const dx = e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX, dy = e.shiftKey && !e.deltaX ? 0 : e.deltaY;
         this.ox += dx * unit * 0.55; this.oy += dy * unit * 0.55; this.dirty = true;
@@ -775,7 +783,11 @@ ${v.vp.list.map(vo => html`
 function fit() { const vw = window.innerWidth, vh = window.innerHeight, s = Math.min(vw, vh) / 1360, w = vw / s, h = vh / s, ENL = 1.12;
   for (const [sel, k] of [['.wrap', ENL], ['.ringl', 1]]) { const st = document.querySelector(sel); if (!st) continue; st.style.width = w + 'px'; st.style.height = h + 'px'; st.style.margin = (-h / 2) + 'px 0 0 ' + (-w / 2) + 'px'; st.style.transform = 'scale(' + (s * k) + ')'; } }
 window.addEventListener('resize', fit); fit();
-['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
+// Safari на Mac передаёт щипок трекпада событиями gesture* (а не колесом с Ctrl, как Chrome и Firefox) — превращаем их в масштаб купола
+let gm0 = null;
+document.addEventListener('gesturestart', e => { e.preventDefault(); const d = window.__dome; gm0 = d && navigator.maxTouchPoints === 0 && !d.state.reader && !d.state.ed && !d.state.act ? d.m : null; window.__gzoom = gm0 != null; if (gm0 != null) try { cancelAnimationFrame(d.tw && d.tw.m); d.stopGlide && d.stopGlide(); } catch (err) {} }, { passive: false });
+document.addEventListener('gesturechange', e => { e.preventDefault(); const d = window.__dome; if (!d || gm0 == null) return; d.dismissHint && d.dismissHint(); d.m = Math.max(d.MMIN, Math.min(d.MMAX, gm0 * e.scale)); d.dirty = true; }, { passive: false });
+document.addEventListener('gestureend', e => { e.preventDefault(); gm0 = null; setTimeout(() => { window.__gzoom = false; }, 120); }, { passive: false });
 document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
 document.addEventListener('error', e => { const t = e.target; if (t && t.tagName === 'IMG' && t.closest && t.closest('.rd-body, .rd-art')) { const f = t.closest('figure'); (f || t).style.display = 'none'; } }, true);
 document.addEventListener('keydown', e => { const d = window.__dome; if (!d) return; const t = e.target; if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) { if (e.key === 'Escape') t.blur(); return; } if (e.key === 'Enter' && t && t.closest && t.closest('button, a') && !t.closest('.ringl')) return; try { if (d.key(e)) e.preventDefault(); } catch (err) {} });
