@@ -1,4 +1,4 @@
-# Проверка источников — 2026-11-13T23:49 UTC
+# Проверка источников — 2026-11-13T23:52 UTC
 
 ✅ лента и режим чтения работают · 🟡 режим чтения открыл не все статьи · 📰 лента есть, режим чтения не открывает · ❌ лента не открылась
 
@@ -13,12 +13,16 @@
 | 📰 | [BBC Politics](https://feeds.bbci.co.uk/news/politics/rss.xml) | 60 | 5 | 0/2 |  | Сайт ответил 403 |
 | ✅ | [CBS News · Politics](https://www.cbsnews.com/latest/rss/politics) | 30 | 2 | 2/2 | 298, 403 |  |
 | 📰 | [Axios](https://api.axios.com/feed/) | 100 | 1 | 0/2 |  | Сайт ответил 403 |
+| ✅ | [The Guardian · US politics](https://www.theguardian.com/us-news/us-politics/rss) | 17 | 2 | 2/2 | 1282, 1108 |  |
+| ✅ | [Fox News · Politics](https://moxie.foxnews.com/google-publisher/politics.xml) | 25 | 3 | 2/2 | 182, 446 |  |
+| ✅ | [ABC News · Politics](https://feeds.abcnews.com/abcnews/politicsheadlines) | 25 | 4 | 2/2 | 421, 661 |  |
+| 📰 | [PBS NewsHour · Politics](https://www.pbs.org/newshour/feeds/rss/politics) | 20 | 0 | 0/2 |  | мало текста (57 слов); мало текста (62 слов) |
 
 ## В мире
 
 | | Источник | Новостей | Свежесть, ч | Чтение | Слов | Ошибка |
 |---|---|---|---|---|---|---|
-| 📰 | [BBC World](https://feeds.bbci.co.uk/news/world/rss.xml) | 25 | 1 | 0/2 |  | Сайт ответил 403 |
+| 📰 | [BBC World](https://feeds.bbci.co.uk/news/world/rss.xml) | 24 | 1 | 0/2 |  | Сайт ответил 403 |
 | ✅ | [The Guardian · World](https://www.theguardian.com/world/rss) | 45 | 0 | 2/2 | 304, 354 |  |
 | 🟡 | [Al Jazeera](https://www.aljazeera.com/xml/rss/all.xml) | 25 | 1 | 1/2 | 342 | Не удалось выделить текст статьи |
 | ✅ | [NPR World](https://feeds.npr.org/1004/rss.xml) | 10 | 5 | 2/2 | 1188, 1365 |  |
@@ -59,6 +63,9 @@
 | 📰 | [Courthouse News](https://www.courthousenews.com/feed/) | 10 | 2 | 0/2 |  | Сайт ответил 403 |
 | ❌ | [The Independent · Crime](https://www.independent.co.uk/topic/crime/rss) | 0 | — | 0/0 |  |  |
 | ✅ | [CrimeReads](https://crimereads.com/feed/) | 10 | 5 | 2/2 | 264, 798 |  |
+| 🟡 | [CBS News · Crime](https://www.cbsnews.com/latest/rss/crime) | 30 | 0 | 1/2 | 275 | мало текста (81 слов) |
+| 🟡 | [The Guardian · US crime](https://www.theguardian.com/us-news/us-crime/rss) | 20 | 7 | 1/2 | 505 | мало текста (50 слов) |
+| ✅ | [Fox News · US](https://moxie.foxnews.com/google-publisher/us.xml) | 25 | 3 | 2/2 | 1015, 671 |  |
 
 ## Армия и оборона
 
@@ -103,8 +110,12 @@
 | ✅ | [CNBC Finance](https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664) | 30 | 0 | 2/2 | 1895, 342 |  |
 | ❌ | [Yahoo Finance](https://finance.yahoo.com/news/rssindex) | 0 | — | 0/0 |  | лента: HTTP 404 |
 | ✅ | [Investing.com](https://www.investing.com/rss/news.rss) | 10 | 0 | 2/2 | 341, 291 |  |
-| 📰 | [Seeking Alpha · Market Currents](https://seekingalpha.com/market_currents.xml) | 7 | 1 | 0/2 |  | Не удалось выделить текст статьи |
+| 📰 | [Seeking Alpha · Market Currents](https://seekingalpha.com/market_currents.xml) | 7 | 0 | 0/2 |  | мало текста (94 слов); Не удалось выделить текст статьи |
 | ❌ | [Nasdaq · Markets](https://www.nasdaq.com/feed/rssoutbound?category=Markets) | 0 | — | 0/0 |  | лента: таймаут |
+| ❌ | [Kiplinger · Investing](https://www.kiplinger.com/feeds/investing) | 0 | — | 0/0 |  | лента: HTTP 404 |
+| 📰 | [Benzinga](https://www.benzinga.com/feed) | 25 | 3 | 0/2 |  | Сайт ответил 403 |
+| ✅ | [The Guardian · Markets](https://www.theguardian.com/business/stock-markets/rss) | 20 | 17 | 2/2 | 2746, 3309 |  |
+| ❌ | [Fortune · Finance](https://fortune.com/section/finance/feed/) | 0 | — | 0/0 |  | лента: HTTP 404 |
 
 ## Бизнес
 
@@ -123,7 +134,7 @@
 |---|---|---|---|---|---|---|
 | 📰 | [Inman](https://www.inman.com/feed/) | 18 | 296 | 0/2 |  | Сайт ответил 403 |
 | ✅ | [HousingWire](https://www.housingwire.com/feed/) | 10 | 2 | 2/2 | 1570, 582 |  |
-| ❌ | [The Real Deal](https://therealdeal.com/feed/) | 0 | — | 0/0 |  | лента: не RSS |
+| ❌ | [The Real Deal](https://therealdeal.com/feed/) | 0 | — | 0/0 |  | лента: не RSS, а HTML-страница |
 | ✅ | [Realtor.com News](https://www.realtor.com/news/feed/) | 30 | 1 | 2/2 | 786, 597 |  |
 | 🟡 | [CNBC Real Estate](https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000115) | 30 | 30 | 1/2 | 788 | мало текста (15 слов) |
 | ✅ | [The Guardian · Property](https://www.theguardian.com/money/property/rss) | 20 | 4 | 2/2 | 1109, 469 |  |
@@ -150,6 +161,9 @@
 | ✅ | [Bitcoin Magazine](https://bitcoinmagazine.com/.rss/full/) | 10 | 3 | 2/2 | 442, 458 |  |
 | 📰 | [The Block](https://www.theblock.co/rss.xml) | 20 | 3 | 0/2 |  | Сайт ответил 403 |
 | ✅ | [CryptoSlate](https://cryptoslate.com/feed/) | 10 | 0 | 2/2 | 368, 591 |  |
+| ✅ | [Crypto Briefing](https://cryptobriefing.com/feed/) | 30 | 0 | 2/2 | 438, 494 |  |
+| 📰 | [Blockworks](https://blockworks.co/feed) | 50 | 7450 | 0/2 |  | Сайт ответил 403 |
+| 📰 | [BeInCrypto](https://beincrypto.com/feed/) | 12 | 0 | 0/2 |  | Сайт ответил 403 |
 
 ## Личные финансы
 
@@ -168,7 +182,7 @@
 | | Источник | Новостей | Свежесть, ч | Чтение | Слов | Ошибка |
 |---|---|---|---|---|---|---|
 | ✅ | [TechCrunch](https://techcrunch.com/feed/) | 20 | 1 | 2/2 | 726, 891 |  |
-| 🟡 | [The Verge](https://www.theverge.com/rss/index.xml) | 10 | 0 | 1/2 | 442 | Сайт ответил 404 |
+| ✅ | [The Verge](https://www.theverge.com/rss/index.xml) | 10 | 2 | 2/2 | 442, 273 |  |
 | ✅ | [Ars Technica](https://feeds.arstechnica.com/arstechnica/index) | 20 | 1 | 2/2 | 279, 296 |  |
 | ✅ | [The Register](https://www.theregister.com/headlines.atom) | 50 | 3 | 2/2 | 786, 999 |  |
 | ✅ | [Wired](https://www.wired.com/feed/rss) | 50 | 1 | 2/2 | 465, 506 |  |
@@ -190,7 +204,7 @@
 
 | | Источник | Новостей | Свежесть, ч | Чтение | Слов | Ошибка |
 |---|---|---|---|---|---|---|
-| ❌ | [Gizmodo](https://gizmodo.com/feed) | 0 | — | 0/0 |  | лента: HTTP 403 |
+| 📰 | [Gizmodo](https://gizmodo.com/feed) | 20 | 1 | 0/2 |  | Сайт ответил 403 |
 | ✅ | [9to5Google](https://9to5google.com/feed/) | 100 | 2 | 2/2 | 164, 553 |  |
 | ✅ | [9to5Mac](https://9to5mac.com/feed/) | 100 | 1 | 2/2 | 1182, 273 |  |
 | ✅ | [Android Authority](https://www.androidauthority.com/feed/) | 80 | 0 | 2/2 | 1971, 557 |  |
@@ -225,13 +239,15 @@
 
 | | Источник | Новостей | Свежесть, ч | Чтение | Слов | Ошибка |
 |---|---|---|---|---|---|---|
-| 📰 | [STAT](https://www.statnews.com/feed/) | 20 | 1 | 0/2 |  | Не удалось выделить текст статьи |
+| 📰 | [STAT](https://www.statnews.com/feed/) | 20 | 2 | 0/2 |  | Не удалось выделить текст статьи |
 | 📰 | [Medical Xpress](https://medicalxpress.com/rss-feed/) | 30 | 1 | 0/2 |  | Сайт ответил 403 |
 | ✅ | [NPR Health](https://feeds.npr.org/1128/rss.xml) | 10 | 8 | 2/2 | 1250, 2169 |  |
 | 📰 | [BBC Health](https://feeds.bbci.co.uk/news/health/rss.xml) | 56 | 1 | 0/2 |  | Сайт ответил 403 |
 | ✅ | [ScienceDaily · Health](https://www.sciencedaily.com/rss/health_medicine.xml) | 60 | 11 | 2/2 | 1031, 930 |  |
 | 📰 | [KFF Health News](https://kffhealthnews.org/feed/) | 10 | 14 | 0/2 |  | мало текста (32 слов); мало текста (29 слов) |
 | ✅ | [The Guardian · Health](https://www.theguardian.com/society/health/rss) | 20 | 6 | 2/2 | 1717, 1703 |  |
+| ✅ | [PBS NewsHour · Health](https://www.pbs.org/newshour/feeds/rss/health) | 20 | 6 | 2/2 | 642, 1195 |  |
+| ❌ | [Medical News Today](https://www.medicalnewstoday.com/newsfeeds/rss/medical_all.xml) | 0 | — | 0/0 |  | лента: HTTP 403 |
 
 ## Экология и климат
 
@@ -293,7 +309,7 @@
 | 🟡 | [The Guardian · Art & design](https://www.theguardian.com/artanddesign/rss) | 23 | 1 | 1/2 | 1232 | Не удалось выделить текст статьи |
 | 🟡 | [Colossal](https://www.thisiscolossal.com/feed/) | 10 | 7 | 1/2 | 723 | мало текста (115 слов) |
 | ❌ | [BroadwayWorld](https://www.broadwayworld.com/rss/news.xml) | 0 | — | 0/0 |  | лента: HTTP 404 |
-| 📰 | [Playbill](https://playbill.com/rss/news) | 10 | 5 | 0/2 |  | Не удалось выделить текст статьи |
+| 📰 | [Playbill](https://playbill.com/rss/news) | 10 | 6 | 0/2 |  | Не удалось выделить текст статьи |
 
 ## Игры
 
@@ -325,7 +341,7 @@
 | | Источник | Новостей | Свежесть, ч | Чтение | Слов | Ошибка |
 |---|---|---|---|---|---|---|
 | 🟡 | [The Onion](https://theonion.com/feed/) | 12 | 2 | 1/2 | 156 | мало текста (84 слов) |
-| 🟡 | [Bored Panda](https://www.boredpanda.com/feed/) | 10 | -3 | 1/2 | 577 | HTTP 503 |
+| ✅ | [Bored Panda](https://www.boredpanda.com/feed/) | 10 | -3 | 2/2 | 914, 742 |  |
 | ❌ | [McSweeney's](https://www.mcsweeneys.net/feeds/columns) | 0 | — | 0/0 |  | лента: HTTP 404 |
 | ✅ | [The Babylon Bee](https://babylonbee.com/feed) | 16 | 3 | 2/2 | 272, 363 |  |
 | ✅ | [Daily Dot](https://www.dailydot.com/feed/) | 10 | 0 | 2/2 | 576, 517 |  |
@@ -363,9 +379,9 @@
 | 🟡 | [Vogue](https://www.vogue.com/feed/rss) | 30 | 0 | 1/2 | 2771 | HTTP 503 |
 | ✅ | [Harper's Bazaar](https://www.harpersbazaar.com/rss/all.xml/) | 50 | 2 | 2/2 | 1001, 770 |  |
 | ✅ | [The Guardian · Fashion](https://www.theguardian.com/fashion/rss) | 33 | 10 | 2/2 | 956, 773 |  |
-| 📰 | [Allure](https://www.allure.com/feed/rss) | 30 | 1 | 0/2 |  | HTTP 503 |
+| ✅ | [Allure](https://www.allure.com/feed/rss) | 30 | 1 | 2/2 | 1251, 2183 |  |
 | ✅ | [Hypebeast](https://hypebeast.com/feed) | 19 | 2 | 2/2 | 1317, 444 |  |
-| 🟡 | [WWD](https://wwd.com/feed/) | 10 | 1 | 1/2 | 389 | HTTP 503 |
+| ✅ | [WWD](https://wwd.com/feed/) | 10 | 1 | 2/2 | 865, 389 |  |
 
 ## Дом и интерьер
 
@@ -373,10 +389,10 @@
 |---|---|---|---|---|---|---|
 | ✅ | [Dezeen](https://www.dezeen.com/feed/) | 50 | 5 | 2/2 | 371, 522 |  |
 | 📰 | [Apartment Therapy](https://www.apartmenttherapy.com/main.rss) | 20 | 1 | 0/2 |  | Сайт ответил 403 |
-| 🟡 | [Architectural Digest](https://www.architecturaldigest.com/feed/rss) | 30 | 4 | 1/2 | 819 | HTTP 503 |
+| ✅ | [Architectural Digest](https://www.architecturaldigest.com/feed/rss) | 30 | 4 | 2/2 | 1056, 819 |  |
 | ✅ | [Design Milk](https://design-milk.com/feed/) | 12 | 2 | 2/2 | 718, 904 |  |
-| 📰 | [ArchDaily](https://feeds.feedburner.com/Archdaily) | 24 | 7 | 0/2 |  | HTTP 503; мало текста (26 слов) |
-| 🟡 | [The Guardian · Homes](https://www.theguardian.com/lifeandstyle/homes/rss) | 20 | 17 | 1/2 | 524 | HTTP 503 |
+| 📰 | [ArchDaily](https://feeds.feedburner.com/Archdaily) | 24 | 7 | 0/2 |  | мало текста (62 слов); мало текста (26 слов) |
+| ✅ | [The Guardian · Homes](https://www.theguardian.com/lifeandstyle/homes/rss) | 20 | 17 | 2/2 | 524, 1509 |  |
 | 🟡 | [Yanko Design](https://www.yankodesign.com/feed/) | 16 | 0 | 1/2 | 443 | HTTP 503 |
 
 ## Семья и дети
@@ -385,8 +401,8 @@
 |---|---|---|---|---|---|---|
 | ✅ | [The Guardian · Family](https://www.theguardian.com/lifeandstyle/family/rss) | 18 | 34 | 2/2 | 605, 1074 |  |
 | ✅ | [Fatherly](https://www.fatherly.com/feed) | 50 | 871 | 2/2 | 1525, 2024 |  |
-| 📰 | [Scary Mommy](https://www.scarymommy.com/feed) | 50 | 7 | 0/2 |  | HTTP 503 |
-| 📰 | [Motherly](https://www.mother.ly/feed/) | 10 | 4 | 0/2 |  | HTTP 503 |
+| ✅ | [Scary Mommy](https://www.scarymommy.com/feed) | 50 | 7 | 2/2 | 1334, 2949 |  |
+| ✅ | [Motherly](https://www.mother.ly/feed/) | 10 | 4 | 2/2 | 715, 950 |  |
 | ✅ | [Romper](https://www.romper.com/rss) | 50 | 268 | 2/2 | 1689, 1539 |  |
 | ❌ | [Parents](https://www.parents.com/feed/) | 0 | — | 0/0 |  | лента: HTTP 402 |
 
@@ -398,19 +414,19 @@
 | 📰 | [Psyche](https://psyche.co/feed) | 20 | 13 | 0/2 |  | HTTP 503; Не удалось выделить текст статьи |
 | ✅ | [Greater Good (Berkeley)](https://greatergood.berkeley.edu/site/rss/articles) | 50 | 55 | 2/2 | 1840, 852 |  |
 | ✅ | [Psychology Today](https://www.psychologytoday.com/us/front/feed) | 30 | 0 | 2/2 | 1068, 1225 |  |
-| 🟡 | [The Guardian · Relationships](https://www.theguardian.com/lifeandstyle/relationships/rss) | 20 | 10 | 1/2 | 1339 | HTTP 503 |
+| ✅ | [The Guardian · Relationships](https://www.theguardian.com/lifeandstyle/relationships/rss) | 20 | 10 | 2/2 | 735, 1339 |  |
 | ✅ | [The Gottman Institute](https://www.gottman.com/feed/) | 3 | 55 | 2/2 | 1682, 957 |  |
 
 ## Образование
 
 | | Источник | Новостей | Свежесть, ч | Чтение | Слов | Ошибка |
 |---|---|---|---|---|---|---|
-| 🟡 | [EdSurge](https://www.edsurge.com/articles_rss) | 50 | 72 | 1/2 | 1257 | HTTP 503 |
-| 🟡 | [The Hechinger Report](https://hechingerreport.org/feed/) | 10 | 9 | 1/2 | 908 | HTTP 503 |
+| 🟡 | [EdSurge](https://www.edsurge.com/articles_rss) | 50 | 72 | 1/2 | 475 | HTTP 503 |
+| ✅ | [The Hechinger Report](https://hechingerreport.org/feed/) | 10 | 9 | 2/2 | 2114, 908 |  |
 | ✅ | [Inside Higher Ed](https://www.insidehighered.com/rss.xml) | 10 | 3 | 2/2 | 526, 1219 |  |
-| 📰 | [Chalkbeat](https://www.chalkbeat.org/arc/outboundfeeds/rss/?outputType=xml) | 100 | 0 | 0/2 |  | HTTP 503 |
+| ✅ | [Chalkbeat](https://www.chalkbeat.org/arc/outboundfeeds/rss/?outputType=xml) | 100 | 0 | 2/2 | 550, 1030 |  |
 | ✅ | [The Guardian · Education](https://www.theguardian.com/education/rss) | 16 | 6 | 2/2 | 1717, 1225 |  |
-| 📰 | [K-12 Dive](https://www.k12dive.com/feeds/news/) | 10 | 3 | 0/2 |  | HTTP 503; мало текста (76 слов) |
+| 🟡 | [K-12 Dive](https://www.k12dive.com/feeds/news/) | 10 | 3 | 1/2 | 434 | мало текста (76 слов) |
 
 ## Религия
 
@@ -421,7 +437,7 @@
 | 🟡 | [Christianity Today](https://www.christianitytoday.com/feed/) | 10 | 8 | 1/2 | 1052 | мало текста (81 слов) |
 | ❌ | [National Catholic Reporter](https://www.ncronline.org/feed) | 0 | — | 0/0 |  | лента: HTTP 404 |
 | ✅ | [Crux](https://cruxnow.com/feed) | 10 | 9 | 2/2 | 1035, 1091 |  |
-| 🟡 | [Aleteia](https://aleteia.org/feed/) | 20 | 6 | 1/2 | 502 | HTTP 503 |
+| ✅ | [Aleteia](https://aleteia.org/feed/) | 20 | 6 | 2/2 | 502, 317 |  |
 
 ## Спорт
 
@@ -429,10 +445,15 @@
 |---|---|---|---|---|---|---|
 | 📰 | [BBC Sport](https://feeds.bbci.co.uk/sport/rss.xml) | 65 | 0 | 0/2 |  | Сайт ответил 403 |
 | ✅ | [Sky Sports](https://www.skysports.com/rss/12040) | 20 | 1 | 2/2 | 1627, 685 |  |
-| ❌ | [ESPN](https://www.espn.com/espn/rss/news) | 0 | — | 0/0 |  | лента: не RSS |
-| 📰 | [Yahoo Sports](https://sports.yahoo.com/rss/) | 50 | 0 | 0/2 |  | HTTP 503 |
+| 🟡 | [ESPN](https://www.espn.com/espn/rss/news) | 46 | 0 | 1/2 | 1974 | HTTP 503 |
+| 📰 | [Yahoo Sports](https://sports.yahoo.com/rss/) | 50 | 0 | 0/2 |  | HTTP 503; Не удалось выделить текст статьи |
 | 🟡 | [CBS Sports](https://www.cbssports.com/rss/headlines/) | 36 | 1 | 1/2 | 1074 | HTTP 503 |
-| 🟡 | [The Guardian · Sport](https://www.theguardian.com/uk/sport/rss) | 49 | 1 | 1/2 | 1548 | HTTP 503 |
+| 🟡 | [The Guardian · Sport](https://www.theguardian.com/uk/sport/rss) | 49 | 1 | 1/2 | 781 | HTTP 503 |
+| 🟡 | [The Independent · Sport](https://www.independent.co.uk/sport/rss) | 49 | 1 | 1/2 | 772 | HTTP 503 |
+| 📰 | [Sky Sports · Football](https://www.skysports.com/rss/11095) | 20 | 1 | 0/2 |  | HTTP 503; Не удалось выделить текст статьи |
+| 🟡 | [The Guardian · Football](https://www.theguardian.com/football/rss) | 58 | 1 | 1/2 | 1100 | HTTP 503 |
+| 🟡 | [Fox News · Sports](https://moxie.foxnews.com/google-publisher/sports.xml) | 25 | 19 | 1/2 | 1233 | HTTP 503 |
+| 🟡 | [talkSPORT](https://talksport.com/feed/) | 100 | 1 | 1/2 | 493 | HTTP 503 |
 
 ## Киберспорт
 
@@ -440,19 +461,23 @@
 |---|---|---|---|---|---|---|
 | ❌ | [Dot Esports](https://dotesports.com/feed) | 0 | — | 0/0 |  | лента: HTTP 403 |
 | 📰 | [Esports Insider](https://esportsinsider.com/feed) | 10 | 11 | 0/2 |  | Сайт ответил 403 |
-| 🟡 | [Dexerto](https://www.dexerto.com/feed/) | 50 | 3 | 1/2 | 497 | HTTP 503 |
-| 🟡 | [HLTV](https://www.hltv.org/rss/news) | 10 | 1 | 1/2 | 3058 | HTTP 503 |
+| ✅ | [Dexerto](https://www.dexerto.com/feed/) | 50 | 3 | 2/2 | 469, 497 |  |
+| 🟡 | [HLTV](https://www.hltv.org/rss/news) | 10 | 1 | 1/2 | 3058 | мало текста (98 слов) |
 | 📰 | [Esports.gg](https://esports.gg/feed/) | 10 | 1 | 0/2 |  | Сайт ответил 403 |
 | ❌ | [Dot Esports · News](https://dotesports.com/news/feed) | 0 | — | 0/0 |  | лента: HTTP 403 |
+| ✅ | [Dexerto · Esports](https://www.dexerto.com/esports/feed/) | 50 | 128 | 2/2 | 545, 387 |  |
+| 📰 | [Esports.net](https://www.esports.net/feed/) | 10 | 16 | 0/2 |  | Сайт ответил 403 |
+| ❌ | [Inven Global](https://www.invenglobal.com/rss) | 0 | — | 0/0 |  | лента: HTTP 404 |
+| ✅ | [Esports Headlines](https://esportsheadlines.com/feed/) | 10 | 12617 | 2/2 | 1272, 1724 |  |
 
 ## Фитнес и ЗОЖ
 
 | | Источник | Новостей | Свежесть, ч | Чтение | Слов | Ошибка |
 |---|---|---|---|---|---|---|
-| 🟡 | [Men's Health](https://www.menshealth.com/rss/all.xml/) | 50 | 5 | 1/2 | 1552 | HTTP 503 |
+| ✅ | [Men's Health](https://www.menshealth.com/rss/all.xml/) | 50 | 5 | 2/2 | 1552, 2013 |  |
 | ✅ | [Women's Health](https://www.womenshealthmag.com/rss/all.xml/) | 50 | 1 | 2/2 | 1712, 1188 |  |
 | 🟡 | [Runner's World](https://www.runnersworld.com/rss/all.xml/) | 50 | 3 | 1/2 | 751 | HTTP 503 |
-| 📰 | [Breaking Muscle](https://breakingmuscle.com/feed/) | 12 | 14862 | 0/2 |  | HTTP 503 |
+| 🟡 | [Breaking Muscle](https://breakingmuscle.com/feed/) | 12 | 14862 | 1/2 | 5786 | HTTP 503 |
 | ❌ | [Well+Good](https://www.wellandgood.com/feed/) | 0 | — | 0/0 |  | лента: не RSS, а HTML-страница |
 | ✅ | [Nerd Fitness](https://www.nerdfitness.com/feed/) | 10 | 542 | 2/2 | 676, 486 |  |
 | ✅ | [Outside](https://www.outsideonline.com/feed/) | 10 | 2 | 2/2 | 2179, 861 |  |
@@ -464,9 +489,9 @@
 | ✅ | [InsideEVs](https://insideevs.com/rss/articles/all/) | 20 | 6 | 2/2 | 825, 398 |  |
 | ✅ | [Electrek](https://electrek.co/feed/) | 150 | 2 | 2/2 | 670, 513 |  |
 | ✅ | [Motor1](https://www.motor1.com/rss/articles/all/) | 20 | 2 | 2/2 | 1126, 352 |  |
-| 🟡 | [Carscoops](https://www.carscoops.com/feed/) | 20 | 1 | 1/2 | 433 | HTTP 503 |
+| ✅ | [Carscoops](https://www.carscoops.com/feed/) | 20 | 1 | 2/2 | 525, 433 |  |
 | ❌ | [Autocar](https://www.autocar.co.uk/rss) | 0 | — | 0/0 |  | лента: не RSS |
-| 🟡 | [The Drive](https://www.thedrive.com/feed) | 16 | 4 | 1/2 | 480 | HTTP 503 |
+| ✅ | [The Drive](https://www.thedrive.com/feed) | 16 | 4 | 2/2 | 465, 480 |  |
 | ✅ | [RideApart (moto)](https://www.rideapart.com/rss/articles/all/) | 20 | 8 | 2/2 | 1857, 613 |  |
 | ❌ | [Visordown (moto)](https://www.visordown.com/rss.xml) | 0 | — | 0/0 |  | лента: HTTP 404 |
 
@@ -475,12 +500,13 @@
 | | Источник | Новостей | Свежесть, ч | Чтение | Слов | Ошибка |
 |---|---|---|---|---|---|---|
 | 🟡 | [Simple Flying](https://simpleflying.com/feed/) | 10 | 1 | 1/2 | 1539 | HTTP 503 |
-| 🟡 | [One Mile at a Time](https://onemileatatime.com/feed/) | 25 | 1 | 1/2 | 3364 | HTTP 503 |
+| 📰 | [One Mile at a Time](https://onemileatatime.com/feed/) | 25 | 1 | 0/2 |  | HTTP 503 |
 | 🟡 | [AirlineGeeks](https://airlinegeeks.com/feed/) | 10 | 2 | 1/2 | 478 | HTTP 503 |
 | ❌ | [Airways Magazine](https://airwaysmag.com/feed/) | 0 | — | 0/0 |  | лента: HTTP 404 |
 | ✅ | [AeroTime](https://www.aerotime.aero/feed) | 100 | 2 | 2/2 | 308, 332 |  |
 | 📰 | [Streetsblog USA](https://usa.streetsblog.org/feed/) | 10 | 19 | 0/2 |  | HTTP 503; мало текста (25 слов) |
 | 🟡 | [Railway Technology](https://www.railway-technology.com/feed/) | 10 | 35 | 1/2 | 1233 | HTTP 503 |
+| 🟡 | [The Guardian · Transport](https://www.theguardian.com/uk/transport/rss) | 20 | 43 | 1/2 | 407 | HTTP 503 |
 
 ## Животные
 
@@ -488,7 +514,7 @@
 |---|---|---|---|---|---|---|
 | 🟡 | [The Guardian · Wildlife](https://www.theguardian.com/environment/wildlife/rss) | 20 | 6 | 1/2 | 450 | HTTP 503 |
 | 📰 | [Phys.org · Plants & Animals](https://phys.org/rss-feed/biology-news/plants-animals/) | 30 | 0 | 0/2 |  | Сайт ответил 403 |
-| 📰 | [ScienceDaily · Animals](https://www.sciencedaily.com/rss/plants_animals.xml) | 60 | 36 | 0/2 |  | HTTP 503 |
+| ✅ | [ScienceDaily · Animals](https://www.sciencedaily.com/rss/plants_animals.xml) | 60 | 36 | 2/2 | 666, 597 |  |
 | ✅ | [Bored Panda · Animals](https://www.boredpanda.com/animals/feed/) | 10 | 16 | 2/2 | 455, 162 |  |
 | 🟡 | [A-Z Animals](https://a-z-animals.com/feed/) | 30 | 6 | 1/2 | 974 | HTTP 503 |
 | ❌ | [The Dodo](https://www.thedodo.com/rss) | 0 | — | 0/0 |  | лента: HTTP 404 |
@@ -504,6 +530,7 @@
 | 📰 | [The Guardian · Weather](https://www.theguardian.com/uk/weather/rss) | 20 | 101 | 0/2 |  | HTTP 503 |
 | ✅ | [NOAA News](https://www.noaa.gov/rss.xml) | 10 | 7 | 2/2 | 735, 2378 |  |
 | ❌ | [FOX Weather](https://www.foxweather.com/rss) | 0 | — | 0/0 |  | лента: HTTP 404 |
+| 📰 | [Severe Weather (US) · Live Science](https://www.livescience.com/feeds/tag/weather) | 50 | 200 | 0/2 |  | HTTP 503 |
 
 ## Хорошие новости
 
@@ -512,7 +539,7 @@
 | 🟡 | [Good News Network](https://www.goodnewsnetwork.org/feed/) | 50 | 4 | 1/2 | 557 | HTTP 503 |
 | ❌ | [Positive News](https://www.positive.news/feed/) | 0 | — | 0/0 |  | лента: HTTP 403 |
 | ✅ | [Reasons to be Cheerful](https://reasonstobecheerful.world/feed/) | 10 | 16 | 2/2 | 1582, 1793 |  |
-| 🟡 | [The Optimist Daily](https://www.optimistdaily.com/feed/) | 10 | 24 | 1/2 | 475 | HTTP 503 |
+| 📰 | [The Optimist Daily](https://www.optimistdaily.com/feed/) | 10 | 24 | 0/2 |  | HTTP 503 |
 | 🟡 | [The Guardian · The Upside](https://www.theguardian.com/world/series/the-upside/rss) | 20 | 19792 | 1/2 | 174 | HTTP 503 |
 | ✅ | [Upworthy](https://www.upworthy.com/feed) | 10 | 2 | 2/2 | 550, 814 |  |
 
@@ -527,3 +554,7 @@
 | 📰 | [Boing Boing](https://boingboing.net/feed) | 30 | 1 | 0/2 |  | Сайт ответил 403 |
 | 🟡 | [Open Culture](https://www.openculture.com/feed) | 15 | 15 | 1/2 | 149 | HTTP 503 |
 | 🟡 | [Mental Floss](https://www.mentalfloss.com/rss.xml) | 77 | 3 | 1/2 | 808 | HTTP 503 |
+| 📰 | [Popular Mechanics](https://www.popularmechanics.com/rss/all.xml/) | 50 | 2 | 0/2 |  | HTTP 503 |
+| 📰 | [Neatorama](https://www.neatorama.com/feed) | 15 | 3 | 0/2 |  | Сайт ответил 403 |
+| 📰 | [Kottke](https://feeds.kottke.org/main) | 60 | 2 | 0/2 |  | HTTP 503; мало текста (65 слов) |
+| ❌ | [IFLScience](https://www.iflscience.com/rss.xml) | 0 | — | 0/0 |  | лента: HTTP 404 |

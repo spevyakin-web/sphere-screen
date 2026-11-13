@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-13T23:49:56.528Z",
+ "checked": "2026-11-13T23:52:44.500Z",
  "reader": "https://kupol-reader.ospevyakin.workers.dev",
  "topics": [
   {
@@ -118,6 +118,70 @@
      ],
      "ua": "bot",
      "status": "reader-fail"
+    },
+    {
+     "name": "The Guardian · US politics",
+     "url": "https://www.theguardian.com/us-news/us-politics/rss",
+     "feed": true,
+     "count": 17,
+     "ageH": 2,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      1282,
+      1108
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
+    },
+    {
+     "name": "Fox News · Politics",
+     "url": "https://moxie.foxnews.com/google-publisher/politics.xml",
+     "feed": true,
+     "count": 25,
+     "ageH": 3,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      182,
+      446
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
+    },
+    {
+     "name": "ABC News · Politics",
+     "url": "https://feeds.abcnews.com/abcnews/politicsheadlines",
+     "feed": true,
+     "count": 25,
+     "ageH": 4,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      421,
+      661
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
+    },
+    {
+     "name": "PBS NewsHour · Politics",
+     "url": "https://www.pbs.org/newshour/feeds/rss/politics",
+     "feed": true,
+     "count": 20,
+     "ageH": 0,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "мало текста (57 слов)",
+      "мало текста (62 слов)"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
     }
    ]
   },
@@ -129,7 +193,7 @@
      "name": "BBC World",
      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
      "feed": true,
-     "count": 25,
+     "count": 24,
      "ageH": 1,
      "read": 0,
      "tried": 2,
@@ -557,6 +621,56 @@
      "errors": [],
      "ua": "bot",
      "status": "ok"
+    },
+    {
+     "name": "CBS News · Crime",
+     "url": "https://www.cbsnews.com/latest/rss/crime",
+     "feed": true,
+     "count": 30,
+     "ageH": 0,
+     "read": 1,
+     "tried": 2,
+     "words": [
+      275
+     ],
+     "errors": [
+      "мало текста (81 слов)"
+     ],
+     "ua": "bot",
+     "status": "partial"
+    },
+    {
+     "name": "The Guardian · US crime",
+     "url": "https://www.theguardian.com/us-news/us-crime/rss",
+     "feed": true,
+     "count": 20,
+     "ageH": 7,
+     "read": 1,
+     "tried": 2,
+     "words": [
+      505
+     ],
+     "errors": [
+      "мало текста (50 слов)"
+     ],
+     "ua": "bot",
+     "status": "partial"
+    },
+    {
+     "name": "Fox News · US",
+     "url": "https://moxie.foxnews.com/google-publisher/us.xml",
+     "feed": true,
+     "count": 25,
+     "ageH": 3,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      1015,
+      671
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
     }
    ]
   },
@@ -970,12 +1084,12 @@
      "url": "https://seekingalpha.com/market_currents.xml",
      "feed": true,
      "count": 7,
-     "ageH": 1,
+     "ageH": 0,
      "read": 0,
      "tried": 2,
      "words": [],
      "errors": [
-      "Не удалось выделить текст статьи",
+      "мало текста (94 слов)",
       "Не удалось выделить текст статьи"
      ],
      "ua": "bot",
@@ -992,6 +1106,66 @@
      "words": [],
      "errors": [
       "лента: таймаут"
+     ],
+     "status": "feed-fail"
+    },
+    {
+     "name": "Kiplinger · Investing",
+     "url": "https://www.kiplinger.com/feeds/investing",
+     "feed": false,
+     "count": 0,
+     "ageH": null,
+     "read": 0,
+     "tried": 0,
+     "words": [],
+     "errors": [
+      "лента: HTTP 404"
+     ],
+     "status": "feed-fail"
+    },
+    {
+     "name": "Benzinga",
+     "url": "https://www.benzinga.com/feed",
+     "feed": true,
+     "count": 25,
+     "ageH": 3,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "Сайт ответил 403",
+      "Сайт ответил 403"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
+    },
+    {
+     "name": "The Guardian · Markets",
+     "url": "https://www.theguardian.com/business/stock-markets/rss",
+     "feed": true,
+     "count": 20,
+     "ageH": 17,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      2746,
+      3309
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
+    },
+    {
+     "name": "Fortune · Finance",
+     "url": "https://fortune.com/section/finance/feed/",
+     "feed": false,
+     "count": 0,
+     "ageH": null,
+     "read": 0,
+     "tried": 0,
+     "words": [],
+     "errors": [
+      "лента: HTTP 404"
      ],
      "status": "feed-fail"
     }
@@ -1145,7 +1319,7 @@
      "tried": 0,
      "words": [],
      "errors": [
-      "лента: не RSS"
+      "лента: не RSS, а HTML-страница"
      ],
      "status": "feed-fail"
     },
@@ -1415,6 +1589,54 @@
      "errors": [],
      "ua": "bot",
      "status": "ok"
+    },
+    {
+     "name": "Crypto Briefing",
+     "url": "https://cryptobriefing.com/feed/",
+     "feed": true,
+     "count": 30,
+     "ageH": 0,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      438,
+      494
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
+    },
+    {
+     "name": "Blockworks",
+     "url": "https://blockworks.co/feed",
+     "feed": true,
+     "count": 50,
+     "ageH": 7450,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "Сайт ответил 403",
+      "Сайт ответил 403"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
+    },
+    {
+     "name": "BeInCrypto",
+     "url": "https://beincrypto.com/feed/",
+     "feed": true,
+     "count": 12,
+     "ageH": 0,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "Сайт ответил 403",
+      "Сайт ответил 403"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
     }
    ]
   },
@@ -1560,17 +1782,16 @@
      "url": "https://www.theverge.com/rss/index.xml",
      "feed": true,
      "count": 10,
-     "ageH": 0,
-     "read": 1,
+     "ageH": 2,
+     "read": 2,
      "tried": 2,
      "words": [
-      442
+      442,
+      273
      ],
-     "errors": [
-      "Сайт ответил 404"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "Ars Technica",
@@ -1761,16 +1982,18 @@
     {
      "name": "Gizmodo",
      "url": "https://gizmodo.com/feed",
-     "feed": false,
-     "count": 0,
-     "ageH": null,
+     "feed": true,
+     "count": 20,
+     "ageH": 1,
      "read": 0,
-     "tried": 0,
+     "tried": 2,
      "words": [],
      "errors": [
-      "лента: HTTP 403"
+      "Сайт ответил 403",
+      "Сайт ответил 403"
      ],
-     "status": "feed-fail"
+     "ua": "bot",
+     "status": "reader-fail"
     },
     {
      "name": "9to5Google",
@@ -2102,7 +2325,7 @@
      "url": "https://www.statnews.com/feed/",
      "feed": true,
      "count": 20,
-     "ageH": 1,
+     "ageH": 2,
      "read": 0,
      "tried": 2,
      "words": [],
@@ -2208,6 +2431,36 @@
      "errors": [],
      "ua": "bot",
      "status": "ok"
+    },
+    {
+     "name": "PBS NewsHour · Health",
+     "url": "https://www.pbs.org/newshour/feeds/rss/health",
+     "feed": true,
+     "count": 20,
+     "ageH": 6,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      642,
+      1195
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
+    },
+    {
+     "name": "Medical News Today",
+     "url": "https://www.medicalnewstoday.com/newsfeeds/rss/medical_all.xml",
+     "feed": false,
+     "count": 0,
+     "ageH": null,
+     "read": 0,
+     "tried": 0,
+     "words": [],
+     "errors": [
+      "лента: HTTP 403"
+     ],
+     "status": "feed-fail"
     }
    ]
   },
@@ -2820,7 +3073,7 @@
      "url": "https://playbill.com/rss/news",
      "feed": true,
      "count": 10,
-     "ageH": 5,
+     "ageH": 6,
      "read": 0,
      "tried": 2,
      "words": [],
@@ -3110,16 +3363,15 @@
      "feed": true,
      "count": 10,
      "ageH": -3,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
-      577
+      914,
+      742
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "McSweeney's",
@@ -3490,15 +3742,15 @@
      "feed": true,
      "count": 30,
      "ageH": 1,
-     "read": 0,
+     "read": 2,
      "tried": 2,
-     "words": [],
-     "errors": [
-      "HTTP 503",
-      "HTTP 503"
+     "words": [
+      1251,
+      2183
      ],
+     "errors": [],
      "ua": "bot",
-     "status": "reader-fail"
+     "status": "ok"
     },
     {
      "name": "Hypebeast",
@@ -3522,16 +3774,15 @@
      "feed": true,
      "count": 10,
      "ageH": 1,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
+      865,
       389
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     }
    ]
   },
@@ -3577,16 +3828,15 @@
      "feed": true,
      "count": 30,
      "ageH": 4,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
+      1056,
       819
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "Design Milk",
@@ -3614,7 +3864,7 @@
      "tried": 2,
      "words": [],
      "errors": [
-      "HTTP 503",
+      "мало текста (62 слов)",
       "мало текста (26 слов)"
      ],
      "ua": "bot",
@@ -3626,16 +3876,15 @@
      "feed": true,
      "count": 20,
      "ageH": 17,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
-      524
+      524,
+      1509
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "Yanko Design",
@@ -3698,15 +3947,15 @@
      "feed": true,
      "count": 50,
      "ageH": 7,
-     "read": 0,
+     "read": 2,
      "tried": 2,
-     "words": [],
-     "errors": [
-      "HTTP 503",
-      "HTTP 503"
+     "words": [
+      1334,
+      2949
      ],
+     "errors": [],
      "ua": "bot",
-     "status": "reader-fail"
+     "status": "ok"
     },
     {
      "name": "Motherly",
@@ -3714,15 +3963,15 @@
      "feed": true,
      "count": 10,
      "ageH": 4,
-     "read": 0,
+     "read": 2,
      "tried": 2,
-     "words": [],
-     "errors": [
-      "HTTP 503",
-      "HTTP 503"
+     "words": [
+      715,
+      950
      ],
+     "errors": [],
      "ua": "bot",
-     "status": "reader-fail"
+     "status": "ok"
     },
     {
      "name": "Romper",
@@ -3830,16 +4079,15 @@
      "feed": true,
      "count": 20,
      "ageH": 10,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
+      735,
       1339
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "The Gottman Institute",
@@ -3872,7 +4120,7 @@
      "read": 1,
      "tried": 2,
      "words": [
-      1257
+      475
      ],
      "errors": [
       "HTTP 503"
@@ -3886,16 +4134,15 @@
      "feed": true,
      "count": 10,
      "ageH": 9,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
+      2114,
       908
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "Inside Higher Ed",
@@ -3919,15 +4166,15 @@
      "feed": true,
      "count": 100,
      "ageH": 0,
-     "read": 0,
+     "read": 2,
      "tried": 2,
-     "words": [],
-     "errors": [
-      "HTTP 503",
-      "HTTP 503"
+     "words": [
+      550,
+      1030
      ],
+     "errors": [],
      "ua": "bot",
-     "status": "reader-fail"
+     "status": "ok"
     },
     {
      "name": "The Guardian · Education",
@@ -3951,15 +4198,16 @@
      "feed": true,
      "count": 10,
      "ageH": 3,
-     "read": 0,
+     "read": 1,
      "tried": 2,
-     "words": [],
+     "words": [
+      434
+     ],
      "errors": [
-      "HTTP 503",
       "мало текста (76 слов)"
      ],
      "ua": "bot",
-     "status": "reader-fail"
+     "status": "partial"
     }
    ]
   },
@@ -4052,16 +4300,15 @@
      "feed": true,
      "count": 20,
      "ageH": 6,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
-      502
+      502,
+      317
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     }
    ]
   },
@@ -4104,16 +4351,19 @@
     {
      "name": "ESPN",
      "url": "https://www.espn.com/espn/rss/news",
-     "feed": false,
-     "count": 0,
-     "ageH": null,
-     "read": 0,
-     "tried": 0,
-     "words": [],
-     "errors": [
-      "лента: не RSS"
+     "feed": true,
+     "count": 46,
+     "ageH": 0,
+     "read": 1,
+     "tried": 2,
+     "words": [
+      1974
      ],
-     "status": "feed-fail"
+     "errors": [
+      "HTTP 503"
+     ],
+     "ua": "bot",
+     "status": "partial"
     },
     {
      "name": "Yahoo Sports",
@@ -4126,7 +4376,7 @@
      "words": [],
      "errors": [
       "HTTP 503",
-      "HTTP 503"
+      "Не удалось выделить текст статьи"
      ],
      "ua": "bot",
      "status": "reader-fail"
@@ -4157,7 +4407,91 @@
      "read": 1,
      "tried": 2,
      "words": [
-      1548
+      781
+     ],
+     "errors": [
+      "HTTP 503"
+     ],
+     "ua": "bot",
+     "status": "partial"
+    },
+    {
+     "name": "The Independent · Sport",
+     "url": "https://www.independent.co.uk/sport/rss",
+     "feed": true,
+     "count": 49,
+     "ageH": 1,
+     "read": 1,
+     "tried": 2,
+     "words": [
+      772
+     ],
+     "errors": [
+      "HTTP 503"
+     ],
+     "ua": "bot",
+     "status": "partial"
+    },
+    {
+     "name": "Sky Sports · Football",
+     "url": "https://www.skysports.com/rss/11095",
+     "feed": true,
+     "count": 20,
+     "ageH": 1,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "HTTP 503",
+      "Не удалось выделить текст статьи"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
+    },
+    {
+     "name": "The Guardian · Football",
+     "url": "https://www.theguardian.com/football/rss",
+     "feed": true,
+     "count": 58,
+     "ageH": 1,
+     "read": 1,
+     "tried": 2,
+     "words": [
+      1100
+     ],
+     "errors": [
+      "HTTP 503"
+     ],
+     "ua": "bot",
+     "status": "partial"
+    },
+    {
+     "name": "Fox News · Sports",
+     "url": "https://moxie.foxnews.com/google-publisher/sports.xml",
+     "feed": true,
+     "count": 25,
+     "ageH": 19,
+     "read": 1,
+     "tried": 2,
+     "words": [
+      1233
+     ],
+     "errors": [
+      "HTTP 503"
+     ],
+     "ua": "bot",
+     "status": "partial"
+    },
+    {
+     "name": "talkSPORT",
+     "url": "https://talksport.com/feed/",
+     "feed": true,
+     "count": 100,
+     "ageH": 1,
+     "read": 1,
+     "tried": 2,
+     "words": [
+      493
      ],
      "errors": [
       "HTTP 503"
@@ -4207,16 +4541,15 @@
      "feed": true,
      "count": 50,
      "ageH": 3,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
+      469,
       497
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "HLTV",
@@ -4230,7 +4563,7 @@
       3058
      ],
      "errors": [
-      "HTTP 503"
+      "мало текста (98 слов)"
      ],
      "ua": "bot",
      "status": "partial"
@@ -4264,6 +4597,68 @@
       "лента: HTTP 403"
      ],
      "status": "feed-fail"
+    },
+    {
+     "name": "Dexerto · Esports",
+     "url": "https://www.dexerto.com/esports/feed/",
+     "feed": true,
+     "count": 50,
+     "ageH": 128,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      545,
+      387
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
+    },
+    {
+     "name": "Esports.net",
+     "url": "https://www.esports.net/feed/",
+     "feed": true,
+     "count": 10,
+     "ageH": 16,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "Сайт ответил 403",
+      "Сайт ответил 403"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
+    },
+    {
+     "name": "Inven Global",
+     "url": "https://www.invenglobal.com/rss",
+     "feed": false,
+     "count": 0,
+     "ageH": null,
+     "read": 0,
+     "tried": 0,
+     "words": [],
+     "errors": [
+      "лента: HTTP 404"
+     ],
+     "status": "feed-fail"
+    },
+    {
+     "name": "Esports Headlines",
+     "url": "https://esportsheadlines.com/feed/",
+     "feed": true,
+     "count": 10,
+     "ageH": 12617,
+     "read": 2,
+     "tried": 2,
+     "words": [
+      1272,
+      1724
+     ],
+     "errors": [],
+     "ua": "bot",
+     "status": "ok"
     }
    ]
   },
@@ -4277,16 +4672,15 @@
      "feed": true,
      "count": 50,
      "ageH": 5,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
-      1552
+      1552,
+      2013
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "Women's Health",
@@ -4327,15 +4721,16 @@
      "feed": true,
      "count": 12,
      "ageH": 14862,
-     "read": 0,
+     "read": 1,
      "tried": 2,
-     "words": [],
+     "words": [
+      5786
+     ],
      "errors": [
-      "HTTP 503",
       "HTTP 503"
      ],
      "ua": "bot",
-     "status": "reader-fail"
+     "status": "partial"
     },
     {
      "name": "Well+Good",
@@ -4443,16 +4838,15 @@
      "feed": true,
      "count": 20,
      "ageH": 1,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
+      525,
       433
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "Autocar",
@@ -4474,16 +4868,15 @@
      "feed": true,
      "count": 16,
      "ageH": 4,
-     "read": 1,
+     "read": 2,
      "tried": 2,
      "words": [
+      465,
       480
      ],
-     "errors": [
-      "HTTP 503"
-     ],
+     "errors": [],
      "ua": "bot",
-     "status": "partial"
+     "status": "ok"
     },
     {
      "name": "RideApart (moto)",
@@ -4544,16 +4937,15 @@
      "feed": true,
      "count": 25,
      "ageH": 1,
-     "read": 1,
+     "read": 0,
      "tried": 2,
-     "words": [
-      3364
-     ],
+     "words": [],
      "errors": [
+      "HTTP 503",
       "HTTP 503"
      ],
      "ua": "bot",
-     "status": "partial"
+     "status": "reader-fail"
     },
     {
      "name": "AirlineGeeks",
@@ -4634,6 +5026,23 @@
      ],
      "ua": "bot",
      "status": "partial"
+    },
+    {
+     "name": "The Guardian · Transport",
+     "url": "https://www.theguardian.com/uk/transport/rss",
+     "feed": true,
+     "count": 20,
+     "ageH": 43,
+     "read": 1,
+     "tried": 2,
+     "words": [
+      407
+     ],
+     "errors": [
+      "HTTP 503"
+     ],
+     "ua": "bot",
+     "status": "partial"
     }
    ]
   },
@@ -4680,15 +5089,15 @@
      "feed": true,
      "count": 60,
      "ageH": 36,
-     "read": 0,
+     "read": 2,
      "tried": 2,
-     "words": [],
-     "errors": [
-      "HTTP 503",
-      "HTTP 503"
+     "words": [
+      666,
+      597
      ],
+     "errors": [],
      "ua": "bot",
-     "status": "reader-fail"
+     "status": "ok"
     },
     {
      "name": "Bored Panda · Animals",
@@ -4850,6 +5259,22 @@
       "лента: HTTP 404"
      ],
      "status": "feed-fail"
+    },
+    {
+     "name": "Severe Weather (US) · Live Science",
+     "url": "https://www.livescience.com/feeds/tag/weather",
+     "feed": true,
+     "count": 50,
+     "ageH": 200,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "HTTP 503",
+      "HTTP 503"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
     }
    ]
   },
@@ -4910,16 +5335,15 @@
      "feed": true,
      "count": 10,
      "ageH": 24,
-     "read": 1,
+     "read": 0,
      "tried": 2,
-     "words": [
-      475
-     ],
+     "words": [],
      "errors": [
+      "HTTP 503",
       "HTTP 503"
      ],
      "ua": "bot",
-     "status": "partial"
+     "status": "reader-fail"
     },
     {
      "name": "The Guardian · The Upside",
@@ -5073,6 +5497,68 @@
      ],
      "ua": "bot",
      "status": "partial"
+    },
+    {
+     "name": "Popular Mechanics",
+     "url": "https://www.popularmechanics.com/rss/all.xml/",
+     "feed": true,
+     "count": 50,
+     "ageH": 2,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "HTTP 503",
+      "HTTP 503"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
+    },
+    {
+     "name": "Neatorama",
+     "url": "https://www.neatorama.com/feed",
+     "feed": true,
+     "count": 15,
+     "ageH": 3,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "Сайт ответил 403",
+      "Сайт ответил 403"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
+    },
+    {
+     "name": "Kottke",
+     "url": "https://feeds.kottke.org/main",
+     "feed": true,
+     "count": 60,
+     "ageH": 2,
+     "read": 0,
+     "tried": 2,
+     "words": [],
+     "errors": [
+      "HTTP 503",
+      "мало текста (65 слов)"
+     ],
+     "ua": "bot",
+     "status": "reader-fail"
+    },
+    {
+     "name": "IFLScience",
+     "url": "https://www.iflscience.com/rss.xml",
+     "feed": false,
+     "count": 0,
+     "ageH": null,
+     "read": 0,
+     "tried": 0,
+     "words": [],
+     "errors": [
+      "лента: HTTP 404"
+     ],
+     "status": "feed-fail"
     }
    ]
   }
