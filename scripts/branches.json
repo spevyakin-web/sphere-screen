@@ -1,0 +1,637 @@
+{
+ "branches": [
+  {
+   "id": "it",
+   "name": "IT и технологии",
+   "color": "#8FB7FF",
+   "icon": "cpu",
+   "feeds": [
+    {
+     "name": "CNews",
+     "lang": "ru",
+     "url": "https://www.cnews.ru/inc/rss/news.xml"
+    },
+    {
+     "name": "Хабр",
+     "lang": "ru",
+     "url": "https://habr.com/ru/rss/news/?fl=ru"
+    },
+    {
+     "name": "3DNews",
+     "lang": "ru",
+     "url": "https://3dnews.ru/news/rss/"
+    },
+    {
+     "name": "iXBT",
+     "lang": "ru",
+     "url": "https://www.ixbt.com/export/news.rss"
+    },
+    {
+     "name": "vc.ru",
+     "lang": "ru",
+     "url": "https://vc.ru/rss/all"
+    },
+    {
+     "name": "TechCrunch",
+     "lang": "en",
+     "url": "https://techcrunch.com/feed/"
+    },
+    {
+     "name": "The Verge",
+     "lang": "en",
+     "url": "https://www.theverge.com/rss/index.xml"
+    },
+    {
+     "name": "Ars Technica",
+     "lang": "en",
+     "url": "https://feeds.arstechnica.com/arstechnica/index"
+    },
+    {
+     "name": "The Register",
+     "lang": "en",
+     "url": "https://www.theregister.com/headlines.atom"
+    },
+    {
+     "name": "Hacker News",
+     "lang": "en",
+     "url": "https://news.ycombinator.com/rss"
+    }
+   ]
+  },
+  {
+   "id": "main",
+   "name": "Главное",
+   "color": "#F3F2EE",
+   "icon": "globe",
+   "feeds": [
+    {
+     "name": "РИА Новости",
+     "lang": "ru",
+     "url": "https://ria.ru/export/rss2/archive/index.xml"
+    },
+    {
+     "name": "ТАСС",
+     "lang": "ru",
+     "url": "https://tass.ru/rss/v2.xml"
+    },
+    {
+     "name": "Интерфакс",
+     "lang": "ru",
+     "url": "https://www.interfax.ru/rss.asp"
+    },
+    {
+     "name": "Коммерсантъ",
+     "lang": "ru",
+     "url": "https://www.kommersant.ru/RSS/news.xml"
+    },
+    {
+     "name": "BBC World",
+     "lang": "en",
+     "url": "https://feeds.bbci.co.uk/news/world/rss.xml"
+    },
+    {
+     "name": "The Guardian",
+     "lang": "en",
+     "url": "https://www.theguardian.com/world/rss"
+    },
+    {
+     "name": "Al Jazeera",
+     "lang": "en",
+     "url": "https://www.aljazeera.com/xml/rss/all.xml"
+    },
+    {
+     "name": "NPR",
+     "lang": "en",
+     "url": "https://feeds.npr.org/1004/rss.xml"
+    },
+    {
+     "name": "DW",
+     "lang": "en",
+     "url": "https://rss.dw.com/rdf/rss-en-world"
+    }
+   ]
+  },
+  {
+   "id": "russia",
+   "name": "Россия",
+   "color": "#FF8A7A",
+   "icon": "flag",
+   "feeds": [
+    {
+     "name": "Лента.ру",
+     "lang": "ru",
+     "url": "https://lenta.ru/rss/news/russia"
+    },
+    {
+     "name": "РБК",
+     "lang": "ru",
+     "url": "https://rssexport.rbc.ru/rbcnews/news/30/full.rss"
+    },
+    {
+     "name": "Ведомости",
+     "lang": "ru",
+     "url": "https://www.vedomosti.ru/rss/news"
+    },
+    {
+     "name": "Известия",
+     "lang": "ru",
+     "url": "https://iz.ru/xml/rss/all.xml"
+    },
+    {
+     "name": "Газета.Ru",
+     "lang": "ru",
+     "url": "https://www.gazeta.ru/export/rss/lenta.xml"
+    },
+    {
+     "name": "Фонтанка",
+     "lang": "ru",
+     "url": "https://www.fontanka.ru/fontanka.rss"
+    }
+   ]
+  },
+  {
+   "id": "economy",
+   "name": "Экономика и финансы",
+   "color": "#5EE6C8",
+   "icon": "chart",
+   "feeds": [
+    {
+     "name": "Коммерсантъ · Экономика",
+     "lang": "ru",
+     "url": "https://www.kommersant.ru/RSS/section-economics.xml"
+    },
+    {
+     "name": "Банки.ру",
+     "lang": "ru",
+     "url": "https://www.banki.ru/xml/news.rss"
+    },
+    {
+     "name": "Финмаркет",
+     "lang": "ru",
+     "url": "https://www.finmarket.ru/rss/mainnews.asp"
+    },
+    {
+     "name": "Bloomberg",
+     "lang": "en",
+     "url": "https://feeds.bloomberg.com/markets/news.rss"
+    },
+    {
+     "name": "CNBC",
+     "lang": "en",
+     "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147"
+    },
+    {
+     "name": "MarketWatch",
+     "lang": "en",
+     "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories"
+    },
+    {
+     "name": "Financial Times",
+     "lang": "en",
+     "url": "https://www.ft.com/rss/home"
+    }
+   ]
+  },
+  {
+   "id": "business",
+   "name": "Бизнес и стартапы",
+   "color": "#D9C27A",
+   "icon": "briefcase",
+   "feeds": [
+    {
+     "name": "vc.ru",
+     "lang": "ru",
+     "url": "https://vc.ru/rss/all"
+    },
+    {
+     "name": "Forbes Россия",
+     "lang": "ru",
+     "url": "https://www.forbes.ru/newrss.xml"
+    },
+    {
+     "name": "Секрет фирмы",
+     "lang": "ru",
+     "url": "https://secretmag.ru/rss"
+    },
+    {
+     "name": "TechCrunch Startups",
+     "lang": "en",
+     "url": "https://techcrunch.com/category/startups/feed/"
+    },
+    {
+     "name": "Business Insider",
+     "lang": "en",
+     "url": "https://feeds.businessinsider.com/custom/all"
+    },
+    {
+     "name": "Fortune",
+     "lang": "en",
+     "url": "https://fortune.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "sport",
+   "name": "Спорт",
+   "color": "#7FD67A",
+   "icon": "ball",
+   "feeds": [
+    {
+     "name": "Чемпионат",
+     "lang": "ru",
+     "url": "https://www.championat.com/rss/news/"
+    },
+    {
+     "name": "Спорт-Экспресс",
+     "lang": "ru",
+     "url": "https://www.sport-express.ru/services/materials/news/se/"
+    },
+    {
+     "name": "Sports.ru",
+     "lang": "ru",
+     "url": "https://www.sports.ru/rss/all_news.xml"
+    },
+    {
+     "name": "ESPN",
+     "lang": "en",
+     "url": "https://www.espn.com/espn/rss/news"
+    },
+    {
+     "name": "BBC Sport",
+     "lang": "en",
+     "url": "https://feeds.bbci.co.uk/sport/rss.xml"
+    },
+    {
+     "name": "Sky Sports",
+     "lang": "en",
+     "url": "https://www.skysports.com/rss/12040"
+    }
+   ]
+  },
+  {
+   "id": "science",
+   "name": "Наука",
+   "color": "#C49BFF",
+   "icon": "atom",
+   "feeds": [
+    {
+     "name": "N + 1",
+     "lang": "ru",
+     "url": "https://nplus1.ru/rss"
+    },
+    {
+     "name": "Naked Science",
+     "lang": "ru",
+     "url": "https://naked-science.ru/feed"
+    },
+    {
+     "name": "Элементы",
+     "lang": "ru",
+     "url": "https://elementy.ru/rss/news"
+    },
+    {
+     "name": "ScienceDaily",
+     "lang": "en",
+     "url": "https://www.sciencedaily.com/rss/all.xml"
+    },
+    {
+     "name": "Nature",
+     "lang": "en",
+     "url": "https://www.nature.com/nature.rss"
+    },
+    {
+     "name": "New Scientist",
+     "lang": "en",
+     "url": "https://www.newscientist.com/feed/home/"
+    },
+    {
+     "name": "Phys.org",
+     "lang": "en",
+     "url": "https://phys.org/rss-feed/"
+    }
+   ]
+  },
+  {
+   "id": "space",
+   "name": "Космос",
+   "color": "#9FB3FF",
+   "icon": "rocket",
+   "feeds": [
+    {
+     "name": "NASA",
+     "lang": "en",
+     "url": "https://www.nasa.gov/news-release/feed/"
+    },
+    {
+     "name": "Space.com",
+     "lang": "en",
+     "url": "https://www.space.com/feeds/all"
+    },
+    {
+     "name": "SpaceNews",
+     "lang": "en",
+     "url": "https://spacenews.com/feed/"
+    },
+    {
+     "name": "ESA",
+     "lang": "en",
+     "url": "https://www.esa.int/rssfeed/Our_Activities/Space_News"
+    },
+    {
+     "name": "Universe Today",
+     "lang": "en",
+     "url": "https://www.universetoday.com/feed/"
+    },
+    {
+     "name": "Хайтек · Космос",
+     "lang": "ru",
+     "url": "https://hightech.fm/feed"
+    }
+   ]
+  },
+  {
+   "id": "auto",
+   "name": "Авто",
+   "color": "#FFB547",
+   "icon": "car",
+   "feeds": [
+    {
+     "name": "Драйв",
+     "lang": "ru",
+     "url": "https://www.drive.ru/export/rss.xml"
+    },
+    {
+     "name": "Autonews",
+     "lang": "ru",
+     "url": "https://rssexport.rbc.ru/autonews/news/30/full.rss"
+    },
+    {
+     "name": "Колёса.ру",
+     "lang": "ru",
+     "url": "https://www.kolesa.ru/rss"
+    },
+    {
+     "name": "Electrek",
+     "lang": "en",
+     "url": "https://electrek.co/feed/"
+    },
+    {
+     "name": "Motor1",
+     "lang": "en",
+     "url": "https://www.motor1.com/rss/news/all/"
+    },
+    {
+     "name": "Carscoops",
+     "lang": "en",
+     "url": "https://www.carscoops.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "games",
+   "name": "Игры",
+   "color": "#7FE0F0",
+   "icon": "gamepad",
+   "feeds": [
+    {
+     "name": "StopGame",
+     "lang": "ru",
+     "url": "https://rss.stopgame.ru/rss_news.xml"
+    },
+    {
+     "name": "DTF",
+     "lang": "ru",
+     "url": "https://dtf.ru/rss/all"
+    },
+    {
+     "name": "Канобу",
+     "lang": "ru",
+     "url": "https://kanobu.ru/rss/"
+    },
+    {
+     "name": "IGN",
+     "lang": "en",
+     "url": "https://feeds.ign.com/ign/all"
+    },
+    {
+     "name": "Polygon",
+     "lang": "en",
+     "url": "https://www.polygon.com/rss/index.xml"
+    },
+    {
+     "name": "Eurogamer",
+     "lang": "en",
+     "url": "https://www.eurogamer.net/feed"
+    },
+    {
+     "name": "PC Gamer",
+     "lang": "en",
+     "url": "https://www.pcgamer.com/rss/"
+    }
+   ]
+  },
+  {
+   "id": "movies",
+   "name": "Кино и сериалы",
+   "color": "#F38BC8",
+   "icon": "film",
+   "feeds": [
+    {
+     "name": "КГ-Портал",
+     "lang": "ru",
+     "url": "https://kg-portal.ru/rss/news.rss"
+    },
+    {
+     "name": "Film.ru",
+     "lang": "ru",
+     "url": "https://www.film.ru/rss.xml"
+    },
+    {
+     "name": "Variety",
+     "lang": "en",
+     "url": "https://variety.com/feed/"
+    },
+    {
+     "name": "Deadline",
+     "lang": "en",
+     "url": "https://deadline.com/feed/"
+    },
+    {
+     "name": "The Hollywood Reporter",
+     "lang": "en",
+     "url": "https://www.hollywoodreporter.com/feed/"
+    },
+    {
+     "name": "IndieWire",
+     "lang": "en",
+     "url": "https://www.indiewire.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "music",
+   "name": "Музыка",
+   "color": "#FF6FA8",
+   "icon": "music",
+   "feeds": [
+    {
+     "name": "The Flow",
+     "lang": "ru",
+     "url": "https://the-flow.ru/rss"
+    },
+    {
+     "name": "Rolling Stone",
+     "lang": "en",
+     "url": "https://www.rollingstone.com/music/feed/"
+    },
+    {
+     "name": "Pitchfork",
+     "lang": "en",
+     "url": "https://pitchfork.com/feed/feed-news/rss"
+    },
+    {
+     "name": "Billboard",
+     "lang": "en",
+     "url": "https://www.billboard.com/feed/"
+    },
+    {
+     "name": "NME",
+     "lang": "en",
+     "url": "https://www.nme.com/feed"
+    }
+   ]
+  },
+  {
+   "id": "culture",
+   "name": "Культура",
+   "color": "#E6A86B",
+   "icon": "palette",
+   "feeds": [
+    {
+     "name": "Горький",
+     "lang": "ru",
+     "url": "https://gorky.media/feed/"
+    },
+    {
+     "name": "Артгид",
+     "lang": "ru",
+     "url": "https://artguide.com/rss"
+    },
+    {
+     "name": "The Guardian · Culture",
+     "lang": "en",
+     "url": "https://www.theguardian.com/culture/rss"
+    },
+    {
+     "name": "ARTnews",
+     "lang": "en",
+     "url": "https://www.artnews.com/feed/"
+    },
+    {
+     "name": "Open Culture",
+     "lang": "en",
+     "url": "https://www.openculture.com/feed"
+    }
+   ]
+  },
+  {
+   "id": "health",
+   "name": "Здоровье",
+   "color": "#6FD6B0",
+   "icon": "heart",
+   "feeds": [
+    {
+     "name": "Medportal",
+     "lang": "ru",
+     "url": "https://medportal.ru/rss/"
+    },
+    {
+     "name": "BBC Health",
+     "lang": "en",
+     "url": "https://feeds.bbci.co.uk/news/health/rss.xml"
+    },
+    {
+     "name": "ScienceDaily · Health",
+     "lang": "en",
+     "url": "https://www.sciencedaily.com/rss/health_medicine.xml"
+    },
+    {
+     "name": "Medical Xpress",
+     "lang": "en",
+     "url": "https://medicalxpress.com/rss-feed/"
+    },
+    {
+     "name": "STAT",
+     "lang": "en",
+     "url": "https://www.statnews.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "crypto",
+   "name": "Криптовалюты",
+   "color": "#F7B955",
+   "icon": "coin",
+   "feeds": [
+    {
+     "name": "ForkLog",
+     "lang": "ru",
+     "url": "https://forklog.com/feed"
+    },
+    {
+     "name": "Bits.media",
+     "lang": "ru",
+     "url": "https://bits.media/rss2/"
+    },
+    {
+     "name": "CoinDesk",
+     "lang": "en",
+     "url": "https://www.coindesk.com/arc/outboundfeeds/rss/"
+    },
+    {
+     "name": "Cointelegraph",
+     "lang": "en",
+     "url": "https://cointelegraph.com/rss"
+    },
+    {
+     "name": "Decrypt",
+     "lang": "en",
+     "url": "https://decrypt.co/feed"
+    }
+   ]
+  },
+  {
+   "id": "travel",
+   "name": "Путешествия",
+   "color": "#62C6FF",
+   "icon": "plane",
+   "feeds": [
+    {
+     "name": "АТОР",
+     "lang": "ru",
+     "url": "https://www.atorus.ru/rss"
+    },
+    {
+     "name": "Profi.Travel",
+     "lang": "ru",
+     "url": "https://profi.travel/rss"
+    },
+    {
+     "name": "Skift",
+     "lang": "en",
+     "url": "https://skift.com/feed/"
+    },
+    {
+     "name": "Condé Nast Traveler",
+     "lang": "en",
+     "url": "https://www.cntraveler.com/feed/rss"
+    },
+    {
+     "name": "The Guardian · Travel",
+     "lang": "en",
+     "url": "https://www.theguardian.com/travel/rss"
+    }
+   ]
+  }
+ ]
+}

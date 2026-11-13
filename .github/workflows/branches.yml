@@ -1,0 +1,41 @@
+name: Новости по веткам
+
+on:
+  schedule:
+    - cron: '22,52 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/branches.json', 'scripts/fetch-branches.mjs', '.github/workflows/branches.yml']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: branches
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Зависимости
+        run: npm install --no-audit --no-fund
+        working-directory: scripts
+      - name: Собрать ветки
+        run: node scripts/fetch-branches.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Сохранить data/
+        run: |
+          git config user.name "news-bot"
+          git config user.email "news-bot@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet && exit 0
+          git commit -m "Ветки: $(date -u +'%Y-%m-%d %H:%M') UTC"
+          for i in 1 2 3; do git pull --rebase origin main && git push && break; sleep 5; done
