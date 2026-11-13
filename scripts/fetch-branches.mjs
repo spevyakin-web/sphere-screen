@@ -11,7 +11,7 @@ const MAX_ITEMS = 140, PER_FEED = 25, MAX_AGE_DAYS = 5;
 const KEY = process.env.ANTHROPIC_API_KEY || '';
 const MODEL = process.env.CLAUDE_MODEL || 'claude-haiku-5-5';
 const AI_PER_BRANCH = +(process.env.AI_PER_BRANCH || 12);
-const CATS = ['ИИ', 'Железо', 'Софт', 'Безопасность', 'Бизнес', 'Наука', 'Космос', 'Гаджеты', 'Игры', 'Интернет', 'Связь', 'Право'];
+const CATS = ['AI', 'Hardware', 'Software', 'Security', 'Business', 'Science', 'Space', 'Gadgets', 'Games', 'Internet', 'Telecom', 'Policy'];
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '@', textNodeName: '#text', cdataPropName: '#cdata', removeNSPrefix: false, processEntities: false, htmlEntities: false });
 const arr = v => (v == null ? [] : Array.isArray(v) ? v : [v]);
 const txt = v => { if (v == null) return ''; if (typeof v === 'string' || typeof v === 'number') return String(v); if (v['#cdata'] != null) return txt(v['#cdata']); if (v['#text'] != null) return txt(v['#text']); return ''; };
@@ -117,10 +117,10 @@ ${JSON.stringify(list)}`;
 }
 
 const guessCat = s => { const t = s.toLowerCase();
-  const R = [['ИИ', /\b(ai|ии|нейросет|llm|gpt|openai|claude|gemini|искусственн|машинн)/], ['Безопасность', /(уязвим|взлом|хакер|malware|ransom|security|breach|cve|фишинг|утечк)/], ['Железо', /(процессор|видеокарт|чип|nvidia|amd|intel|cpu|gpu|ssd|memory|памят)/],
-    ['Космос', /(космос|spacex|nasa|ракет|спутник|orbit|space)/], ['Игры', /(игр|game|playstation|xbox|nintendo|steam)/], ['Гаджеты', /(смартфон|iphone|android|ноутбук|phone|laptop|watch|гаджет)/],
-    ['Бизнес', /(инвест|выручк|акци|сделк|ipo|funding|raises|startup|стартап|увольн|layoff)/], ['Связь', /(5g|оператор|связ|telecom|интернет-провайдер)/], ['Право', /(суд|закон|штраф|регулятор|court|lawsuit|antitrust|fcc|ftc)/]];
-  for (const [c, re] of R) if (re.test(t)) return c; return 'Софт'; };
+  const R = [['AI', /\b(ai|ии|нейросет|llm|gpt|openai|claude|gemini|искусственн|машинн)/], ['Security', /(уязвим|взлом|хакер|malware|ransom|security|breach|cve|фишинг|утечк)/], ['Hardware', /(процессор|видеокарт|чип|nvidia|amd|intel|cpu|gpu|ssd|memory|памят)/],
+    ['Space', /(космос|spacex|nasa|ракет|спутник|orbit|space)/], ['Games', /(игр|game|playstation|xbox|nintendo|steam)/], ['Gadgets', /(смартфон|iphone|android|ноутбук|phone|laptop|watch|гаджет)/],
+    ['Business', /(инвест|выручк|акци|сделк|ipo|funding|raises|startup|стартап|увольн|layoff)/], ['Telecom', /(5g|оператор|связ|telecom|интернет-провайдер)/], ['Policy', /(суд|закон|штраф|регулятор|court|lawsuit|antitrust|fcc|ftc)/]];
+  for (const [c, re] of R) if (re.test(t)) return c; return 'Software'; };
 
 // Короткий анонс со страницы, когда лента не даёт описания (Hacker News): og:description или первый абзац, до ~450 знаков.
 async function pageLead(url) {
@@ -154,7 +154,7 @@ for (const b of branches) {
   const seen = new Set(), fresh = [];
   for (const n of (byB[b.id] || []).sort((x, y) => y.date.localeCompare(x.date))) { const k = n.title.toLowerCase().slice(0, 60); if (seen.has(n.id) || seen.has(k)) continue; seen.add(n.id); seen.add(k); fresh.push(n); }
   const items = fresh.slice(0, MAX_ITEMS).map(n => prev[n.id] ? { ...n, ...pick(prev[n.id]) } : n);
-  if (KEY) { const todo = items.filter(n => !n.ai && (n.lang === 'en' || b.id === 'it')).slice(0, AI_PER_BRANCH);
+  if (KEY) { const todo = []; // сайт англоязычный: перевод делает читатель в окне чтения
     for (let i = 0; i < todo.length; i += 4) { const bt = todo.slice(i, i + 4); await Promise.all(bt.map(async n => { n.full = await pageText(n.url); }));
       try { const res = await claude(bt, b.name); for (const r of res) { const n = bt[r.k]; if (!n) continue; n.t = String(r.t || n.title).slice(0, 140); n.s = String(r.s || ''); n.f = arr(r.f).map(String).slice(0, 3); n.c = String(r.c || '').slice(0, 24); n.ai = 1; } }
       catch (e) { console.log('Claude:', e.message); break; } } }
