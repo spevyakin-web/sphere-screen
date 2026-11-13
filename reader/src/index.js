@@ -11,7 +11,7 @@ const VIDEO_HOSTS = /^(www\.)?(youtube\.com|youtube-nocookie\.com|player\.vimeo\
 
 function cors(origin) {
   const ok = ALLOWED_ORIGINS.includes(origin);
-  return { 'Access-Control-Allow-Origin': ok ? origin : ALLOWED_ORIGINS[0], 'Access-Control-Allow-Methods': 'GET, OPTIONS', 'Vary': 'Origin' };
+  return { 'Access-Control-Allow-Origin': ok ? origin : ALLOWED_ORIGINS[0], 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', 'Vary': 'Origin' };
 }
 function json(body, status, origin, extra) {
   return new Response(JSON.stringify(body), { status, headers: Object.assign({ 'Content-Type': 'application/json; charset=utf-8' }, cors(origin), extra || {}) });
@@ -128,6 +128,17 @@ export default {
   async fetch(request, env, ctx) {
     const origin = request.headers.get('Origin') || '';
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: Object.assign(cors(origin), { 'Access-Control-Max-Age': '86400' }) });
+    if (request.method === 'POST' && new URL(request.url).pathname === '/translate') { // перевод абзацев для окна чтения (Workers AI, m2m100)
+      if (!ALLOWED_ORIGINS.includes(origin)) return json({ error: 'forbidden' }, 403, origin);
+      if (!env || !env.AI) return json({ error: 'translation is not configured' }, 501, origin);
+      let b; try { b = await request.json(); } catch { return json({ error: 'bad json' }, 400, origin); }
+      const texts = Array.isArray(b.texts) ? b.texts.slice(0, 60).map(t => String(t || '').slice(0, 1500)) : [], tl = String(b.target || 'ru').slice(0, 5), sl = String(b.source || 'en').slice(0, 5);
+      if (!/^[a-z]{2}$/.test(tl) || !/^[a-z]{2}$/.test(sl)) return json({ error: 'bad language' }, 400, origin);
+      if (texts.join('').length > 12000) return json({ error: 'too much text' }, 413, origin);
+      const out = new Array(texts.length); let i = 0, failed = 0;
+      await Promise.all(Array.from({ length: 6 }, async () => { while (i < texts.length) { const k = i++, t = texts[k]; if (!t.trim()) { out[k] = t; continue; }
+        try { const r = await env.AI.run('@cf/meta/m2m100-1.2b', { text: t, source_lang: sl, target_lang: tl }); out[k] = (r && r.translated_text) || t; } catch (e) { out[k] = t; failed++; } } }));
+      return json({ texts: out, failed }, 200, origin, { 'Cache-Control': 'no-store' }); }
     if (request.method !== 'GET') return json({ error: 'Только GET' }, 405, origin);
     const url = new URL(request.url);
     if (url.pathname === '/' && !url.searchParams.get('url') && !url.searchParams.get('feed')) return json({ ok: true, service: 'kupol-reader' }, 200, origin);
