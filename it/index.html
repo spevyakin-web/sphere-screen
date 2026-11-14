@@ -58,6 +58,8 @@ body{font-family:'Inter',sans-serif;color:#F3F2EE}
 @media (max-width:600px){.rd-art{padding:24px 18px 50px;font-size:18px} .rd-art h1{font-size:27px}}
 button,.peb,.fs,input{touch-action:manipulation}
 .pnl,.pnl *{-webkit-user-select:text;user-select:text}
+.sel,.sel *:not(button):not(button *),.rd-art,.rd-art *{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default;cursor:text} .sel a,.rd-art a{cursor:pointer}
+::selection{background:rgba(143,183,255,.35)}
 button{font:inherit}
 .vig{position:absolute;inset:-1px;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,0) 50%,rgba(0,0,0,.18) 62%,rgba(0,0,0,.5) 75%,rgba(0,0,0,.82) 87%,rgba(0,0,0,.96) 95%,#000 100%)}
 a{color:#F3F2EE;text-decoration:none}
@@ -328,7 +330,9 @@ class Component extends DCLogic {
       else { const x = this.cellXY(i, j).x + ((j & 1) ? -1 : 1) * this.DX * 0.25, y = (j + (dir === 'U' ? -1 : 1)) * this.DY, q = this.nearestIJ(x, y); i = q.i; j = q.j; }
       if (this.newsAt(i, j)) return { i, j }; }
     return null; }
+  selText() { try { return String(window.getSelection() || '').trim(); } catch (e) { return ''; } }
   key(e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return false; // Cmd/Ctrl+C и прочие сочетания — браузеру
     const k = e.key, kc = e.keyCode, back = k === 'Escape' || k === 'GoBack' || k === 'BrowserBack' || k === 'Backspace' || kc === 461 || kc === 10009;
     const dir = { ArrowLeft: 'L', ArrowRight: 'R', ArrowUp: 'U', ArrowDown: 'D', Left: 'L', Right: 'R', Up: 'U', Down: 'D' }[k] || { 37: 'L', 38: 'U', 39: 'R', 40: 'D' }[kc];
     const ok = k === 'Enter' || k === ' ' || kc === 13 || k === 'Select', st = this.state;
@@ -578,9 +582,9 @@ class Component extends DCLogic {
       KEYS.forEach(q => { o['is_' + q.replace(/-/g, '_')] = q === d[0]; }); return o; });
     return {
       accent: acc, act: actv, btns, pn, vp,
-      setScrollF: el => { if (el) this.scF = el; },
-      setScrollB: el => { if (el) this.scB = el; },
-      cardTap: () => { if (this.artMoved) { this.artMoved = false; return; } if (performance.now() - this.suppress < 350) return; this.suppress = performance.now(); this.closeCard(); },
+      setScrollF: el => { if (el) { this.scF = el; if (el.parentElement) el.parentElement.classList.add('sel'); } },
+      setScrollB: el => { if (el) { this.scB = el; if (el.parentElement) el.parentElement.classList.add('sel'); } },
+      cardTap: () => { if (this.artMoved) { this.artMoved = false; return; } if (this.hadSel || this.selText()) { this.hadSel = false; return; } /* выделение текста не закрывает карточку */ if (performance.now() - this.suppress < 350) return; this.suppress = performance.now(); this.closeCard(); },
       stop: e => e.stopPropagation(),
       srcGo: e => { e.stopPropagation(); const st = this.state; if (!st.open || performance.now() - (this.suppress || 0) < 600 || st.f > 0.5) e.preventDefault(); },
       reader: this.state.reader || '', readerSrc: this.state.readerSrc || '',
@@ -596,7 +600,8 @@ class Component extends DCLogic {
       close: () => { this.suppress = performance.now(); this.closeCard(); },
       smaller: () => this.setState({ fs: Math.max(24, fs - 4) }),
       bigger: () => this.setState({ fs: Math.min(46, fs + 4) }),
-      ctx: e => { e.preventDefault(); this.suppress = performance.now(); this.twoTap(this.pos(e)); },
+      ctx: e => { if (this.selText() && e.target && e.target.closest && e.target.closest('.sel')) return; // правый клик / долгое нажатие по выделенному — родное меню «Копировать»
+        e.preventDefault(); this.suppress = performance.now(); this.twoTap(this.pos(e)); },
       down: e => { this.stopGlide();
         const p = this.pos(e); this.pts.set(e.pointerId, p); this.setLight(p);
         if (this.pts.size === 2) {
@@ -607,8 +612,8 @@ class Component extends DCLogic {
         }
         if (this.pts.size > 2) return;
         if (this.state.act) { const ar = this.actRect; if (ar && (Math.abs(p.x - this.CX) > ar.w / 2 || Math.abs(p.y - this.CY) > ar.h / 2)) { this.suppress = performance.now(); this.closeCard(); return; }
-          const sc = this.state.f > 0.5 ? this.scB : this.scF; cancelAnimationFrame(this.artRaf); this.artMoved = false;
-          if (sc) this.art = { y: p.y, st: sc.scrollTop, sc, hist: [{ y: p.y, t: performance.now() }] };
+          const sc = this.state.f > 0.5 ? this.scB : this.scF; cancelAnimationFrame(this.artRaf); this.artMoved = false; this.hadSel = !!this.selText();
+          if (sc && e.pointerType !== 'mouse') this.art = { y: p.y, st: sc.scrollTop, sc, hist: [{ y: p.y, t: performance.now() }] };
           return; }
         cancelAnimationFrame(this.panRaf); this.downT = performance.now();
         this.drag = { x: p.x, y: p.y, ox: this.ox, oy: this.oy, hist: [{ x: p.x, y: p.y, t: this.downT }] }; this.moved = false;
@@ -778,7 +783,7 @@ ${v.vp.list.map(vo => html`
 <div style="font-size: 18px; line-height: 1.45; color: #A6A59E; flex: none; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1)">Самые живые голоса: в браузере Edge — «Microsoft … Online (Natural)»; на iPhone и Mac скачайте «Милена (улучшенный)» в Настройках → Универсальный доступ → Устный контент → Голоса.</div>
 </div>
 ` : null}
-</div></div>${v.reader ? html`<div class="rd-back" onClick=${v.closeReader}><div class="rd" onClick=${e => e.stopPropagation()}><div class="rd-bar"><span class="rd-src">${v.readerSrc}</span>${v.rTrShow && v.rTrLink ? html`<a class="rd-btn rd-tr" href=${v.rTrLink} target="_blank" rel="noopener">${v.rTrLabel}</a>` : null}${v.rTrShow && !v.rTrLink ? html`<button class="rd-btn rd-tr" type="button" aria-pressed=${v.rTrOn ? "true" : "false"} onClick=${v.rTr}>${v.rTrLabel}</button>` : null}<a class="rd-btn" href=${v.reader} target="_blank" rel="noopener">Открыть в браузере ↗</a><button class="rd-btn rd-x" type="button" aria-label="Закрыть" onClick=${v.closeReader}>✕</button></div>${v.rFrame ? html`<iframe src=${v.reader} title="Статья" referrerpolicy="no-referrer-when-downgrade"></iframe>` : html`<div class="rd-scroll">${v.rLoad ? html`<div class="rd-msg"><span class="rd-spin"></span>Готовлю режим чтения…</div>` : null}${v.rErr ? html`<div class="rd-msg">${v.rErr}.<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="rd-btn" type="button" onClick=${v.rRetry}>Повторить</button><a class="rd-btn" href=${v.reader} target="_blank" rel="noopener">Открыть оригинал ↗</a></div></div>` : null}${v.rd ? html`<article class="rd-art"><div class="rd-meta">${v.rd.site}${v.rd.dt ? ' · ' + v.rd.dt : ''}${v.rd.min ? ' · ' + v.rd.min : ''}</div><h1>${v.rTitle}</h1>${v.rd.orig ? html`<div class="rd-orig">${v.rd.orig}</div>` : null}${v.rd.byline ? html`<div class="rd-by">${v.rd.byline}</div>` : null}${v.rd.hero ? html`<img class="rd-hero" src=${v.rd.hero} alt="" referrerpolicy="no-referrer"/>` : null}<div class="rd-body" dangerouslySetInnerHTML=${v.rHtml}></div><div class="rd-end">Текст получен из источника в режиме чтения и не хранится. Оригинал: <a href=${v.rd.url} target="_blank" rel="noopener">${v.rd.site} ↗</a></div></article>` : null}</div>`}</div></div>` : null}`;
+</div></div>${v.reader ? html`<div class="rd-back" onClick=${e => { if (e.target !== e.currentTarget) return; try { if (String(window.getSelection() || '').trim()) return; } catch (err) {} v.closeReader(e); }}><div class="rd" onClick=${e => e.stopPropagation()}><div class="rd-bar"><span class="rd-src">${v.readerSrc}</span>${v.rTrShow && v.rTrLink ? html`<a class="rd-btn rd-tr" href=${v.rTrLink} target="_blank" rel="noopener">${v.rTrLabel}</a>` : null}${v.rTrShow && !v.rTrLink ? html`<button class="rd-btn rd-tr" type="button" aria-pressed=${v.rTrOn ? "true" : "false"} onClick=${v.rTr}>${v.rTrLabel}</button>` : null}<a class="rd-btn" href=${v.reader} target="_blank" rel="noopener">Открыть в браузере ↗</a><button class="rd-btn rd-x" type="button" aria-label="Закрыть" onClick=${v.closeReader}>✕</button></div>${v.rFrame ? html`<iframe src=${v.reader} title="Статья" referrerpolicy="no-referrer-when-downgrade"></iframe>` : html`<div class="rd-scroll">${v.rLoad ? html`<div class="rd-msg"><span class="rd-spin"></span>Готовлю режим чтения…</div>` : null}${v.rErr ? html`<div class="rd-msg">${v.rErr}.<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="rd-btn" type="button" onClick=${v.rRetry}>Повторить</button><a class="rd-btn" href=${v.reader} target="_blank" rel="noopener">Открыть оригинал ↗</a></div></div>` : null}${v.rd ? html`<article class="rd-art"><div class="rd-meta">${v.rd.site}${v.rd.dt ? ' · ' + v.rd.dt : ''}${v.rd.min ? ' · ' + v.rd.min : ''}</div><h1>${v.rTitle}</h1>${v.rd.orig ? html`<div class="rd-orig">${v.rd.orig}</div>` : null}${v.rd.byline ? html`<div class="rd-by">${v.rd.byline}</div>` : null}${v.rd.hero ? html`<img class="rd-hero" src=${v.rd.hero} alt="" referrerpolicy="no-referrer"/>` : null}<div class="rd-body" dangerouslySetInnerHTML=${v.rHtml}></div><div class="rd-end">Текст получен из источника в режиме чтения и не хранится. Оригинал: <a href=${v.rd.url} target="_blank" rel="noopener">${v.rd.site} ↗</a></div></article>` : null}</div>`}</div></div>` : null}`;
 }
 function fit() { const vw = window.innerWidth, vh = window.innerHeight, s = Math.min(vw, vh) / 1360, w = vw / s, h = vh / s, ENL = 1.12;
   for (const [sel, k] of [['.wrap', ENL], ['.ringl', 1]]) { const st = document.querySelector(sel); if (!st) continue; st.style.width = w + 'px'; st.style.height = h + 'px'; st.style.margin = (-h / 2) + 'px 0 0 ' + (-w / 2) + 'px'; st.style.transform = 'scale(' + (s * k) + ')'; } }
