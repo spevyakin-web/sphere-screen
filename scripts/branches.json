@@ -1,64 +1,6 @@
 {
  "branches": [
   {
-   "id": "it",
-   "name": "IT & Tech",
-   "color": "#8FB7FF",
-   "icon": "cpu",
-   "feeds": [
-    {
-     "name": "TechCrunch",
-     "lang": "en",
-     "url": "https://techcrunch.com/feed/"
-    },
-    {
-     "name": "The Verge",
-     "lang": "en",
-     "url": "https://www.theverge.com/rss/index.xml"
-    },
-    {
-     "name": "Ars Technica",
-     "lang": "en",
-     "url": "https://feeds.arstechnica.com/arstechnica/index"
-    },
-    {
-     "name": "The Register",
-     "lang": "en",
-     "url": "https://www.theregister.com/headlines.atom"
-    },
-    {
-     "name": "Hacker News",
-     "lang": "en",
-     "url": "https://news.ycombinator.com/rss"
-    },
-    {
-     "name": "Wired",
-     "lang": "en",
-     "url": "https://www.wired.com/feed/rss"
-    },
-    {
-     "name": "Engadget",
-     "lang": "en",
-     "url": "https://www.engadget.com/rss.xml"
-    },
-    {
-     "name": "MIT Technology Review",
-     "lang": "en",
-     "url": "https://www.technologyreview.com/feed/"
-    },
-    {
-     "name": "Tom's Hardware",
-     "lang": "en",
-     "url": "https://www.tomshardware.com/feeds/all"
-    },
-    {
-     "name": "9to5Mac",
-     "lang": "en",
-     "url": "https://9to5mac.com/feed/"
-    }
-   ]
-  },
-  {
    "id": "main",
    "name": "Top News",
    "color": "#F3F2EE",
@@ -150,45 +92,254 @@
    ]
   },
   {
+   "id": "politics",
+   "name": "Politics",
+   "color": "#E8E3D3",
+   "icon": "landmark",
+   "feeds": [
+    {
+     "name": "The Guardian · Politics",
+     "lang": "en",
+     "url": "https://www.theguardian.com/politics/rss"
+    },
+    {
+     "name": "CBS News · Politics",
+     "lang": "en",
+     "url": "https://www.cbsnews.com/latest/rss/politics"
+    },
+    {
+     "name": "The Guardian · US politics",
+     "lang": "en",
+     "url": "https://www.theguardian.com/us-news/us-politics/rss"
+    },
+    {
+     "name": "Fox News · Politics",
+     "lang": "en",
+     "url": "https://moxie.foxnews.com/google-publisher/politics.xml"
+    },
+    {
+     "name": "ABC News · Politics",
+     "lang": "en",
+     "url": "https://feeds.abcnews.com/abcnews/politicsheadlines"
+    }
+   ]
+  },
+  {
+   "id": "world",
+   "name": "World",
+   "color": "#BFD4FF",
+   "icon": "globe",
+   "feeds": [
+    {
+     "name": "The Guardian · World",
+     "lang": "en",
+     "url": "https://www.theguardian.com/world/rss"
+    },
+    {
+     "name": "NPR World",
+     "lang": "en",
+     "url": "https://feeds.npr.org/1004/rss.xml"
+    },
+    {
+     "name": "DW",
+     "lang": "en",
+     "url": "https://rss.dw.com/rdf/rss-en-world"
+    },
+    {
+     "name": "France 24",
+     "lang": "en",
+     "url": "https://www.france24.com/en/rss"
+    },
+    {
+     "name": "CBS News · World",
+     "lang": "en",
+     "url": "https://www.cbsnews.com/latest/rss/world"
+    }
+   ]
+  },
+  {
+   "id": "society",
+   "name": "Society",
+   "color": "#D6C7FF",
+   "icon": "users",
+   "feeds": [
+    {
+     "name": "The Guardian · Society",
+     "lang": "en",
+     "url": "https://www.theguardian.com/society/rss"
+    },
+    {
+     "name": "The Conversation",
+     "lang": "en",
+     "url": "https://theconversation.com/global/articles.atom"
+    },
+    {
+     "name": "Vox",
+     "lang": "en",
+     "url": "https://www.vox.com/rss/index.xml"
+    },
+    {
+     "name": "ABC News · US",
+     "lang": "en",
+     "url": "https://feeds.abcnews.com/abcnews/usheadlines"
+    }
+   ]
+  },
+  {
+   "id": "incidents",
+   "name": "Incidents",
+   "color": "#FF9F7A",
+   "icon": "alert",
+   "feeds": [
+    {
+     "name": "CBS News · US",
+     "lang": "en",
+     "url": "https://www.cbsnews.com/latest/rss/us"
+    },
+    {
+     "name": "The Guardian · US news",
+     "lang": "en",
+     "url": "https://www.theguardian.com/us-news/rss"
+    },
+    {
+     "name": "Fox News · US",
+     "lang": "en",
+     "url": "https://moxie.foxnews.com/google-publisher/us.xml"
+    }
+   ]
+  },
+  {
+   "id": "crime",
+   "name": "Crime",
+   "color": "#FF7A8A",
+   "icon": "shield",
+   "feeds": [
+    {
+     "name": "The Guardian · UK crime",
+     "lang": "en",
+     "url": "https://www.theguardian.com/uk/ukcrime/rss"
+    },
+    {
+     "name": "CrimeReads",
+     "lang": "en",
+     "url": "https://crimereads.com/feed/"
+    },
+    {
+     "name": "CBS News · Crime",
+     "lang": "en",
+     "url": "https://www.cbsnews.com/latest/rss/crime"
+    },
+    {
+     "name": "The Guardian · US crime",
+     "lang": "en",
+     "url": "https://www.theguardian.com/us-news/us-crime/rss"
+    }
+   ]
+  },
+  {
+   "id": "defense",
+   "name": "Defense",
+   "color": "#A7B58A",
+   "icon": "shield",
+   "feeds": [
+    {
+     "name": "Defense One",
+     "lang": "en",
+     "url": "https://www.defenseone.com/rss/all/"
+    },
+    {
+     "name": "Military Times",
+     "lang": "en",
+     "url": "https://www.militarytimes.com/arc/outboundfeeds/rss/?outputType=xml"
+    },
+    {
+     "name": "The War Zone",
+     "lang": "en",
+     "url": "https://www.twz.com/feed"
+    },
+    {
+     "name": "Task & Purpose",
+     "lang": "en",
+     "url": "https://taskandpurpose.com/feed/"
+    },
+    {
+     "name": "The Guardian · Military",
+     "lang": "en",
+     "url": "https://www.theguardian.com/uk/military/rss"
+    }
+   ]
+  },
+  {
+   "id": "law",
+   "name": "Law",
+   "color": "#C9B98F",
+   "icon": "scale",
+   "feeds": [
+    {
+     "name": "SCOTUSblog",
+     "lang": "en",
+     "url": "https://www.scotusblog.com/feed/"
+    },
+    {
+     "name": "Above the Law",
+     "lang": "en",
+     "url": "https://abovethelaw.com/feed/"
+    },
+    {
+     "name": "The Guardian · Law",
+     "lang": "en",
+     "url": "https://www.theguardian.com/law/rss"
+    }
+   ]
+  },
+  {
    "id": "economy",
    "name": "Economy & Finance",
    "color": "#5EE6C8",
    "icon": "chart",
    "feeds": [
     {
-     "name": "Bloomberg",
+     "name": "The Guardian · Economics",
      "lang": "en",
-     "url": "https://feeds.bloomberg.com/markets/news.rss"
+     "url": "https://www.theguardian.com/business/economics/rss"
     },
     {
-     "name": "CNBC",
+     "name": "NPR Economy",
      "lang": "en",
-     "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147"
+     "url": "https://feeds.npr.org/1017/rss.xml"
     },
     {
-     "name": "MarketWatch",
+     "name": "CNBC Economy",
      "lang": "en",
-     "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories"
+     "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258"
     },
     {
-     "name": "Financial Times",
+     "name": "Marginal Revolution",
      "lang": "en",
-     "url": "https://www.ft.com/rss/home"
-    },
+     "url": "https://marginalrevolution.com/feed"
+    }
+   ]
+  },
+  {
+   "id": "markets",
+   "name": "Markets",
+   "color": "#4FD1A0",
+   "icon": "chart",
+   "feeds": [
     {
-     "name": "The Economist · Finance",
+     "name": "CNBC Finance",
      "lang": "en",
-     "url": "https://www.economist.com/finance-and-economics/rss.xml"
-    },
-    {
-     "name": "Seeking Alpha",
-     "lang": "en",
-     "url": "https://seekingalpha.com/market_currents.xml"
+     "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664"
     },
     {
      "name": "Investing.com",
      "lang": "en",
      "url": "https://www.investing.com/rss/news.rss"
+    },
+    {
+     "name": "The Guardian · Markets",
+     "lang": "en",
+     "url": "https://www.theguardian.com/business/stock-markets/rss"
     }
    ]
   },
@@ -199,72 +350,235 @@
    "icon": "briefcase",
    "feeds": [
     {
-     "name": "TechCrunch Startups",
-     "lang": "en",
-     "url": "https://techcrunch.com/category/startups/feed/"
-    },
-    {
-     "name": "Business Insider",
-     "lang": "en",
-     "url": "https://feeds.businessinsider.com/custom/all"
-    },
-    {
      "name": "Fortune",
      "lang": "en",
-     "url": "https://fortune.com/feed/"
+     "url": "https://fortune.com/feed/fortune-feeds/?id=3230629"
     },
     {
-     "name": "Inc.",
+     "name": "The Guardian · Business",
      "lang": "en",
-     "url": "https://www.inc.com/rss/"
+     "url": "https://www.theguardian.com/uk/business/rss"
     },
     {
-     "name": "Fast Company",
+     "name": "CNBC Business",
      "lang": "en",
-     "url": "https://www.fastcompany.com/latest/rss"
-    },
-    {
-     "name": "Entrepreneur",
-     "lang": "en",
-     "url": "https://www.entrepreneur.com/latest.rss"
+     "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147"
     }
    ]
   },
   {
-   "id": "sport",
-   "name": "Sports",
-   "color": "#7FD67A",
-   "icon": "ball",
+   "id": "realestate",
+   "name": "Real Estate",
+   "color": "#E0B48A",
+   "icon": "home",
    "feeds": [
     {
-     "name": "Yahoo Sports",
+     "name": "HousingWire",
      "lang": "en",
-     "url": "https://sports.yahoo.com/rss/"
+     "url": "https://www.housingwire.com/feed/"
     },
     {
-     "name": "BBC Sport",
+     "name": "Realtor.com News",
      "lang": "en",
-     "url": "https://feeds.bbci.co.uk/sport/rss.xml"
+     "url": "https://www.realtor.com/news/feed/"
     },
     {
-     "name": "Sky Sports",
+     "name": "The Guardian · Property",
      "lang": "en",
-     "url": "https://www.skysports.com/rss/12040"
+     "url": "https://www.theguardian.com/money/property/rss"
     },
     {
-     "name": "CBS Sports",
+     "name": "Curbed",
      "lang": "en",
-     "url": "https://www.cbssports.com/rss/headlines/"
+     "url": "https://www.curbed.com/rss/index.xml"
+    }
+   ]
+  },
+  {
+   "id": "careers",
+   "name": "Work & Careers",
+   "color": "#B8C98A",
+   "icon": "briefcase",
+   "feeds": [
+    {
+     "name": "The Guardian · Work & careers",
+     "lang": "en",
+     "url": "https://www.theguardian.com/money/work-and-careers/rss"
     },
     {
-     "name": "The Guardian · Sport",
+     "name": "HR Dive",
      "lang": "en",
-     "url": "https://www.theguardian.com/uk/sport/rss"
+     "url": "https://www.hrdive.com/feeds/news/"
     },
     {
-     "name": "BBC Football",
+     "name": "CNBC Make It",
      "lang": "en",
-     "url": "https://feeds.bbci.co.uk/sport/football/rss.xml"
+     "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=44877279"
+    },
+    {
+     "name": "Fast Company · Work Life",
+     "lang": "en",
+     "url": "https://www.fastcompany.com/work-life/rss"
+    }
+   ]
+  },
+  {
+   "id": "crypto",
+   "name": "Crypto",
+   "color": "#F7B955",
+   "icon": "coin",
+   "feeds": [
+    {
+     "name": "Bitcoin Magazine",
+     "lang": "en",
+     "url": "https://bitcoinmagazine.com/.rss/full/"
+    },
+    {
+     "name": "CryptoSlate",
+     "lang": "en",
+     "url": "https://cryptoslate.com/feed/"
+    },
+    {
+     "name": "Crypto Briefing",
+     "lang": "en",
+     "url": "https://cryptobriefing.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "money",
+   "name": "Personal Finance",
+   "color": "#9FE07A",
+   "icon": "wallet",
+   "feeds": [
+    {
+     "name": "Kiplinger",
+     "lang": "en",
+     "url": "https://www.kiplinger.com/feeds/all"
+    },
+    {
+     "name": "The Guardian · Money",
+     "lang": "en",
+     "url": "https://www.theguardian.com/money/rss"
+    },
+    {
+     "name": "Get Rich Slowly",
+     "lang": "en",
+     "url": "https://www.getrichslowly.org/feed/"
+    },
+    {
+     "name": "CNBC Personal Finance",
+     "lang": "en",
+     "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=21324812"
+    },
+    {
+     "name": "Mr. Money Mustache",
+     "lang": "en",
+     "url": "https://www.mrmoneymustache.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "it",
+   "name": "IT & Tech",
+   "color": "#8FB7FF",
+   "icon": "cpu",
+   "feeds": [
+    {
+     "name": "TechCrunch",
+     "lang": "en",
+     "url": "https://techcrunch.com/feed/"
+    },
+    {
+     "name": "The Verge",
+     "lang": "en",
+     "url": "https://www.theverge.com/rss/index.xml"
+    },
+    {
+     "name": "Ars Technica",
+     "lang": "en",
+     "url": "https://feeds.arstechnica.com/arstechnica/index"
+    },
+    {
+     "name": "The Register",
+     "lang": "en",
+     "url": "https://www.theregister.com/headlines.atom"
+    },
+    {
+     "name": "Wired",
+     "lang": "en",
+     "url": "https://www.wired.com/feed/rss"
+    },
+    {
+     "name": "Engadget",
+     "lang": "en",
+     "url": "https://www.engadget.com/rss.xml"
+    }
+   ]
+  },
+  {
+   "id": "ai",
+   "name": "AI",
+   "color": "#A89BFF",
+   "icon": "spark",
+   "feeds": [
+    {
+     "name": "MIT Technology Review · AI",
+     "lang": "en",
+     "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed"
+    },
+    {
+     "name": "The Verge · AI",
+     "lang": "en",
+     "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+    },
+    {
+     "name": "TechCrunch · AI",
+     "lang": "en",
+     "url": "https://techcrunch.com/category/artificial-intelligence/feed/"
+    },
+    {
+     "name": "Ars Technica · AI",
+     "lang": "en",
+     "url": "https://arstechnica.com/ai/feed/"
+    },
+    {
+     "name": "The Guardian · AI",
+     "lang": "en",
+     "url": "https://www.theguardian.com/technology/artificialintelligenceai/rss"
+    }
+   ]
+  },
+  {
+   "id": "gadgets",
+   "name": "Gadgets",
+   "color": "#7FC8FF",
+   "icon": "phone",
+   "feeds": [
+    {
+     "name": "9to5Google",
+     "lang": "en",
+     "url": "https://9to5google.com/feed/"
+    },
+    {
+     "name": "9to5Mac",
+     "lang": "en",
+     "url": "https://9to5mac.com/feed/"
+    },
+    {
+     "name": "Android Authority",
+     "lang": "en",
+     "url": "https://www.androidauthority.com/feed/"
+    },
+    {
+     "name": "GSMArena",
+     "lang": "en",
+     "url": "https://www.gsmarena.com/rss-news-reviews.php3"
+    },
+    {
+     "name": "Digital Trends",
+     "lang": "en",
+     "url": "https://www.digitaltrends.com/feed/"
     }
    ]
   },
@@ -277,37 +591,22 @@
     {
      "name": "ScienceDaily",
      "lang": "en",
-     "url": "https://www.sciencedaily.com/rss/all.xml"
-    },
-    {
-     "name": "Nature",
-     "lang": "en",
-     "url": "https://www.nature.com/nature.rss"
-    },
-    {
-     "name": "Quanta Magazine",
-     "lang": "en",
-     "url": "https://www.quantamagazine.org/feed/"
-    },
-    {
-     "name": "Phys.org",
-     "lang": "en",
-     "url": "https://phys.org/rss-feed/"
-    },
-    {
-     "name": "Scientific American",
-     "lang": "en",
-     "url": "https://www.scientificamerican.com/platform/syndication/rss/"
-    },
-    {
-     "name": "Live Science",
-     "lang": "en",
-     "url": "https://www.livescience.com/feeds/all"
+     "url": "https://www.sciencedaily.com/rss/top/science.xml"
     },
     {
      "name": "Science News",
      "lang": "en",
      "url": "https://www.sciencenews.org/feed"
+    },
+    {
+     "name": "New Scientist",
+     "lang": "en",
+     "url": "https://www.newscientist.com/feed/home/"
+    },
+    {
+     "name": "Quanta Magazine",
+     "lang": "en",
+     "url": "https://www.quantamagazine.org/feed/"
     }
    ]
   },
@@ -317,11 +616,6 @@
    "color": "#9FB3FF",
    "icon": "rocket",
    "feeds": [
-    {
-     "name": "NASA",
-     "lang": "en",
-     "url": "https://www.nasa.gov/news-release/feed/"
-    },
     {
      "name": "Space.com",
      "lang": "en",
@@ -333,105 +627,70 @@
      "url": "https://spacenews.com/feed/"
     },
     {
-     "name": "Spaceflight Now",
-     "lang": "en",
-     "url": "https://spaceflightnow.com/feed/"
-    },
-    {
      "name": "Universe Today",
      "lang": "en",
      "url": "https://www.universetoday.com/feed/"
     },
     {
-     "name": "Phys.org · Space",
+     "name": "NASA",
      "lang": "en",
-     "url": "https://phys.org/rss-feed/space-news/"
+     "url": "https://www.nasa.gov/news-release/feed/"
     }
    ]
   },
   {
-   "id": "auto",
-   "name": "Cars",
-   "color": "#FFB547",
-   "icon": "car",
+   "id": "health",
+   "name": "Health",
+   "color": "#6FD6B0",
+   "icon": "heart",
    "feeds": [
     {
-     "name": "InsideEVs",
+     "name": "NPR Health",
      "lang": "en",
-     "url": "https://insideevs.com/rss/news/all/"
+     "url": "https://feeds.npr.org/1128/rss.xml"
     },
     {
-     "name": "Electrek",
+     "name": "ScienceDaily · Health",
      "lang": "en",
-     "url": "https://electrek.co/feed/"
+     "url": "https://www.sciencedaily.com/rss/health_medicine.xml"
     },
     {
-     "name": "Motor1",
+     "name": "The Guardian · Health",
      "lang": "en",
-     "url": "https://www.motor1.com/rss/news/all/"
+     "url": "https://www.theguardian.com/society/health/rss"
     },
     {
-     "name": "Carscoops",
+     "name": "PBS NewsHour · Health",
      "lang": "en",
-     "url": "https://www.carscoops.com/feed/"
-    },
-    {
-     "name": "Car and Driver",
-     "lang": "en",
-     "url": "https://www.caranddriver.com/rss/all.xml/"
-    },
-    {
-     "name": "Autocar",
-     "lang": "en",
-     "url": "https://www.autocar.co.uk/rss"
-    },
-    {
-     "name": "Jalopnik",
-     "lang": "en",
-     "url": "https://jalopnik.com/rss"
+     "url": "https://www.pbs.org/newshour/feeds/rss/health"
     }
    ]
   },
   {
-   "id": "games",
-   "name": "Games",
-   "color": "#7FE0F0",
-   "icon": "gamepad",
+   "id": "climate",
+   "name": "Climate",
+   "color": "#7FD67A",
+   "icon": "leaf",
    "feeds": [
     {
-     "name": "IGN",
+     "name": "The Guardian · Environment",
      "lang": "en",
-     "url": "https://feeds.ign.com/ign/all"
+     "url": "https://www.theguardian.com/environment/rss"
     },
     {
-     "name": "Polygon",
+     "name": "Grist",
      "lang": "en",
-     "url": "https://www.polygon.com/rss/index.xml"
+     "url": "https://grist.org/feed/"
     },
     {
-     "name": "Eurogamer",
+     "name": "Carbon Brief",
      "lang": "en",
-     "url": "https://www.eurogamer.net/feed"
+     "url": "https://www.carbonbrief.org/feed/"
     },
     {
-     "name": "PC Gamer",
+     "name": "Yale Environment 360",
      "lang": "en",
-     "url": "https://www.pcgamer.com/rss/"
-    },
-    {
-     "name": "Rock Paper Shotgun",
-     "lang": "en",
-     "url": "https://www.rockpapershotgun.com/feed"
-    },
-    {
-     "name": "Kotaku",
-     "lang": "en",
-     "url": "https://kotaku.com/rss"
-    },
-    {
-     "name": "GameSpot",
-     "lang": "en",
-     "url": "https://www.gamespot.com/feeds/news/"
+     "url": "https://e360.yale.edu/feed.xml"
     }
    ]
   },
@@ -470,6 +729,16 @@
      "name": "Collider",
      "lang": "en",
      "url": "https://collider.com/feed/"
+    },
+    {
+     "name": "/Film",
+     "lang": "en",
+     "url": "https://www.slashfilm.com/feed/"
+    },
+    {
+     "name": "The Guardian · Film",
+     "lang": "en",
+     "url": "https://www.theguardian.com/film/rss"
     }
    ]
   },
@@ -485,14 +754,14 @@
      "url": "https://www.stereogum.com/feed/"
     },
     {
-     "name": "Rolling Stone",
+     "name": "Rolling Stone · Music",
      "lang": "en",
      "url": "https://www.rollingstone.com/music/feed/"
     },
     {
      "name": "Pitchfork",
      "lang": "en",
-     "url": "https://pitchfork.com/feed/feed-news/rss"
+     "url": "https://pitchfork.com/rss/news/"
     },
     {
      "name": "Billboard",
@@ -503,6 +772,54 @@
      "name": "NME",
      "lang": "en",
      "url": "https://www.nme.com/feed"
+    },
+    {
+     "name": "Consequence",
+     "lang": "en",
+     "url": "https://consequence.net/feed/"
+    },
+    {
+     "name": "The Guardian · Music",
+     "lang": "en",
+     "url": "https://www.theguardian.com/music/rss"
+    }
+   ]
+  },
+  {
+   "id": "books",
+   "name": "Books",
+   "color": "#E6C29A",
+   "icon": "book",
+   "feeds": [
+    {
+     "name": "The Guardian · Books",
+     "lang": "en",
+     "url": "https://www.theguardian.com/books/rss"
+    },
+    {
+     "name": "Literary Hub",
+     "lang": "en",
+     "url": "https://lithub.com/feed/"
+    },
+    {
+     "name": "Book Riot",
+     "lang": "en",
+     "url": "https://bookriot.com/feed/"
+    },
+    {
+     "name": "Publishers Weekly",
+     "lang": "en",
+     "url": "https://www.publishersweekly.com/pw/feeds/recent/index.xml"
+    },
+    {
+     "name": "NPR Books",
+     "lang": "en",
+     "url": "https://feeds.npr.org/1032/rss.xml"
+    },
+    {
+     "name": "Electric Literature",
+     "lang": "en",
+     "url": "https://electricliterature.com/feed/"
     }
    ]
   },
@@ -518,90 +835,123 @@
      "url": "https://hyperallergic.com/feed/"
     },
     {
-     "name": "The Guardian · Culture",
-     "lang": "en",
-     "url": "https://www.theguardian.com/culture/rss"
-    },
-    {
      "name": "ARTnews",
      "lang": "en",
      "url": "https://www.artnews.com/feed/"
     },
     {
-     "name": "Open Culture",
+     "name": "The Art Newspaper",
      "lang": "en",
-     "url": "https://www.openculture.com/feed"
+     "url": "https://www.theartnewspaper.com/rss.xml"
     },
     {
-     "name": "Smithsonian",
+     "name": "The Guardian · Stage",
      "lang": "en",
-     "url": "https://www.smithsonianmag.com/rss/latest_articles/"
+     "url": "https://www.theguardian.com/stage/rss"
     }
    ]
   },
   {
-   "id": "health",
-   "name": "Health",
-   "color": "#6FD6B0",
-   "icon": "heart",
+   "id": "games",
+   "name": "Games",
+   "color": "#7FE0F0",
+   "icon": "gamepad",
    "feeds": [
     {
-     "name": "BBC Health",
+     "name": "IGN",
      "lang": "en",
-     "url": "https://feeds.bbci.co.uk/news/health/rss.xml"
+     "url": "https://feeds.feedburner.com/ign/all"
     },
     {
-     "name": "ScienceDaily · Health",
+     "name": "Polygon",
      "lang": "en",
-     "url": "https://www.sciencedaily.com/rss/health_medicine.xml"
+     "url": "https://www.polygon.com/rss/index.xml"
     },
     {
-     "name": "Medical Xpress",
+     "name": "Eurogamer",
      "lang": "en",
-     "url": "https://medicalxpress.com/rss-feed/"
+     "url": "https://www.eurogamer.net/feed"
     },
     {
-     "name": "STAT",
+     "name": "PC Gamer",
      "lang": "en",
-     "url": "https://www.statnews.com/feed/"
+     "url": "https://www.pcgamer.com/rss/"
     },
     {
-     "name": "NPR · Health",
+     "name": "Rock Paper Shotgun",
      "lang": "en",
-     "url": "https://feeds.npr.org/1128/rss.xml"
+     "url": "https://www.rockpapershotgun.com/feed"
+    },
+    {
+     "name": "Kotaku",
+     "lang": "en",
+     "url": "https://kotaku.com/rss"
+    },
+    {
+     "name": "VGC",
+     "lang": "en",
+     "url": "https://www.videogameschronicle.com/feed/"
     }
    ]
   },
   {
-   "id": "crypto",
-   "name": "Crypto",
-   "color": "#F7B955",
-   "icon": "coin",
+   "id": "celebs",
+   "name": "Celebrities",
+   "color": "#FFB3D9",
+   "icon": "star",
    "feeds": [
     {
-     "name": "CoinDesk",
+     "name": "E! Online",
      "lang": "en",
-     "url": "https://www.coindesk.com/arc/outboundfeeds/rss/"
+     "url": "https://www.eonline.com/syndication/feeds/rssfeeds/topstories.xml"
     },
     {
-     "name": "Cointelegraph",
+     "name": "Page Six",
      "lang": "en",
-     "url": "https://cointelegraph.com/rss"
+     "url": "https://pagesix.com/feed/"
     },
     {
-     "name": "Decrypt",
+     "name": "Us Weekly",
      "lang": "en",
-     "url": "https://decrypt.co/feed"
+     "url": "https://www.usmagazine.com/feed/"
     },
     {
-     "name": "Bitcoin Magazine",
+     "name": "TMZ",
      "lang": "en",
-     "url": "https://bitcoinmagazine.com/.rss/full/"
+     "url": "https://www.tmz.com/rss.xml"
     },
     {
-     "name": "The Block",
+     "name": "The Guardian · Celebrity",
      "lang": "en",
-     "url": "https://www.theblock.co/rss.xml"
+     "url": "https://www.theguardian.com/lifeandstyle/celebrity/rss"
+    }
+   ]
+  },
+  {
+   "id": "humor",
+   "name": "Humor",
+   "color": "#FFE07A",
+   "icon": "smile",
+   "feeds": [
+    {
+     "name": "Bored Panda",
+     "lang": "en",
+     "url": "https://www.boredpanda.com/feed/"
+    },
+    {
+     "name": "The Babylon Bee",
+     "lang": "en",
+     "url": "https://babylonbee.com/feed"
+    },
+    {
+     "name": "Daily Dot",
+     "lang": "en",
+     "url": "https://www.dailydot.com/feed/"
+    },
+    {
+     "name": "The Poke",
+     "lang": "en",
+     "url": "https://www.thepoke.com/feed/"
     }
    ]
   },
@@ -611,11 +961,6 @@
    "color": "#62C6FF",
    "icon": "plane",
    "feeds": [
-    {
-     "name": "The Points Guy",
-     "lang": "en",
-     "url": "https://thepointsguy.com/feed/"
-    },
     {
      "name": "Skift",
      "lang": "en",
@@ -629,12 +974,470 @@
     {
      "name": "The Guardian · Travel",
      "lang": "en",
-     "url": "https://www.theguardian.com/travel/rss"
+     "url": "https://www.theguardian.com/uk/travel/rss"
+    }
+   ]
+  },
+  {
+   "id": "food",
+   "name": "Food",
+   "color": "#FFAA66",
+   "icon": "cup",
+   "feeds": [
+    {
+     "name": "Eater",
+     "lang": "en",
+     "url": "https://www.eater.com/rss/index.xml"
+    },
+    {
+     "name": "Bon Appétit",
+     "lang": "en",
+     "url": "https://www.bonappetit.com/feed/rss"
+    },
+    {
+     "name": "The Guardian · Food",
+     "lang": "en",
+     "url": "https://www.theguardian.com/food/rss"
+    },
+    {
+     "name": "Smitten Kitchen",
+     "lang": "en",
+     "url": "https://smittenkitchen.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "fashion",
+   "name": "Fashion & Beauty",
+   "color": "#F5A3E0",
+   "icon": "sparkle",
+   "feeds": [
+    {
+     "name": "Harper's Bazaar",
+     "lang": "en",
+     "url": "https://www.harpersbazaar.com/rss/all.xml/"
+    },
+    {
+     "name": "The Guardian · Fashion",
+     "lang": "en",
+     "url": "https://www.theguardian.com/fashion/rss"
+    },
+    {
+     "name": "Allure",
+     "lang": "en",
+     "url": "https://www.allure.com/feed/rss"
+    },
+    {
+     "name": "Hypebeast",
+     "lang": "en",
+     "url": "https://hypebeast.com/feed"
+    },
+    {
+     "name": "WWD",
+     "lang": "en",
+     "url": "https://wwd.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "home",
+   "name": "Home & Interior",
+   "color": "#D8B99A",
+   "icon": "home",
+   "feeds": [
+    {
+     "name": "Dezeen",
+     "lang": "en",
+     "url": "https://www.dezeen.com/feed/"
+    },
+    {
+     "name": "Architectural Digest",
+     "lang": "en",
+     "url": "https://www.architecturaldigest.com/feed/rss"
+    },
+    {
+     "name": "Design Milk",
+     "lang": "en",
+     "url": "https://design-milk.com/feed/"
+    },
+    {
+     "name": "The Guardian · Homes",
+     "lang": "en",
+     "url": "https://www.theguardian.com/lifeandstyle/homes/rss"
+    }
+   ]
+  },
+  {
+   "id": "family",
+   "name": "Family",
+   "color": "#FFC9A3",
+   "icon": "users",
+   "feeds": [
+    {
+     "name": "The Guardian · Family",
+     "lang": "en",
+     "url": "https://www.theguardian.com/lifeandstyle/family/rss"
+    },
+    {
+     "name": "Fatherly",
+     "lang": "en",
+     "url": "https://www.fatherly.com/feed"
+    },
+    {
+     "name": "Scary Mommy",
+     "lang": "en",
+     "url": "https://www.scarymommy.com/feed"
+    },
+    {
+     "name": "Motherly",
+     "lang": "en",
+     "url": "https://www.mother.ly/feed/"
+    },
+    {
+     "name": "Romper",
+     "lang": "en",
+     "url": "https://www.romper.com/rss"
+    }
+   ]
+  },
+  {
+   "id": "psychology",
+   "name": "Psychology",
+   "color": "#C3A3FF",
+   "icon": "heart",
+   "feeds": [
+    {
+     "name": "PsyPost",
+     "lang": "en",
+     "url": "https://www.psypost.org/feed/"
+    },
+    {
+     "name": "Greater Good (Berkeley)",
+     "lang": "en",
+     "url": "https://greatergood.berkeley.edu/site/rss/articles"
+    },
+    {
+     "name": "Psychology Today",
+     "lang": "en",
+     "url": "https://www.psychologytoday.com/us/front/feed"
+    },
+    {
+     "name": "The Guardian · Relationships",
+     "lang": "en",
+     "url": "https://www.theguardian.com/lifeandstyle/relationships/rss"
+    },
+    {
+     "name": "The Gottman Institute",
+     "lang": "en",
+     "url": "https://www.gottman.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "education",
+   "name": "Education",
+   "color": "#9ACBFF",
+   "icon": "book",
+   "feeds": [
+    {
+     "name": "The Hechinger Report",
+     "lang": "en",
+     "url": "https://hechingerreport.org/feed/"
+    },
+    {
+     "name": "Inside Higher Ed",
+     "lang": "en",
+     "url": "https://www.insidehighered.com/rss.xml"
+    },
+    {
+     "name": "Chalkbeat",
+     "lang": "en",
+     "url": "https://www.chalkbeat.org/arc/outboundfeeds/rss/?outputType=xml"
+    },
+    {
+     "name": "The Guardian · Education",
+     "lang": "en",
+     "url": "https://www.theguardian.com/education/rss"
+    }
+   ]
+  },
+  {
+   "id": "religion",
+   "name": "Religion",
+   "color": "#E8D9A8",
+   "icon": "sun",
+   "feeds": [
+    {
+     "name": "The Guardian · Religion",
+     "lang": "en",
+     "url": "https://www.theguardian.com/world/religion/rss"
+    },
+    {
+     "name": "Crux",
+     "lang": "en",
+     "url": "https://cruxnow.com/feed"
+    },
+    {
+     "name": "Aleteia",
+     "lang": "en",
+     "url": "https://aleteia.org/feed/"
+    },
+    {
+     "name": "Christianity Today",
+     "lang": "en",
+     "url": "https://www.christianitytoday.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "sport",
+   "name": "Sports",
+   "color": "#7FD67A",
+   "icon": "ball",
+   "feeds": [
+    {
+     "name": "Sky Sports",
+     "lang": "en",
+     "url": "https://www.skysports.com/rss/12040"
+    },
+    {
+     "name": "ESPN",
+     "lang": "en",
+     "url": "https://www.espn.com/espn/rss/news"
+    },
+    {
+     "name": "CBS Sports",
+     "lang": "en",
+     "url": "https://www.cbssports.com/rss/headlines/"
+    },
+    {
+     "name": "The Guardian · Sport",
+     "lang": "en",
+     "url": "https://www.theguardian.com/uk/sport/rss"
+    }
+   ]
+  },
+  {
+   "id": "esports",
+   "name": "Esports",
+   "color": "#5FE0C0",
+   "icon": "gamepad",
+   "feeds": [
+    {
+     "name": "Dexerto",
+     "lang": "en",
+     "url": "https://www.dexerto.com/feed/"
+    },
+    {
+     "name": "Dexerto · Esports",
+     "lang": "en",
+     "url": "https://www.dexerto.com/esports/feed/"
+    },
+    {
+     "name": "Esports Headlines",
+     "lang": "en",
+     "url": "https://esportsheadlines.com/feed/"
+    },
+    {
+     "name": "HLTV",
+     "lang": "en",
+     "url": "https://www.hltv.org/rss/news"
+    }
+   ]
+  },
+  {
+   "id": "fitness",
+   "name": "Fitness",
+   "color": "#A6E36F",
+   "icon": "run",
+   "feeds": [
+    {
+     "name": "Men's Health",
+     "lang": "en",
+     "url": "https://www.menshealth.com/rss/all.xml/"
+    },
+    {
+     "name": "Women's Health",
+     "lang": "en",
+     "url": "https://www.womenshealthmag.com/rss/all.xml/"
+    },
+    {
+     "name": "Nerd Fitness",
+     "lang": "en",
+     "url": "https://www.nerdfitness.com/feed/"
+    },
+    {
+     "name": "Outside",
+     "lang": "en",
+     "url": "https://www.outsideonline.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "auto",
+   "name": "Cars",
+   "color": "#FFB547",
+   "icon": "car",
+   "feeds": [
+    {
+     "name": "InsideEVs",
+     "lang": "en",
+     "url": "https://insideevs.com/rss/articles/all/"
+    },
+    {
+     "name": "Electrek",
+     "lang": "en",
+     "url": "https://electrek.co/feed/"
+    },
+    {
+     "name": "Motor1",
+     "lang": "en",
+     "url": "https://www.motor1.com/rss/articles/all/"
+    },
+    {
+     "name": "Carscoops",
+     "lang": "en",
+     "url": "https://www.carscoops.com/feed/"
+    },
+    {
+     "name": "The Drive",
+     "lang": "en",
+     "url": "https://www.thedrive.com/feed"
+    },
+    {
+     "name": "RideApart (moto)",
+     "lang": "en",
+     "url": "https://www.rideapart.com/rss/articles/all/"
+    }
+   ]
+  },
+  {
+   "id": "transport",
+   "name": "Transport & Aviation",
+   "color": "#8FD0E8",
+   "icon": "plane",
+   "feeds": [
+    {
+     "name": "AeroTime",
+     "lang": "en",
+     "url": "https://www.aerotime.aero/feed"
     },
     {
      "name": "Simple Flying",
      "lang": "en",
      "url": "https://simpleflying.com/feed/"
+    },
+    {
+     "name": "AirlineGeeks",
+     "lang": "en",
+     "url": "https://airlinegeeks.com/feed/"
+    },
+    {
+     "name": "Railway Technology",
+     "lang": "en",
+     "url": "https://www.railway-technology.com/feed/"
+    }
+   ]
+  },
+  {
+   "id": "animals",
+   "name": "Animals",
+   "color": "#C8D88A",
+   "icon": "paw",
+   "feeds": [
+    {
+     "name": "ScienceDaily · Animals",
+     "lang": "en",
+     "url": "https://www.sciencedaily.com/rss/plants_animals.xml"
+    },
+    {
+     "name": "Bored Panda · Animals",
+     "lang": "en",
+     "url": "https://www.boredpanda.com/animals/feed/"
+    },
+    {
+     "name": "Mongabay",
+     "lang": "en",
+     "url": "https://news.mongabay.com/feed/"
+    },
+    {
+     "name": "The Guardian · Wildlife",
+     "lang": "en",
+     "url": "https://www.theguardian.com/environment/wildlife/rss"
+    }
+   ]
+  },
+  {
+   "id": "weather",
+   "name": "Weather",
+   "color": "#A8D8FF",
+   "icon": "cloud",
+   "feeds": [
+    {
+     "name": "Severe Weather Europe",
+     "lang": "en",
+     "url": "https://www.severe-weather.eu/feed/"
+    },
+    {
+     "name": "Yale Climate Connections",
+     "lang": "en",
+     "url": "https://yaleclimateconnections.org/feed/"
+    },
+    {
+     "name": "NOAA News",
+     "lang": "en",
+     "url": "https://www.noaa.gov/rss.xml"
+    }
+   ]
+  },
+  {
+   "id": "goodnews",
+   "name": "Good News",
+   "color": "#FFD86F",
+   "icon": "sun",
+   "feeds": [
+    {
+     "name": "Reasons to be Cheerful",
+     "lang": "en",
+     "url": "https://reasonstobecheerful.world/feed/"
+    },
+    {
+     "name": "Upworthy",
+     "lang": "en",
+     "url": "https://www.upworthy.com/feed"
+    },
+    {
+     "name": "Good News Network",
+     "lang": "en",
+     "url": "https://www.goodnewsnetwork.org/feed/"
+    },
+    {
+     "name": "The Guardian · The Upside",
+     "lang": "en",
+     "url": "https://www.theguardian.com/world/series/the-upside/rss"
+    }
+   ]
+  },
+  {
+   "id": "weird",
+   "name": "Curious",
+   "color": "#D9A8FF",
+   "icon": "spark",
+   "feeds": [
+    {
+     "name": "Oddity Central",
+     "lang": "en",
+     "url": "https://www.odditycentral.com/feed"
+    },
+    {
+     "name": "Open Culture",
+     "lang": "en",
+     "url": "https://www.openculture.com/feed"
+    },
+    {
+     "name": "Mental Floss",
+     "lang": "en",
+     "url": "https://www.mentalfloss.com/rss.xml"
     }
    ]
   }
