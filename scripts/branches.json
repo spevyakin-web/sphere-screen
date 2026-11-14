@@ -50,6 +50,11 @@
      "name": "France 24",
      "lang": "en",
      "url": "https://www.france24.com/en/rss"
+    },
+    {
+     "name": "BBC · Europe",
+     "lang": "en",
+     "url": "https://feeds.bbci.co.uk/news/world/europe/rss.xml"
     }
    ]
   },
@@ -62,32 +67,32 @@
     {
      "name": "The Moscow Times",
      "lang": "en",
-     "url": "https://www.themoscowtimes.com/rss/news"
+     "url": "https://www.themoscowtimes.com/rss/news",
+     "off": true
     },
     {
      "name": "Meduza (English)",
      "lang": "en",
-     "url": "https://meduza.io/rss/en/all"
+     "url": "https://meduza.io/rss/en/all",
+     "off": true
     },
     {
      "name": "TASS",
      "lang": "en",
-     "url": "https://tass.com/rss/v2.xml"
+     "url": "https://tass.com/rss/v2.xml",
+     "off": true
     },
     {
      "name": "The Guardian · Russia",
      "lang": "en",
-     "url": "https://www.theguardian.com/world/russia/rss"
-    },
-    {
-     "name": "BBC · Europe",
-     "lang": "en",
-     "url": "https://feeds.bbci.co.uk/news/world/europe/rss.xml"
+     "url": "https://www.theguardian.com/world/russia/rss",
+     "off": true
     },
     {
      "name": "RFE/RL",
      "lang": "en",
-     "url": "https://www.rferl.org/api/zrqiteuuir"
+     "url": "https://www.rferl.org/api/zrqiteuuir",
+     "off": true
     }
    ]
   },
