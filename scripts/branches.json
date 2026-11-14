@@ -19,79 +19,49 @@
     {
      "name": "Al Jazeera",
      "lang": "en",
-     "url": "https://www.aljazeera.com/xml/rss/all.xml"
+     "url": "https://www.aljazeera.com/xml/rss/all.xml",
+     "off": true
     },
     {
      "name": "NPR",
      "lang": "en",
-     "url": "https://feeds.npr.org/1004/rss.xml"
+     "url": "https://feeds.npr.org/1004/rss.xml",
+     "off": true
     },
     {
      "name": "DW",
      "lang": "en",
-     "url": "https://rss.dw.com/rdf/rss-en-world"
+     "url": "https://rss.dw.com/rdf/rss-en-world",
+     "off": true
     },
     {
      "name": "CBS News",
      "lang": "en",
-     "url": "https://www.cbsnews.com/latest/rss/main"
+     "url": "https://www.cbsnews.com/latest/rss/main",
+     "off": true
     },
     {
      "name": "ABC News",
      "lang": "en",
-     "url": "https://abcnews.go.com/abcnews/topstories"
+     "url": "https://abcnews.go.com/abcnews/topstories",
+     "off": true
     },
     {
      "name": "Sky News",
      "lang": "en",
-     "url": "https://feeds.skynews.com/feeds/rss/world.xml"
+     "url": "https://feeds.skynews.com/feeds/rss/world.xml",
+     "off": true
     },
     {
      "name": "France 24",
      "lang": "en",
-     "url": "https://www.france24.com/en/rss"
+     "url": "https://www.france24.com/en/rss",
+     "off": true
     },
     {
      "name": "BBC · Europe",
      "lang": "en",
-     "url": "https://feeds.bbci.co.uk/news/world/europe/rss.xml"
-    }
-   ]
-  },
-  {
-   "id": "russia",
-   "name": "Russia",
-   "color": "#FF8A7A",
-   "icon": "flag",
-   "feeds": [
-    {
-     "name": "The Moscow Times",
-     "lang": "en",
-     "url": "https://www.themoscowtimes.com/rss/news",
-     "off": true
-    },
-    {
-     "name": "Meduza (English)",
-     "lang": "en",
-     "url": "https://meduza.io/rss/en/all",
-     "off": true
-    },
-    {
-     "name": "TASS",
-     "lang": "en",
-     "url": "https://tass.com/rss/v2.xml",
-     "off": true
-    },
-    {
-     "name": "The Guardian · Russia",
-     "lang": "en",
-     "url": "https://www.theguardian.com/world/russia/rss",
-     "off": true
-    },
-    {
-     "name": "RFE/RL",
-     "lang": "en",
-     "url": "https://www.rferl.org/api/zrqiteuuir",
+     "url": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
      "off": true
     }
    ]
@@ -127,7 +97,8 @@
      "lang": "en",
      "url": "https://feeds.abcnews.com/abcnews/politicsheadlines"
     }
-   ]
+   ],
+   "hidden": true
   },
   {
    "id": "world",
@@ -191,57 +162,6 @@
    ]
   },
   {
-   "id": "incidents",
-   "name": "Incidents",
-   "color": "#FF9F7A",
-   "icon": "alert",
-   "feeds": [
-    {
-     "name": "CBS News · US",
-     "lang": "en",
-     "url": "https://www.cbsnews.com/latest/rss/us"
-    },
-    {
-     "name": "The Guardian · US news",
-     "lang": "en",
-     "url": "https://www.theguardian.com/us-news/rss"
-    },
-    {
-     "name": "Fox News · US",
-     "lang": "en",
-     "url": "https://moxie.foxnews.com/google-publisher/us.xml"
-    }
-   ]
-  },
-  {
-   "id": "crime",
-   "name": "Crime",
-   "color": "#FF7A8A",
-   "icon": "shield",
-   "feeds": [
-    {
-     "name": "The Guardian · UK crime",
-     "lang": "en",
-     "url": "https://www.theguardian.com/uk/ukcrime/rss"
-    },
-    {
-     "name": "CrimeReads",
-     "lang": "en",
-     "url": "https://crimereads.com/feed/"
-    },
-    {
-     "name": "CBS News · Crime",
-     "lang": "en",
-     "url": "https://www.cbsnews.com/latest/rss/crime"
-    },
-    {
-     "name": "The Guardian · US crime",
-     "lang": "en",
-     "url": "https://www.theguardian.com/us-news/us-crime/rss"
-    }
-   ]
-  },
-  {
    "id": "defense",
    "name": "Defense",
    "color": "#A7B58A",
@@ -272,7 +192,8 @@
      "lang": "en",
      "url": "https://www.theguardian.com/uk/military/rss"
     }
-   ]
+   ],
+   "hidden": false
   },
   {
    "id": "law",
@@ -1192,7 +1113,8 @@
      "lang": "en",
      "url": "https://www.christianitytoday.com/feed/"
     }
-   ]
+   ],
+   "hidden": true
   },
   {
    "id": "sport",
