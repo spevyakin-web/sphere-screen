@@ -86,7 +86,7 @@ class Component extends DCLogic {
     super(p); this.NEWS = [{"cat": "Tech", "reg": "", "d": "now", "h": "Welcome to the news dome", "src": "Dome", "col": "#8FB7FF", "facts": [{"t": "Pick a branch to start reading."}], "link": "spevyakin-web.github.io"}]; this.NEWS.forEach(n => { if (n.noText === undefined) n.noText = true; if (!n.dfull) n.dfull = n.d; });
     this.DX = 380; this.DY = 256; this.RM = 662; this.P = 1.6;
     this.ox = 0; this.oy = 0; this.M0 = 1.45; this.ZS = 1.2; this.MMIN = 1.45 / Math.pow(1.2, 5); this.MMAX = 1.45 * Math.pow(1.2, 5); this.WU = 1360; this.HU = 1360; this.AX = 1; this.AY = 1; this.CX = 680; this.CY = 680; this.m = 1.45; this.lx = 330; this.ly = 250;
-    this.state = { g: 0, f: 0, act: null, open: false, fs: 30, hint: 1, panel: false, feeds: null, fname: '', furl: '', flang: 'ru', tok: '', ed: null };
+    this.state = { g: 0, f: 0, act: null, open: false, fs: 42, hint: 1, panel: false, feeds: null, fname: '', furl: '', flang: 'ru', tok: '', ed: null };
     this.BASE = window.__BASE != null ? window.__BASE : ''; this.LANGS = [['ru', 'Русский'], ['uk', 'Українська'], ['de', 'Deutsch'], ['fr', 'Français'], ['es', 'Español'], ['it', 'Italiano'], ['pt', 'Português'], ['pl', 'Polski'], ['tr', 'Türkçe'], ['zh', '中文'], ['ja', '日本語'], ['ko', '한국어'], ['ar', 'العربية'], ['hi', 'हिन्दी'], ['he', 'עברית'], ['nl', 'Nederlands'], ['sv', 'Svenska'], ['cs', 'Čeština'], ['kk', 'Қазақша'], ['en', 'English']]; this.mode = 'branches'; this.layout = 'hex'; this.SP = []; this.trA = 0; this.STUB = this.NEWS[0]; this.NEWS = [];
     this.pts = new Map(); this.drag = null; this.moved = false; this.pinch = null; this.suppress = 0; this.lastWheel = 0;
     this.tw = {}; this.panRaf = 0; this.hits = []; this.dirty = true; this.alive = true; this.downT = 0; this.cv = null; this.built = false; this.sprites = new Map();
@@ -228,7 +228,7 @@ class Component extends DCLogic {
       const items = await pr; const b = (this.bidx && this.bidx.branches || []).find(q => q.id === bid);
       this.mode = 'news'; this.branch = bid; this.bname = bid === 'fav' ? 'Favorites' : (this.bview().names[bid] || (b && b.name) || ''); this.bcol = bid === 'fav' ? '#FF3B30' : (this.bview().colors[bid] || (b && b.color) || '#8FB7FF');
       this.layout = 'spiral'; this.raw = (items || []).slice().sort((x, y) => new Date(y.date) - new Date(x.date)); this.ox = 0; this.oy = 0; this.applyFilter(); this.forceUpdate();
-      const MT = this.M0; this.tween(620, k => { const e = 1 - Math.pow(1 - k, 3); this.trA = 1 - e; this.m = MT * (2.6 - 1.6 * e); this.dirty = true; }, () => { this.busy = false; this.trA = 0; this.m = MT; this.dirty = true; }); }); }
+      const MT = this.M0 * Math.pow(this.ZS, 3); this.tween(620, k => { const e = 1 - Math.pow(1 - k, 3); this.trA = 1 - e; this.m = MT * (2.6 - 1.6 * e); this.dirty = true; }, () => { this.busy = false; this.trA = 0; this.m = MT; this.dirty = true; }); }); }
   exitBranch() { if (this.busy || this.mode !== 'news') return; this.busy = true; this.stopGlide(); this.stopSpeak(); const M0 = this.m;
     this.tween(240, k => { this.trA = k; this.m = M0 * (1 - 0.45 * k); this.dirty = true; }, () => {
       this.mode = 'branches'; this.branch = null; this.layout = 'hex'; this.raw = null; this.setBranches(); const bp = this.bpos || { ox: 0, oy: 0, m: this.M0 }; this.ox = bp.ox; this.oy = bp.oy; this.forceUpdate();
@@ -722,7 +722,7 @@ class Component extends DCLogic {
       field: [this.mode === 'news' ? ['home', 'Branches', () => this.exitBranch()] : ['home', 'To start', () => this.pan(0, 0, 700)], ['plus', 'Larger', () => this.zoomStep(1)], ['news', 'Open story', () => { const c = this.centerIJ(); this.openCard(c.i, c.j); }],
         ['minus', 'Smaller', () => this.zoomStep(-1)], this.mode === 'branches' ? ['list-check', 'Branch & source editor', () => this.openEditor()] : ['rotate-clockwise-2', 'Sources & facts', () => { const c = this.centerIJ(); this.pan(c.x, c.y, 300); this.setState({ act: { i: c.i, j: c.j }, open: false }); this.anim('g', 0.62, 560); this.anim('f', 1, 700); }],
         [sp ? 'player-stop' : 'volume', sp ? 'Stop' : 'Listen to headline', () => { const c = this.centerIJ(), n = this.newsAt(c.i, c.j); this.speak(n.h + '. ' + n.src); }]],
-      article: [['text-decrease', 'Smaller text', () => this.setState({ fs: Math.max(24, this.state.fs - 4) })], ['text-increase', 'Larger text', () => this.setState({ fs: Math.min(46, this.state.fs + 4) })], ['list-check', 'Sources & facts', () => this.flipToggle()],
+      article: [['text-decrease', 'Smaller text', () => this.setState({ fs: Math.max(24, this.state.fs - 4) })], ['text-increase', 'Larger text', () => this.setState({ fs: Math.min(58, this.state.fs + 4) })], ['list-check', 'Sources & facts', () => this.flipToggle()],
         ['arrow-up', 'Back to top', () => { const s = sc(); if (s) s.scrollTo({ top: 0, behavior: 'smooth' }); }], ['x', 'Close', () => this.closeCard()],
         [sp ? 'player-stop' : 'volume', sp ? 'Stop' : 'Listen to article', () => this.speak(a.h + '.\n\n' + (a.body || (this.scF ? this.scF.innerText : '')))]],
       back: [['arrow-back-up', this.state.open ? 'Back to article' : 'Flip', () => this.flipToggle()], [this.state.copied ? 'check' : 'copy', this.state.copied ? 'Copied' : 'Copy source', () => {
@@ -761,7 +761,7 @@ class Component extends DCLogic {
       flip: () => { this.suppress = performance.now(); this.flipToggle(); },
       close: () => { this.suppress = performance.now(); this.closeCard(); },
       smaller: () => this.setState({ fs: Math.max(24, fs - 4) }),
-      bigger: () => this.setState({ fs: Math.min(46, fs + 4) }),
+      bigger: () => this.setState({ fs: Math.min(58, fs + 4) }),
       ctx: e => { if (this.selText() && e.target && e.target.closest && e.target.closest('.sel')) return; // правый клик / долгое нажатие по выделенному — родное меню «Копировать»
         e.preventDefault(); this.suppress = performance.now(); this.twoTap(this.pos(e)); },
       down: e => { this.stopGlide();
